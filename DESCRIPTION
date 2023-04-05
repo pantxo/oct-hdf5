@@ -1,0 +1,10 @@
+Name: oct-hdf5
+Version: 0.1.1
+Date: 2023-04-02
+Author: Pantxo Diribarne <pantxo.diribarne@gmail.com>
+Maintainer: Pantxo Diribarne <pantxo.diribarne@gmail.com>
+Title: Low-level function for working with hdf5 files.
+Description: Collection of Matlab compatible lowlevel functions to handle hdf5 files.
+Categories: package
+Depends: octave (>= 5.0.0)
+License: GPLv3+
