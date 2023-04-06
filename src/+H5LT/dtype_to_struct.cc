@@ -24,8 +24,8 @@ Created: 2021-04-25
 #include <hdf5/serial/hdf5.h>
 #include <hdf5/serial/hdf5_hl.h>
 
-#include "../+H5ML/H5LT_c.h"
-#include "../+H5ML/h5_oct_util.h"
+#include "../util/H5LT_c.h"
+#include "../util/h5_oct_util.h"
 
 DEFUN_DLD(dtype_to_struct, args, nargout,
           "-*- texinfo -*-\n\

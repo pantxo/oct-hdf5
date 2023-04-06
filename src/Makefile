@@ -5,6 +5,7 @@ CFLAGS = -Wall -g
 export OCTAVE MKOCTFILE CFLAGS
 
 all:
+	$(MAKE) -s -C util
 	$(MAKE) -s -C +H5A
 	$(MAKE) -s -C +H5D
 	$(MAKE) -s -C +H5E
@@ -22,3 +23,4 @@ all:
 
 clean:
 	rm -f ../inst/+H5*/*.oct
+	rm -f ./util/*.o

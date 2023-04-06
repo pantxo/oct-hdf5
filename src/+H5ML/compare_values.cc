@@ -23,7 +23,7 @@ Created: 2021-04-25
 #include <octave/oct.h>
 #include <hdf5/serial/hdf5.h>
 
-#include "h5_oct_util.h"
+#include "../util/h5_oct_util.h"
 
 DEFUN_DLD(compare_values, args, nargout,
           "-*- texinfo -*-\n\
