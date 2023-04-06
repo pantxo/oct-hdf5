@@ -1,5 +1,5 @@
 OBJS = $(patsubst %.cc,../../inst/+H5L/%.oct,$(wildcard *.cc))
-UTIL_OBJS = ../util/h5_oct_util.o ../util/h5_data_util.o
+UTIL_OBJS = ../util/h5_oct_util.o ../util/H5LT_c.o ../util/h5_data_util.o
 
 all: $(OBJS)
 
