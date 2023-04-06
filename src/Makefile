@@ -24,3 +24,4 @@ all:
 clean:
 	rm -f ../inst/+H5*/*.oct
 	rm -f ./util/*.o
+	rm -f ./+H5*/*.o
