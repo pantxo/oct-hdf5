@@ -6,4 +6,4 @@ clean:
 	rm -f *.o
 
 %.o: %.cc
-	${MKOCTFILE} ${CFLAGS} ${INCLUDES} -o $@ -c $<
+	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -o $@ ${LIBS} -c $<

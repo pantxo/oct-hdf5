@@ -5,8 +5,8 @@ CFLAGS = -Wall -g
 export OCTAVE MKOCTFILE CFLAGS
 
 all:
-	$(MAKE)  -C util
-	$(MAKE)  -C +H5A
+	$(MAKE) -s -C util
+	$(MAKE) -s -C +H5A
 	$(MAKE) -s -C +H5D
 	$(MAKE) -s -C +H5E
 	$(MAKE) -s -C +H5F
