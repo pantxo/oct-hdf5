@@ -1,2 +1,5 @@
-# Ignore everything in this directory
+## Ignore emacs files
 *~
+
+## Ignore object files
+*.o
