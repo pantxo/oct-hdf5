@@ -159,6 +159,8 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
               std::strcpy (strtmp, &str[ii*slen]);
               cell_str(ii) = octave_value (std::string (strtmp));
             }
+
+          retval = octave_value (cell_str);
         }
     }
   else if (cls == "H5T_REFERENCE")
@@ -194,6 +196,45 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
         }
 
       retval = octave_value (data);
+    }
+  else if (cls == "H5T_VLEN")
+    {
+      if (dv.ndims () > 0)
+        {
+          hid_t base_type_id = H5Tget_super (mem_type_id);
+          dtype_to_struct (base_type_id, info_struct);
+
+          if (info_struct.getfield ("Class").string_value () != "H5T_STRING")
+            error ("%s: unhandled type %s", caller.c_str (), cls.c_str ());
+
+          hvl_t rdata[dv.ndims ()];
+
+          herr_t status;
+          if (read_fcn == 0)
+            status = H5Dread (object_id, mem_type_id, mem_space_id,
+                              file_space_id, xfer_plist_id, rdata);
+          else
+            status = H5Aread (object_id, mem_type_id, rdata);
+
+          if (status)
+            error ("%s: unable to retrieve vlen data", caller.c_str ());
+
+          if (dv.ndims () > 1)
+            {
+              Cell data (dv);
+
+              for (int ii = 0; ii < dv.ndims (); ii++)
+                data(ii) = std::string (static_cast<char*> (rdata[ii].p));
+
+              retval = octave_value (data);
+            }
+          else
+            retval = std::string (static_cast<char*> (rdata[0].p));
+
+          // FIXME : we should H5Dvlen_reclaim
+        }
+      else
+        retval = octave_value ();
     }
   else
     error ("%s: unhandled type %s", caller.c_str (), cls.c_str ());
