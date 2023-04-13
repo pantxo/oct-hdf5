@@ -3,6 +3,7 @@ MKOCTFILE ?= mkoctfile
 CFLAGS = -Wall -g
 INCLUDES = $(shell ${OCTAVE} -f --eval "printf ('%s', __octave_config_info__().build_environment.HDF5_CPPFLAGS)")
 LIBS = $(shell ${OCTAVE} -f --eval "printf ('%s %s', __octave_config_info__().build_environment.HDF5_LDFLAGS, __octave_config_info__().build_environment.HDF5_LIBS)")
+PWD =  $(shell pwd)
 
 export OCTAVE MKOCTFILE CFLAGS LIBS INCLUDES
 
@@ -22,6 +23,9 @@ all:
 	$(MAKE) -s -C +H5R
 	$(MAKE) -s -C +H5S
 	$(MAKE) -s -C +H5T
+
+index:
+	$(OCTAVE) -f --eval "cd util; make_index ('$(PWD)')"
 
 clean:
 	rm -f ../inst/+H5*/*.oct
