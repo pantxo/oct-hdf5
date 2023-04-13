@@ -1,6 +1,6 @@
 /*
 
-Copyright (C) 2023 Pantxo Diribarne
+Copyright (C) 2023 Vipul Cariappa
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../util/h5_oct_util.h"
 
 DEFUN_DLD (get_num_attrs, args, nargout, "-*- texinfo -*-\n\
-@deftypefn {} { } H5A.get_num_attrs (@var{loc_id})\n\
+@deftypefn {} {@var{attr_count} =} H5A.get_num_attrs (@var{loc_id})\n\
 Determine the number of attributes attached to @var{loc_id}.\n\
 @end deftypefn")
 {
