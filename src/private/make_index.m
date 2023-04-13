@@ -21,7 +21,7 @@
 
 function make_index (basedir)
   fname = fullfile (basedir, '..', "INDEX");
-  dirs = {"+H5D", "+H5E", "+H5F", "+H5G", "+H5I", "+H5L", "+H5LT", ...
+  dirs = {"+H5A", "+H5D", "+H5E", "+H5F", "+H5G", "+H5I", "+H5L", "+H5LT", ...
           "+H5ML", "+H5O", "+H5P", "+H5R", "+H5S", "+H5T"};
 
   hl_fun = {"h5info", "h5readatt", "read_mat73"};
