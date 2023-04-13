@@ -167,6 +167,7 @@ function [status, od_out] = attr_op_func (loc_id, name, od_in)
   endswitch
 
   H5S.close (space_id);
+  H5A.close (attr_id);
 
   if (isempty (od_in))
     od_in = as;
