@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <octave/oct.h>
-#include <hdf5/serial/hdf5.h>
+#include <hdf5.h>
 
 DEFUN_DLD(create_simple, args, nargout,
           "-*- texinfo -*-\n\

@@ -9,4 +9,4 @@ clean:
 ../../inst/+H5O/%.oct: %.cc ${UTIL_OBJS}
 	mkdir -p ../../inst/+H5O/
 	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -c -o $<.o $<
-	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -o $@ ${LIBS} ${UTIL_OBJS} $<.o
+	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} ${UTIL_OBJS} $<.o

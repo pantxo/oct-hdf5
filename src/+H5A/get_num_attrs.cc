@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-#include <hdf5/serial/hdf5.h>
+#include <hdf5.h>
 #include <octave/oct.h>
 
 #include "../util/h5_oct_util.h"

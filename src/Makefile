@@ -1,8 +1,10 @@
 OCTAVE ?= octave
 MKOCTFILE ?= mkoctfile
 CFLAGS = -Wall -g
+INCLUDES = $(shell ${OCTAVE} -f --eval "printf ('%s', __octave_config_info__().build_environment.HDF5_CPPFLAGS)")
+LIBS = $(shell ${OCTAVE} -f --eval "printf ('%s %s', __octave_config_info__().build_environment.HDF5_LDFLAGS, __octave_config_info__().build_environment.HDF5_LIBS)")
 
-export OCTAVE MKOCTFILE CFLAGS
+export OCTAVE MKOCTFILE CFLAGS LIBS INCLUDES
 
 all:
 	$(MAKE) -s -C util
