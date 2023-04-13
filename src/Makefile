@@ -25,7 +25,7 @@ all:
 	$(MAKE) -s -C +H5T
 
 index:
-	$(OCTAVE) -f --eval "cd util; make_index ('$(PWD)')"
+	$(OCTAVE) -f --eval "cd private; make_index ('$(PWD)')"
 
 clean:
 	rm -f ../inst/+H5*/*.oct
