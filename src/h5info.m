@@ -28,11 +28,8 @@ function s = h5info (fname, obj_name = "/")
     H5E.set_auto (false);
     file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
 
-    debug_print (false);
 
     ## Begin iteration.
-    debug_print ("Objects in root group:\n");
-
     ## Get object info for the root group
     infobuf = H5O.get_info_by_name (file, obj_name, "H5P_DEFAULT");
 
@@ -63,31 +60,14 @@ function status = error_walker (n, s)
   status = -1;
 endfunction
 
-function str = class_id_to_string (class_id)
-  switch class_id
-    case H5ML.get_constant_value ('H5T_INTEGER')
-      str = 'H5T_INTEGER';
-    case H5ML.get_constant_value ('H5T_FLOAT')
-      str = 'H5T_FLOAT';
-    case H5ML.get_constant_value ('H5T_STRING')
-      str = 'H5T_STRING';
-    case H5ML.get_constant_value ('H5T_BITFIELD')
-      str = 'H5T_BITFIELD';
-    case H5ML.get_constant_value ('H5T_OPAQUE')
-      str = 'H5T_OPAQUE';
-    case H5ML.get_constant_value ('H5T_COMPOUND')
-      str = 'H5T_COMPOUND';
-    case H5ML.get_constant_value ('H5T_REFERENCE')
-      str = 'H5T_REFERENCE';
-    case H5ML.get_constant_value ('H5T_ENUM')
-      str = 'H5T_ENUM';
-    case H5ML.get_constant_value ('H5T_VLEN')
-      str = 'H5T_VLEN';
-    case H5ML.get_constant_value ('H5T_ARRAY')
-      str = 'H5T_ARRAY';
-    otherwise
-      error ("class_id_to_string: unknown datatype class %d", class_id)
-  endswitch
+function cst = get_constants ()
+  persistent constants = {"H5S_SIMPLE", "H5S_NULL", "H5S_SCALAR", ...
+                          "H5O_TYPE_GROUP", "H5O_TYPE_DATASET", ...
+                          "H5D_CHUNKED", "H5D_FILL_VALUE_USER_DEFINED",...
+                          "H5O_TYPE_NAMED_DATATYPE"};
+  persistent vals = cellfun (@H5ML.get_constant_value, constants, "uni", false);
+  persistent s = struct ([constants; vals]{:});
+  cst = s;
 endfunction
 
 function debug_print (varargin)
@@ -103,29 +83,40 @@ function debug_print (varargin)
 endfunction
 
 function s = group_struct (name, addr = 0)
-  s = struct ("Name", name, "Groups", [], "Datasets", [], "Datatypes", [], ...
-              "Links", [], "Attributes", [], "addr", addr);
+  persistent ss = struct ("Name", name, "Groups", [], ...
+                          "Datasets", [], "Datatypes", [], ...
+                          "Links", [], "Attributes", [], "addr", addr);
+  ss.Name = name;
+  ss.addr = addr;
+  s = ss;
 endfunction
 
 function s = dataset_struct (name)
-  s = struct ("Name", name, "Datatype", datatype_struct (""), ...
-              "Dataspace", dataspace_struct (), ...
-              "ChunkSize", [], "FillValue", 0, "Filters", [], ...
-              "Attributes", []);
+  persistent ss  = struct ("Name", name, "Datatype", datatype_struct (""), ...
+                           "Dataspace", dataspace_struct (), ...
+                           "ChunkSize", [], "FillValue", 0, "Filters", [], ...
+                           "Attributes", []);
+  ss.Name = name;
+  s = ss;
 endfunction
 
 function s = attribute_struct (name)
-  s = struct ("Name", name, "Datatype", datatype_struct (""), ...
-              "Dataspace", dataspace_struct (), "Value", []);
+  persistent ss  = struct ("Name", name, "Datatype", datatype_struct (""), ...
+                           "Dataspace", dataspace_struct (), "Value", []);
+  ss.Name = name;
+  s = ss;
 endfunction
 
 function s = datatype_struct (name)
-  s = struct ("Name", name, "Class", "", "Type", "", "Size", 0, ...
-              "Attributes", []);
+  persistent ss = struct ("Name", name, "Class", "", "Type", "", "Size", 0, ...
+                          "Attributes", []);
+  ss.Name = name;
+  s = ss;
 endfunction
 
 function s = dataspace_struct ()
-  s = struct ("Size", [], "MaxSize", [], "Type", "simple");
+  persistent ss = struct ("Size", [], "MaxSize", [], "Type", "simple");
+  s = ss;
 endfunction
 
 function status = group_check (parent_addr, target_addr)
@@ -152,15 +143,17 @@ function [status, od_out] = attr_op_func (loc_id, name, od_in)
   [n, dims, maxdims] = H5S.get_simple_extent_dims (space_id);
   space_type = H5S.get_simple_extent_type (space_id);
 
+  persistent cst = get_constants ();
+
   switch (space_type)
-    case H5ML.get_constant_value ("H5S_SIMPLE")
+    case cst.H5S_SIMPLE
       as.Dataspace.Size = dims;
       as.Dataspace.MaxSize = maxdims;
-    case H5ML.get_constant_value ("H5S_NULL")
+    case cst.H5S_NULL
       as.Dataspace.Size = dims;
       as.Dataspace.MaxSize = maxdims;
       as.Dataspace.Type = "null";
-    case H5ML.get_constant_value ("H5S_SCALAR")
+    case cst.H5S_SCALAR
       as.Dataspace.Size = 1;
       as.Dataspace.MaxSize = 1;
       as.Dataspace.Type = "scalar";
@@ -184,14 +177,13 @@ function [status, od_out] = op_func (loc_id, name, od_in)
   status = 0;
 
   spaces = 2*(numel (od_in.addr) + 1);
-  debug_print ("%*s", spaces, "");
 
   infobuf = H5O.get_info_by_name (loc_id, name, "H5P_DEFAULT");
 
-  switch (infobuf.type)
-    case H5ML.get_constant_value ("H5O_TYPE_GROUP")
-      debug_print ("  Group: %s {\n", name);
+  persistent cst = get_constants ();
 
+  switch (infobuf.type)
+    case cst.H5O_TYPE_GROUP
       ## Iterate through the links of this group
       if (group_check (od_in.addr, infobuf.addr))
         debug_print ("%*s  Warning: Loop detected!\n", spaces, "");
@@ -219,11 +211,7 @@ function [status, od_out] = op_func (loc_id, name, od_in)
         od_in.Groups(end+1) = cod_out;
       endif
 
-      debug_print ("%*s}\n", spaces, "");
-
-    case H5ML.get_constant_value ("H5O_TYPE_DATASET")
-
-      debug_print ("  Dataset: %s\n", name);
+    case cst.H5O_TYPE_DATASET
 
       ds = dataset_struct (name);
 
@@ -231,10 +219,6 @@ function [status, od_out] = op_func (loc_id, name, od_in)
       dset_id = H5D.open (loc_id, name, "H5P_DEFAULT");
       type_id = H5D.get_type (dset_id);
 
-      class_id = H5T.get_class (type_id);
-      ## ds.Datatype.Class = class_id_to_string (class_id);
-      ## ds.Datatype.Type = H5LT.dtype_to_text (type_id);
-      ## ds.Datatype.Size = H5T.get_size (type_id);
       ds.Datatype = H5LT.dtype_to_struct (type_id);
 
       H5T.close (type_id);
@@ -246,14 +230,14 @@ function [status, od_out] = op_func (loc_id, name, od_in)
       space_type = H5S.get_simple_extent_type (space_id);
 
       switch (space_type)
-        case H5ML.get_constant_value ("H5S_SIMPLE")
+        case cst.H5S_SIMPLE
           ds.Dataspace.Size = dims;
           ds.Dataspace.MaxSize = maxdims;
-        case H5ML.get_constant_value ("H5S_NULL")
+        case cst.H5S_NULL
           ds.Dataspace.Size = dims;
           ds.Dataspace.MaxSize = maxdims;
           ds.Dataspace.Type = "null";
-        case H5ML.get_constant_value ("H5S_SCALAR")
+        case cst.H5S_SCALAR
           ds.Dataspace.Size = 1;
           ds.Dataspace.MaxSize = 1;
           ds.Dataspace.Type = "scalar";
@@ -264,7 +248,7 @@ function [status, od_out] = op_func (loc_id, name, od_in)
       ## Chunk size
       dcpl_id = H5D.get_create_plist (dset_id);
       chunk_dims = [];
-      if (H5P.get_layout (dcpl_id) == H5ML.get_constant_value ("H5D_CHUNKED"))
+      if (H5P.get_layout (dcpl_id) == cst.H5D_CHUNKED)
         [~,chunk_dims] = H5P.get_chunk (dcpl_id);
       endif
 
@@ -272,7 +256,7 @@ function [status, od_out] = op_func (loc_id, name, od_in)
 
       ## Fill value
       fill_id = H5P.fill_value_defined (dcpl_id);
-      if (fill_id == H5ML.get_constant_value ("H5D_FILL_VALUE_USER_DEFINED"))
+      if (fill_id == cst.H5D_FILL_VALUE_USER_DEFINED)
         ## FIXME: implement this
       endif
 
@@ -289,11 +273,10 @@ function [status, od_out] = op_func (loc_id, name, od_in)
 
       od_in.Datasets(end+1) = ds;
 
-    case H5ML.get_constant_value ("H5O_TYPE_NAMED_DATATYPE")
-      debug_print ("  Datatype: %s\n", name);
+    case cst.H5O_TYPE_NAMED_DATATYPE
 
     otherwise
-      debug_print ( "  Unknown: %s\n", name);
+
   endswitch
 
   od_out = od_in;
