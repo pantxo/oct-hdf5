@@ -24,28 +24,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(create, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id})\n\
-@deftypefn {} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id}, @var{aapl_id},)\n\
+@deftypefn {oct-hdf5} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id})\n\
+@deftypefnx {oct-hdf5} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id}, @var{aapl_id},)\n\
 Create an attribute, @var{attr_name}, which is attached to the object\n\
 specified by the identifier @var{loc_id}.\n\
 \n\
-The attribute name, @var{attr_name}, must be unique for the object.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{loc_id} @tab @tab Location or object identifier\n\
+ @item @var{attr_name} @tab @tab Attribute name\n\
+ @item @var{space_id} @tab @tab Attribute dataspace identifier\n\
+ @item @var{acpl_id} @tab @tab Attribute creation property list identifier\n\
+ @item @var{aapl_id} @tab @tab Attribute access property list identifier\n\
+ @end multitable\n\
 \n\
-The attribute is created with the specified datatype and dataspace,\n\
-@var{type_id} and @var{space_id}, which are created with the H5T and H5S\n\
-interfaces, respectively.\n\
+@strong{Description:}\n\
 \n\
-If @var{type_id} is either a fixed-length or variable-length string,\n\
-it is important to set the string length when defining the datatype.\n\
-String datatypes are derived from @qcode{'H5T_C_S1'} (or\n\
-@qcode{'H5T_FORTRAN_S1'} for Fortran), which defaults to 1 character\n\
-in size. See @code{H5T.set_size}.\n\
-\n\
-The access property list is currently unused, but will be used in the future.\n\
-This property list should currently be @qcode{'H5P_DEFAULT'}.\n\
-\n\
-The attribute identifier returned by this function must be released\n\
-with @code{H5A.close} or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_CREATE}.\n\
 \n\
 @seealso{H5A.open,H5A.close}\n\
 @end deftypefn")
@@ -74,7 +70,7 @@ with @code{H5A.close} or resource leaks will develop.\n\
   if (nargin > 5)
     aapl_id = get_h5_id (args, 5, "AAPL_ID", "H5A.create");
 
-  hid_t attribute_id =  H5Acreate (loc_id, attr_name.c_str (), type_id,
+  hid_t attribute_id =  H5Acreate2 (loc_id, attr_name.c_str (), type_id,
                                    space_id, acpl_id, aapl_id);
 
   if (attribute_id < 0)

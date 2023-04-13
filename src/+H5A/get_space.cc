@@ -24,11 +24,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(get_space, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {@var{space_id} = } H5A.get_space (@var{attr_id})\n\
+@deftypefn {oct-hdf5} {@var{space_id} = } H5A.get_space (@var{attr_id})\n\
 Retrieve a copy of the dataspace for an attribute @var{attr_id}.\n\
 \n\
-The dataspace identifier @var{space_id} returned from this function\n\
-must be released with H5S.close or resource leaks will develop.\n\
+\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{attr_id} @tab @tab Identifier of an attribute\n\
+ @end multitable\n\
+\n\
+@strong{Description:}\n\
+\n\
+The dataspace identifier returned from this function must be \
+released with H5S.close or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_GET_NUM_ATTRS}.\n\
+\n\
 @seealso{H5S.close}\n\
 @end deftypefn")
 {

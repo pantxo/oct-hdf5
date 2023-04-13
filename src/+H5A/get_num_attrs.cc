@@ -23,8 +23,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../util/h5_oct_util.h"
 
 DEFUN_DLD (get_num_attrs, args, nargout, "-*- texinfo -*-\n\
-@deftypefn {} {@var{attr_count} =} H5A.get_num_attrs (@var{loc_id})\n\
-Determine the number of attributes attached to @var{loc_id}.\n\
+@deftypefn {oct-hdf5} {@var{attr_count} =} H5A.get_num_attrs (@var{loc_id})\n\
+Return the number of attributes if successful; otherwise return a negative \
+value.\n\
+\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{loc_id} @tab @tab Identifier of a group, dataset, or named \
+datatype\n\
+ @end multitable\n\
+\n\
+@strong{Description:}\n\
+\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_GET_NUM_ATTRS}.\n\
+\n\
 @end deftypefn")
 {
   octave_value_list retval;

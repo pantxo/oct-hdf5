@@ -24,16 +24,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(get_type, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {@var{type_id} = } H5A.get_type (@var{attr_id})\n\
-Retrieve a copy of the datatype for an attribute @var{attr_id}.\n\
+@deftypefn {oct-hdf5} {@var{type_id} = } H5A.get_type (@var{attr_id})\n\
+Return a datatype identifier if successful; otherwise returns a negative \
+value.\n\
 \n\
-The datatype is reopened if it is a named type before returning it\n\
-to the application.  The datatypes returned by this function are always\n\
-read-only.  If an error occurs when atomizing the return datatype,\n\
-then the datatype is closed.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{attr_id} @tab @tab Identifier of an attribute\n\
+ @end multitable\n\
+\n\
+@strong{Description:}\n\
 \n\
 The datatype identifier @var{type_id} returned from this function must\n\
 be released with H5T.close or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_GET_TYPE}.\n\
+\n\
 @seealso{H5T.close}\n\
 @end deftypefn")
 {

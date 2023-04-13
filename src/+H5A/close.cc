@@ -24,8 +24,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(close, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} { } H5A.close (@var{attr_id})\n\
-Close attribute identified by @var{attr_id}.\n\
+@deftypefn {oct-hdf5} { } H5A.close (@var{attr_id})\n\
+Terminates access to the attribute specified by @var{attr_id}.\n\
+\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{attr_id} @tab @tab Attribute to release access to\n\
+ @end multitable\n\
+\n\
+@strong{Description:}\n\
+\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_CLOSE}.\n\
+\n\
 @seealso{H5A.open}\n\
 @end deftypefn")
 {

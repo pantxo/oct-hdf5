@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(iterate_by_name, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate_by_name (@var{loc_id}, @var{name}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in}, @var{lapd_id})\n\
+@deftypefn {oct-hdf5} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate_by_name (@var{loc_id}, @var{name}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in}, @var{lapd_id})\n\
 Iterate over the attributes attached to the dataset or group specified\n\
 with @var{loc_id} and @var{obj_name}.\n\
 \n\
@@ -105,6 +105,8 @@ return value of @var{idx_out}.\n\
 The link access property list, @var{lapl_id}, may provide information\n\
 regarding the properties of links required to access the object,\n\
 @var{obj_name}.  See 'Link Access Properties' in the H5P APIs.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_ITERATE_BY_NAME}.\n\
 \n\
 @seealso{H5A.iterate}\n\
 @end deftypefn")

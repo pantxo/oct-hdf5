@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(open, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {@var{attr_id} =} H5A.open (@var{obj_id}, @var{name}, @var{aapl_id})\n\
+@deftypefn {oct-hdf5} {@var{attr_id} =} H5A.open (@var{obj_id}, @var{name}, @var{aapl_id})\n\
 Open an existing attribute, @var{name}, that is attached to an object\n\
 specified by an object identifier, @var{obj_id}.\n\
 \n\
@@ -36,6 +36,8 @@ further purpose, including reading, writing, or any modification.\n\
 \n\
 The attribute identifier @var{attr_id} returned by this function must be\n\
 released with H5A.close or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_OPEN}.\n\
 \n\
 @seealso{H5A.close}\n\
 @end deftypefn")

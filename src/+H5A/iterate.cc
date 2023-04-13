@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 DEFUN_DLD(iterate, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate (@var{loc_id}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in})\n\
+@deftypefn {oct-hdf5} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate (@var{loc_id}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in})\n\
 Iterate over the attributes attached to the dataset or group specified\n\
 with @var{loc_id}.\n\
 \n\
@@ -98,6 +98,8 @@ Causes the iterator to immediately return that value, indicating failure.\n\
 The iterator can be restarted at the next attribute, as indicated by the\n\
 return value of @var{idx_out}.\n\
 @end table\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_ITERATE2}.\n\
 \n\
 @seealso{H5A.iterate_by_name}\n\
 @end deftypefn")
