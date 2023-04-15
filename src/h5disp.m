@@ -35,11 +35,11 @@ function h5disp (filename, loc = "/", mode = "simple")
   endif
 
   if (strcmp(loc, "/") ~= 1)
-    error ("Use of different group is not yet implemented")
+    error ("h5disp: Use of different group is not yet implemented")
   endif
   
   if (strcmp(mode, "simple") ~= 1)
-    error ("Only default (simple) mode is implemented")
+    error ("h5disp: Only default (simple) mode is implemented")
   endif
 
   unwind_protect
@@ -118,10 +118,10 @@ function od_out = disp_dataset (grp_id, name, od_in, infobuf)
   fprintf ("%s Datatype: %s\n", spaces, type_str);
 
   switch H5S.get_simple_extent_type (space_id)
-    case 0 # scalar
+    case H5ML.get_constant_value ("H5S_SCALAR")
       fprintf ("%s Size: Scalar\n", spaces);
     
-    case 1 # simple
+    case H5ML.get_constant_value ("H5S_SIMPLE")
       [ndim, dims, maxdims] = H5S.get_simple_extent_dims (space_id);
       
       for i = 1:ndim
@@ -144,7 +144,7 @@ function od_out = disp_dataset (grp_id, name, od_in, infobuf)
       
       fprintf("\n");
 
-    case 2 # null
+    case H5ML.get_constant_value ("H5S_NULL")
       fprintf ("%s Size: Null\n", spaces);
   endswitch
 
