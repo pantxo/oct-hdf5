@@ -6,3 +6,6 @@
 
 ## Ignore generated INDEX
 INDEX
+
+## Ignore generated log file
+fntests.log
