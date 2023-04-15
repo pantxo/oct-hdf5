@@ -1,0 +1,28 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_and_test:
+    name: Compile and run Tests
+    
+    runs-on: ubuntu-latest
+    
+    container:
+      image: gnuoctave/octave:latest
+      volumes:
+        - ${{ github.workspace }}:/app
+
+    steps:
+      - name: Check Out the Repo
+        uses: actions/checkout@v2
+
+      - name: Build oct-hdf5
+        run: make -j $(nproc)
+
+      - name: Test oct-hdf5
+        run: make check
