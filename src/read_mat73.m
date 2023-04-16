@@ -133,7 +133,7 @@ function val = read_dataset (dset, h5cls)
       try
         tmp2 =  H5D.read(dset_ref, "H5ML_DEFAULT", "H5S_ALL", ...
                          "H5S_ALL", "H5P_DEFAULT");
-        cls = var_class (dset_ref)
+        cls = var_class (dset_ref);
 
         tmp = [tmp, reinterpret(tmp2, dset_ref, cls)];
       catch ee
@@ -183,15 +183,19 @@ endfunction
 
 function val = reinterpret (val, obj_id, cls, info = [])
 
-  iscplx = isstruct (val) && all (isfield (val, {"real", "imag"}));
-
   switch cls
-    case {"double", "single", ...
+    case {"cell", ...
           "int8", "int16", "int32", "int64",...
           "uint8", "uint16", "uint32", "uint64"}
-      if (iscplx)
+      ## Do nothing
+    case {"double", "single"}
+      if (isstruct (val) && all (isfield (val, {"real", "imag"})))
         val = complex (val.real, val.imag);
       endif
+    case "char"
+      val = char (val);
+    case "logical"
+      val = logical (val);
     case "struct"
       attr_id = H5A.open (obj_id, "MATLAB_fields", "H5P_DEFAULT");
       fields = H5A.read (attr_id);
@@ -222,231 +226,231 @@ function val = reinterpret (val, obj_id, cls, info = [])
 
 endfunction
 
-## Empty objects are still unhandled, marking xtest
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'char_empty');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'char_empty');
-%! assert (v7, v73)
+%! assert (v7.char_empty, v73.char_empty)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'char_vector');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'char_vector');
-%! assert (v7, v73)
+%! assert (v7.char_vector, v73.char_vector)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'char_matrix');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'char_matrix');
-%! assert (v7, v73)
+%! assert (v7.char_matrix, v73.char_matrix)
 
+## Empty objects are still unhandled, marking xtest
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_int8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int8');
-%! assert (v7, v73)
+%! assert (v7.empty_int8, v73.empty_int8)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_int16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int16');
-%! assert (v7, v73)
+%! assert (v7.empty_int16, v73.empty_int16)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_int32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int32');
-%! assert (v7, v73)
+%! assert (v7.empty_int32, v73.empty_int32)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_int64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int64');
-%! assert (v7, v73)
+%! assert (v7.empty_int64, v73.empty_int64)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_uint8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint8');
-%! assert (v7, v73)
+%! assert (v7.empty_uint8, v73.empty_uint8)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_uint16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint16');
-%! assert (v7, v73)
+%! assert (v7.empty_uint16, v73.empty_uint16)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_uint32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint32');
-%! assert (v7, v73)
+%! assert (v7.empty_uint32, v73.empty_uint32)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_uint64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint64');
-%! assert (v7, v73)
+%! assert (v7.empty_uint64, v73.empty_uint64)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_single');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_single');
-%! assert (v7, v73)
+%! assert (v7.empty_single, v73.empty_single)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_double');
-%! assert (v7, v73)
+%! assert (v7.empty_double, v73.empty_double)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'empty_logical');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_logical');
-%! assert (v7, v73)
+%! assert (v7.empty_logical, v73.empty_logical)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_int8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_int8');
-%! assert (v7, v73)
+%! assert (v7.scalar_int8, v73.scalar_int8)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_int16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_int16');
-%! assert (v7, v73)
+%! assert (v7.scalar_int16, v73.scalar_int16)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_int32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_int32');
-%! assert (v7, v73)
+%! assert (v7.scalar_int32, v73.scalar_int32)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_int64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_int64');
-%! assert (v7, v73)
+%! assert (v7.scalar_int64, v73.scalar_int64)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_uint8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_uint8');
-%! assert (v7, v73)
+%! assert (v7.scalar_uint8, v73.scalar_uint8)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_uint16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_uint16');
-%! assert (v7, v73)
+%! assert (v7.scalar_uint16, v73.scalar_uint16)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_uint32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_uint32');
-%! assert (v7, v73)
+%! assert (v7.scalar_uint32, v73.scalar_uint32)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_uint64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_uint64');
-%! assert (v7, v73)
+%! assert (v7.scalar_uint64, v73.scalar_uint64)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_double');
-%! assert (v7, v73)
+%! assert (v7.scalar_double, v73.scalar_double)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_single');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_single');
-%! assert (v7, v73)
+%! assert (v7.scalar_single, v73.scalar_single)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_logical');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_logical');
-%! assert (v7, v73)
+%! assert (v7.scalar_logical, v73.scalar_logical)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_int8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_int8');
-%! assert (v7, v73)
+%! assert (v7.ndim_int8, v73.ndim_int8)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_int16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_int16');
-%! assert (v7, v73)
+%! assert (v7.ndim_int16, v73.ndim_int16)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_int32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_int32');
-%! assert (v7, v73)
+%! assert (v7.ndim_int32, v73.ndim_int32)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_int64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_int64');
-%! assert (v7, v73)
+%! assert (v7.ndim_int64, v73.ndim_int64)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_uint8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_uint8');
-%! assert (v7, v73)
+%! assert (v7.ndim_uint8, v73.ndim_uint8)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_uint16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_uint16');
-%! assert (v7, v73)
+%! assert (v7.ndim_uint16, v73.ndim_uint16)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_uint32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_uint32');
-%! assert (v7, v73)
+%! assert (v7.ndim_uint32, v73.ndim_uint32)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_uint64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_uint64');
-%! assert (v7, v73)
+%! assert (v7.ndim_uint64, v73.ndim_uint64)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_double');
-%! assert (v7, v73)
+%! assert (v7.ndim_double, v73.ndim_double)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_single');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_single');
-%! assert (v7, v73)
+%! assert (v7.ndim_single, v73.ndim_single)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'ndim_logical');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_logical');
-%! assert (v7, v73)
+%! assert (v7.ndim_logical, v73.ndim_logical)
 
 ## Sparse matrices are still unhandled, marking xtest
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'sparse_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'sparse_double');
-%! assert (v7, v73)
+%! assert (v7.sparse_double, v73.sparse_double)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'cplx_scalar_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cplx_scalar_double');
-%! assert (v7, v73)
+%! assert (v7.cplx_scalar_double, v73.cplx_scalar_double)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'cplx_scalar_single');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cplx_scalar_single');
-%! assert (v7, v73)
+%! assert (v7.cplx_scalar_single, v73.cplx_scalar_single)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'cplx_ndim_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cplx_ndim_double');
-%! assert (v7, v73)
+%! assert (v7.cplx_ndim_double, v73.cplx_ndim_double)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'cplx_ndim_single');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cplx_ndim_single');
-%! assert (v7, v73)
+%! assert (v7.cplx_ndim_single, v73.cplx_ndim_single)
 
 ## Cell arrays are still unhandled, marking xtest
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'cell_any');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cell_any');
-%! assert (v7, v73)
+%! assert (v7.cell_any, v73.cell_any)
 
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'cell_str');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cell_str');
-%! assert (v7, v73)
+%! assert (v7.cell_str, v73.cell_str)
 
 ## Scalar structs are still unhandled, marking xtest
 %!xtest
 %! v7 = load ('base_types_mat7.mat', 'scalar_struct');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_struct');
-%! assert (v7, v73)
+%! assert (v7.scalar_struct, v73.scalar_struct)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'struct_array');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'struct_array');
-%! assert (v7, v73)
+%! assert (v7.struct_array, v73.struct_array)
