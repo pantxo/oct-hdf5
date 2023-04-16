@@ -95,8 +95,7 @@ function rdata = read_vars (obj_id, varnames, s)
       try
         cls = var_class (dset);
         h5cls = info.Datatype.Class;
-        tmp = read_dataset (dset, h5cls);
-        rdata.(varname) = reinterpret (tmp, dset, cls);
+        rdata.(varname) = read_dataset (dset, h5cls, info);
       catch
         H5D.close (dset);
       end_try_catch
@@ -117,7 +116,7 @@ function rdata = read_vars (obj_id, varnames, s)
 
 endfunction
 
-function val = read_dataset (dset, h5cls)
+function val = read_dataset (dset, h5cls, info)
 
   tmp = H5D.read (dset, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
                         "H5P_DEFAULT");
@@ -128,6 +127,7 @@ function val = read_dataset (dset, h5cls)
     for jj = 1:numel (refs)
       ref = refs(jj);
 
+      ## FIXME: that won't work if the referenced object is a group
       dset_ref = H5R.dereference (dset, "H5R_OBJECT", refs(jj));
 
       try
@@ -135,7 +135,7 @@ function val = read_dataset (dset, h5cls)
                          "H5S_ALL", "H5P_DEFAULT");
         cls = var_class (dset_ref);
 
-        tmp = [tmp, reinterpret(tmp2, dset_ref, cls)];
+        tmp = [tmp, reinterpret(tmp2, dset_ref, cls, info)];
       catch ee
         H5D.close (dset_ref);
         rethrow (ee)
@@ -143,10 +143,11 @@ function val = read_dataset (dset, h5cls)
 
     endfor
 
-    tmp = reshape (tmp, size (refs));
+    val = reshape (tmp, size (refs));
+  else
+    cls = var_class (dset);
+    val = reinterpret(tmp, dset, cls, info);
   endif
-
-  val = tmp;
 endfunction
 
 function vars = get_available_vars (s)
@@ -183,50 +184,77 @@ endfunction
 
 function val = reinterpret (val, obj_id, cls, info = [])
 
+  empty = (isfield (info.Attributes, "Name")
+           && any (strcmp ({info.Attributes.Name}, "MATLAB_empty")));
+
   switch cls
     case {"cell", ...
           "int8", "int16", "int32", "int64",...
           "uint8", "uint16", "uint32", "uint64"}
-      ## Do nothing
+
+      if (empty)
+        val = zeros (val, cls);
+      endif
+
     case {"double", "single"}
       if (isstruct (val) && all (isfield (val, {"real", "imag"})))
         val = complex (val.real, val.imag);
       endif
+
+      if (empty)
+        val = zeros (val, cls);
+      endif
+
     case "char"
       val = char (val);
-    case "logical"
-      val = logical (val);
-    case "struct"
-      attr_id = H5A.open (obj_id, "MATLAB_fields", "H5P_DEFAULT");
-      fields = H5A.read (attr_id);
-      H5A.close (attr_id)
 
-      tmp = read_vars (obj_id, fields, info);
-
-      ## FIXME: how do we differenciate structs and struct-arrays
-      allcell = all (cellfun (@(nm) iscell (tmp.(nm)), fields));
-
-      if (allcell)
-        args = {};
-        for ii = 1:numel (fields)
-          args{end+1} = fields{ii};
-          args{end+1} = tmp.(fields{ii});
-        endfor
-
-        try
-          val = struct (args{:});
-        catch
-          val = tmp;
-        end_try_catch
+      if (empty)
+        val = '';
       endif
+
+    case "logical"
+
+      if (empty)
+        val = zeros (val, cls);
+      else
+        val = logical (val);
+      endif
+
+    case "struct"
+      if (empty)
+        val = struct ();
+      else
+        attr_id = H5A.open (obj_id, "MATLAB_fields", "H5P_DEFAULT");
+        fields = H5A.read (attr_id);
+        H5A.close (attr_id)
+
+        tmp = read_vars (obj_id, fields, info);
+
+        ## FIXME: how do we differenciate structs and struct-arrays
+        allcell = all (cellfun (@(nm) iscell (tmp.(nm)), fields));
+
+        if (allcell)
+          args = {};
+          for ii = 1:numel (fields)
+            args{end+1} = fields{ii};
+            args{end+1} = tmp.(fields{ii});
+          endfor
+
+          try
+            val = struct (args{:});
+          catch
+            val = tmp;
+          end_try_catch
+        endif
+      endif
+
     otherwise
       warning ("read_mat73: unhandled class %s, returning data asis", ...
                cls)
   endswitch
-
 endfunction
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'char_empty');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'char_empty');
 %! assert (v7.char_empty, v73.char_empty)
@@ -241,58 +269,57 @@ endfunction
 %! v73 = read_mat73 ('base_types_mat73.mat', 'char_matrix');
 %! assert (v7.char_matrix, v73.char_matrix)
 
-## Empty objects are still unhandled, marking xtest
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_int8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int8');
 %! assert (v7.empty_int8, v73.empty_int8)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_int16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int16');
 %! assert (v7.empty_int16, v73.empty_int16)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_int32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int32');
 %! assert (v7.empty_int32, v73.empty_int32)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_int64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_int64');
 %! assert (v7.empty_int64, v73.empty_int64)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_uint8');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint8');
 %! assert (v7.empty_uint8, v73.empty_uint8)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_uint16');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint16');
 %! assert (v7.empty_uint16, v73.empty_uint16)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_uint32');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint32');
 %! assert (v7.empty_uint32, v73.empty_uint32)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_uint64');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_uint64');
 %! assert (v7.empty_uint64, v73.empty_uint64)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_single');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_single');
 %! assert (v7.empty_single, v73.empty_single)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_double');
 %! assert (v7.empty_double, v73.empty_double)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'empty_logical');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'empty_logical');
 %! assert (v7.empty_logical, v73.empty_logical)
@@ -434,12 +461,12 @@ endfunction
 %! assert (v7.cplx_ndim_single, v73.cplx_ndim_single)
 
 ## Cell arrays are still unhandled, marking xtest
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'cell_any');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cell_any');
 %! assert (v7.cell_any, v73.cell_any)
 
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'cell_str');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cell_str');
 %! assert (v7.cell_str, v73.cell_str)
