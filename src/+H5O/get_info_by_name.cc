@@ -26,7 +26,7 @@ DEFUN_DLD(get_info_by_name, args, nargout,
           "-*- texinfo -*-\n\
 @deftypefn {} {@var{info_struct} =} H5O.get_info_by_name (@var{loc_id}, @var{name}, @var{lapl_id})\n\
 The @var{info_struct} structure contains fields:\n\
-unsigned long  fileno;    /* File number that object is located in \n\
+fileno;    /* File number that object is located in \n\
 addr;      /* Object address in file \n\
 type;      /* Basic object type (group, dataset, etc.) \n\
 rc;        /* Reference count of object    \n\
@@ -35,7 +35,7 @@ mtime;     /* Modification time      \n\
 ctime;     /* Change time            \n\
 btime;     /* Birth time         \n\
 num_attrs; /* # of attributes attached to object \n\
-(not implemented: H5O_hdr_info_t hdr;       /* Object header information )\n\
+\n\
 @seealso{}\n\
 @end deftypefn")
 {
