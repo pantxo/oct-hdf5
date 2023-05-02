@@ -51,7 +51,7 @@ Open a group, dataset, or committed (named) datatype specified by a location, \
   hid_t dataset_id =  H5Oopen (loc_id, name.c_str (), lapl_id);
 
   if (dataset_id < 0)
-    error ("H5O.open: unable open dataset");
+    error ("H5O.open: unable to open object");
 
   return ovl (octave_int64 (dataset_id));
 }
