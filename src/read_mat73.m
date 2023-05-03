@@ -86,19 +86,7 @@ function status = error_walker (n, s)
   status = -1;
 endfunction
 
-function cst = get_constants ()
-  persistent constants = {"H5S_SIMPLE", "H5S_NULL", "H5S_SCALAR", ...
-                          "H5O_TYPE_GROUP", "H5O_TYPE_DATASET", ...
-                          "H5D_CHUNKED", "H5D_FILL_VALUE_USER_DEFINED",...
-                          "H5O_TYPE_NAMED_DATATYPE"};
-  persistent vals = cellfun (@H5ML.get_constant_value, constants, "uni", false);
-  persistent s = struct ([constants; vals]{:});
-  cst = s;
-endfunction
-
 function rdata = read_vars (obj_id, varnames, as_dset = false)
-
-  persistent cst = get_constants ();
 
   if (isempty (varnames))
     ## Read every variable
@@ -163,9 +151,8 @@ function val = read_dataset (obj_id)
     for jj = 1:numel (refs)
 
       obj_id = H5R.dereference (obj_id, "H5R_OBJECT", refs(jj));
-
       try
-        tmp = [tmp, get_object_data(obj_id)];
+        tmp{jj} = get_object_data (obj_id);
       catch ee
         H5O.close (obj_id);
         rethrow (ee)
@@ -275,7 +262,6 @@ function val = get_object_data (obj_id)
       val = struct ();
 
       if (! empty)
-
         attr_id = H5A.open (obj_id, "MATLAB_fields", "H5P_DEFAULT");
         fields = H5A.read (attr_id);
         H5A.close (attr_id)
@@ -306,9 +292,18 @@ function val = get_object_data (obj_id)
           val = read_vars (obj_id, fields);
         endif
       endif
+    case "canonical empty"
+
+      val = read_dataset (obj_id);
+      val = resize ([], val);
+
     case "cell"
 
       val = read_dataset (obj_id);
+
+      if (empty)
+        val = resize ({}, val);
+      endif
 
     otherwise
       warning ("read_mat73: unhandled class %s, returning data asis", ...
