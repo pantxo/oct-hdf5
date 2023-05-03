@@ -283,6 +283,7 @@ function val = get_object_data (obj_id)
         try
           obj = H5O.open (obj_id, fields{1}, "H5P_DEFAULT");
           cls = var_class (obj);
+          H5O.close (obj);
         catch
         end_try_catch
 
