@@ -28,146 +28,179 @@
 function rdata = read_mat73 (fname, varnames = "__all__")
 
   if (! ischar (fname))
-    error ("read_mat73: FNAME must be a mat file name")
+    error ("read_mat73: FNAME must be a string")
   elseif (! ischar (varnames) && ! iscellstr (varnames))
     print_usage ();
   endif
 
   fname = file_in_loadpath (fname);
+  if (isempty (fname) || ! exist (fname, "file"))
+    error ("read_mat73: FNAME must be an existing file name")
+  endif
 
-  persistent s = h5info (fname);
+  ## Disable automatic display of hdf5 library errors
+  H5E.set_auto (false);
 
-  all_vars = get_available_vars (s);
+  unwind_protect
+    ## Open file
+    try
+      file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
+      fcn = @() H5F.close (file);
 
-  if (strcmp (varnames, "__all__"))
-    varnames = all_vars;
-  else
-    if (! iscellstr (varnames))
+    catch
+      error ("read_mat73: unbale to open '%s'.", fname)
+
+      ## Walk the error stack to print the last error from hdf5
+      H5E.walk ("H5E_WALK_UPWARD", @error_walker);
+    end_try_catch
+
+    ## List available variables in file and check the requested ones existvar
+    if (strcmp (varnames, "__all__"))
+      varnames = {};
+    elseif (! iscellstr (varnames))
       varnames = {varnames};
     endif
 
-    for ii = 1:numel (varnames)
-      if (! any (strcmp (varnames{ii}, all_vars)))
-        error ("read_mat73: can't find variable %s in %s", varnames{ii}, fname)
-      endif
-    endfor
-  endif
+    ## Read variables
+    rdata = read_vars (file, varnames);
 
-  file = H5F.open (fname);
+    if (any (varnames))
+      for ii = 1:numel (varnames)
+        if (! isfield (rdata, (varnames{ii})))
+          error ("read_mat73: can't find variable '%s' in file '%s'", ...
+                 varnames{ii}, fname)
+        endif
+      endfor
+    endif
 
-  unwind_protect
-    rdata = read_vars (file, varnames, s);
   unwind_protect_cleanup
     H5F.close (file);
+    ## Restore previous error printing
+    H5E.set_auto (true);
   end_unwind_protect
 endfunction
 
-function rdata = read_vars (obj_id, varnames, s)
 
-  gnames = {};
-  if (isfield (s, "Groups") && ! isempty (s.Groups))
-    gnames = {s.Groups.Name};
-  endif
+function status = error_walker (n, s)
+  disp (s.desc)
+  status = -1;
+endfunction
 
-  dnames = {};
-  if (isfield (s, "Datasets")  && ! isempty (s.Datasets))
-    dnames = {s.Datasets.Name};
+function cst = get_constants ()
+  persistent constants = {"H5S_SIMPLE", "H5S_NULL", "H5S_SCALAR", ...
+                          "H5O_TYPE_GROUP", "H5O_TYPE_DATASET", ...
+                          "H5D_CHUNKED", "H5D_FILL_VALUE_USER_DEFINED",...
+                          "H5O_TYPE_NAMED_DATATYPE"};
+  persistent vals = cellfun (@H5ML.get_constant_value, constants, "uni", false);
+  persistent s = struct ([constants; vals]{:});
+  cst = s;
+endfunction
+
+function rdata = read_vars (obj_id, varnames, as_dset = false)
+
+  persistent cst = get_constants ();
+
+  if (isempty (varnames))
+    ## Read every variable
+    varnames = get_named_variables (obj_id);
   endif
 
   rdata = struct ([varnames(:).'; cell(size (varnames(:).'))]{:});
 
   for ii = 1:numel (varnames)
-    varname = varnames{ii};
-    isdset = true;
 
-    idx = strcmp (varname, dnames);
-    if (any (idx))
-      info = s.Datasets(idx);
-    else
-      idx = strcmp (varname, gnames);
-      info = s.Groups(idx);
-      isdset = false;
-    endif
+    name = varnames{ii};
 
-    if (isdset)
-      dset = H5D.open (obj_id, varname, "H5P_DEFAULT");
+    obj = H5O.open (obj_id, name, "H5P_DEFAULT");
+    unwind_protect
+      if (! as_dset)
+        rdata.(name) = get_object_data (obj);
+      else
+        rdata.(name) = read_dataset (obj);
+      endif
 
-      try
-        cls = var_class (dset);
-        h5cls = info.Datatype.Class;
-        rdata.(varname) = read_dataset (dset, h5cls, info);
-      catch
-        H5D.close (dset);
-      end_try_catch
-    else
-      group = H5G.open (obj_id, varname, "H5P_DEFAULT");
-
-      try
-        cls = var_class (group);
-        tmp = [];
-        rdata.(varname) = reinterpret (tmp, group, cls, info);
-
-      catch
-        H5G.close (group);
-      end_try_catch
-    endif
+    unwind_protect_cleanup
+      H5O.close (obj);
+    end_unwind_protect
 
   endfor
 
 endfunction
 
-function val = read_dataset (dset, h5cls, info)
+function vars = get_named_variables (obj_id)
+  [status, ii, vars] = H5L.iterate_by_name (obj_id, "/", "H5_INDEX_NAME", ...
+                                            "H5_ITER_NATIVE", 0, @var_func, ...
+                                            {}, "H5P_DEFAULT");
+endfunction
 
-  tmp = H5D.read (dset, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
-                        "H5P_DEFAULT");
+function [status, data_out] = var_func (obj_id, name, data_in)
+  obj = H5O.open (obj_id, name, "H5P_DEFAULT");
+  cls = var_class (obj);
 
-  if (strcmp (h5cls, "H5T_REFERENCE"))
-    refs = tmp;
+  data_out = data_in;
+
+  if (! isempty (cls))
+    data_out = [data_out name];
+  endif
+
+  H5O.close (obj);
+
+  status = 0;
+endfunction
+
+function val = read_dataset (obj_id)
+
+  type_id = H5D.get_type (obj_id);
+  dtype = H5LT.dtype_to_struct (type_id);
+  H5T.close (type_id);
+
+  val = H5D.read(obj_id, "H5ML_DEFAULT", "H5S_ALL", ...
+                 "H5S_ALL", "H5P_DEFAULT");
+
+  if (strcmp (dtype.Class, "H5T_REFERENCE"))
+    refs = val;
     tmp = {};
     for jj = 1:numel (refs)
-      ref = refs(jj);
 
-      ## FIXME: that won't work if the referenced object is a group
-      dset_ref = H5R.dereference (dset, "H5R_OBJECT", refs(jj));
+      obj_id = H5R.dereference (obj_id, "H5R_OBJECT", refs(jj));
 
       try
-        tmp2 =  H5D.read(dset_ref, "H5ML_DEFAULT", "H5S_ALL", ...
-                         "H5S_ALL", "H5P_DEFAULT");
-        cls = var_class (dset_ref);
-
-        tmp = [tmp, reinterpret(tmp2, dset_ref, cls, info)];
+        tmp = [tmp, get_object_data(obj_id)];
       catch ee
-        H5D.close (dset_ref);
+        H5O.close (obj_id);
         rethrow (ee)
       end_try_catch
 
     endfor
 
     val = reshape (tmp, size (refs));
-  else
-    cls = var_class (dset);
-    val = reinterpret(tmp, dset, cls, info);
   endif
 endfunction
 
-function vars = get_available_vars (s)
-  vars = {};
-  dsets = s.Datasets;
-  groups = s.Groups;
+function tf = is_sparse (id)
 
-  for ii = 1:numel (dsets)
-    if (! isempty (dsets(ii).Attributes)
-        && any (strcmp ({dsets(ii).Attributes.Name}, "MATLAB_class")))
-      vars = [vars dsets(ii).Name];
-    endif
-  endfor
+  tf = false;
 
-  for ii = 1:numel (groups)
-    if (! isempty (groups(ii).Attributes)
-        && any (strcmp ({groups(ii).Attributes.Name}, "MATLAB_class")))
-      vars = [vars groups(ii).Name];
-    endif
-  endfor
+  try
+    attr_id = H5A.open (id, "MATLAB_sparse", "H5P_DEFAULT");
+    tf = true;
+    H5A.close (attr_id)
+  catch
+  end_try_catch
+
+endfunction
+
+function tf = is_empty (id)
+
+  tf = false;
+
+  try
+    attr_id = H5A.open (id, "MATLAB_empty", "H5P_DEFAULT");
+    tf = true;
+    H5A.close (attr_id)
+  catch
+  end_try_catch
+
 endfunction
 
 function cls = var_class (id)
@@ -182,21 +215,33 @@ function cls = var_class (id)
 
 endfunction
 
-function val = reinterpret (val, obj_id, cls, info = [])
+function val = get_object_data (obj_id)
 
-  empty = (isfield (info.Attributes, "Name")
-           && any (strcmp ({info.Attributes.Name}, "MATLAB_empty")));
+  empty = is_empty (obj_id);
+
+  cls = var_class (obj_id);
 
   switch cls
-    case {"cell", ...
-          "int8", "int16", "int32", "int64",...
+    case {"int8", "int16", "int32", "int64",...
           "uint8", "uint16", "uint32", "uint64"}
+
+      val = read_dataset (obj_id);
 
       if (empty)
         val = zeros (val, cls);
       endif
 
     case {"double", "single"}
+
+      if (! is_sparse (obj_id))
+        val = read_dataset (obj_id);
+      else
+        warning ("read_dataset: unhandled sparse variable");
+        val = [];
+      endif
+
+
+      ## complex
       if (isstruct (val) && all (isfield (val, {"real", "imag"})))
         val = complex (val.real, val.imag);
       endif
@@ -206,6 +251,9 @@ function val = reinterpret (val, obj_id, cls, info = [])
       endif
 
     case "char"
+
+      val = read_dataset (obj_id);
+
       val = char (val);
 
       if (empty)
@@ -214,6 +262,8 @@ function val = reinterpret (val, obj_id, cls, info = [])
 
     case "logical"
 
+      val = read_dataset (obj_id);
+
       if (empty)
         val = zeros (val, cls);
       else
@@ -221,19 +271,25 @@ function val = reinterpret (val, obj_id, cls, info = [])
       endif
 
     case "struct"
-      if (empty)
-        val = struct ();
-      else
+
+      val = struct ();
+
+      if (! empty)
+
         attr_id = H5A.open (obj_id, "MATLAB_fields", "H5P_DEFAULT");
         fields = H5A.read (attr_id);
         H5A.close (attr_id)
 
-        tmp = read_vars (obj_id, fields, info);
+        try
+          obj = H5O.open (obj_id, fields{1}, "H5P_DEFAULT");
+          cls = var_class (obj);
+        catch
+        end_try_catch
 
-        ## FIXME: how do we differenciate structs and struct-arrays
-        allcell = all (cellfun (@(nm) iscell (tmp.(nm)), fields));
+        if (isempty (cls))
+          ## Struct arrays store data in datasets with no named class
+          tmp = read_vars (obj_id, fields, true);
 
-        if (allcell)
           args = {};
           for ii = 1:numel (fields)
             args{end+1} = fields{ii};
@@ -245,13 +301,19 @@ function val = reinterpret (val, obj_id, cls, info = [])
           catch
             val = tmp;
           end_try_catch
+        else
+          val = read_vars (obj_id, fields);
         endif
       endif
+    case "cell"
+
+      val = read_dataset (obj_id);
 
     otherwise
       warning ("read_mat73: unhandled class %s, returning data asis", ...
                cls)
   endswitch
+
 endfunction
 
 %!test
@@ -471,11 +533,11 @@ endfunction
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cell_str');
 %! assert (v7.cell_str, v73.cell_str)
 
-## Scalar structs are still unhandled, marking xtest
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'scalar_struct');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'scalar_struct');
-%! assert (v7.scalar_struct, v73.scalar_struct)
+%! assert (v7.scalar_struct.field1, v73.scalar_struct.field1)
+%! assert (v7.scalar_struct.field2.field1, v73.scalar_struct.field2.field1)
 
 %!test
 %! v7 = load ('base_types_mat7.mat', 'struct_array');

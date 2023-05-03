@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "h5_oct_util.h"
+#include <octave/builtin-defun-decls.h>
 
 dim_vector
 get_dim_vector (hid_t space_id)
@@ -133,15 +134,11 @@ iter_handler (hid_t group_id, const char* name, const H5L_info_t* /*info*/,
                               ucdp->data),
                          2);
 
-      int nargout = result.length ();
-
-      if (nargout != 2)
-        error ("H5L.iterate: expect FCN to return exactly 2 arguments (%d returned", nargout);
+      // octave::Fdisp (ovl (std::string ("Changing value to ")));
+      // octave::Fdisp (result(1));
 
       status = static_cast<herr_t> (result(0).int_value ());
 
-      // Fdisp (ovl (std::string ("Changing value to ")));
-      // Fdisp (result(1));
       ucdp->data = result(1);
     }
   catch (const octave::execution_exception& ee)
@@ -164,8 +161,6 @@ A_iter_handler (hid_t group_id, const char* name, const H5A_info_t* /*info*/,
   // Evaluate user supplied function
   herr_t status = 0;
 
-  // Fdisp (ovl (std::string ("iter_handler receiving ")));
-  // Fdisp (ucdp->data);
   try
     {
       octave_value_list result
@@ -174,15 +169,10 @@ A_iter_handler (hid_t group_id, const char* name, const H5A_info_t* /*info*/,
                               ucdp->data),
                          2);
 
-      int nargout = result.length ();
-
-      if (nargout != 2)
-        error ("H5L.iterate: expect FCN to return exactly 2 arguments (%d returned", nargout);
-
+      // octave::Fdisp (ovl (std::string ("Changing value to ")));
+      // octave::Fdisp (result(0));
       status = static_cast<herr_t> (result(0).int_value ());
 
-      // Fdisp (ovl (std::string ("Changing value to ")));
-      // Fdisp (result(1));
       ucdp->data = result(1);
     }
   catch (const octave::execution_exception& ee)
