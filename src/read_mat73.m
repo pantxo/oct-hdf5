@@ -35,7 +35,7 @@ function rdata = read_mat73 (fname, varnames = "__all__")
 
   fname = file_in_loadpath (fname);
   if (isempty (fname) || ! exist (fname, "file"))
-    error ("read_mat73: FNAME must be an existing file name")
+    error ("read_mat73: FNAME must be a valid file name")
   endif
 
   ## Disable automatic display of hdf5 library errors
@@ -44,8 +44,7 @@ function rdata = read_mat73 (fname, varnames = "__all__")
   unwind_protect
     ## Open file
     try
-      file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
-      fcn = @() H5F.close (file);
+      file_id = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
 
     catch
       error ("read_mat73: unbale to open '%s'.", fname)
@@ -62,7 +61,7 @@ function rdata = read_mat73 (fname, varnames = "__all__")
     endif
 
     ## Read variables
-    rdata = read_vars (file, varnames);
+    rdata = read_vars (file_id, varnames);
 
     if (any (varnames))
       for ii = 1:numel (varnames)
@@ -74,9 +73,11 @@ function rdata = read_mat73 (fname, varnames = "__all__")
     endif
 
   unwind_protect_cleanup
-    H5F.close (file);
+    H5F.close (file_id);
+
     ## Restore previous error printing
     H5E.set_auto (true);
+
   end_unwind_protect
 endfunction
 
@@ -202,6 +203,16 @@ function cls = var_class (id)
 
 endfunction
 
+function ic = jc2ic (jc)
+  nc = numel (jc) - 1;
+  ic = zeros (jc(end),1);
+
+  for jj = 1:nc
+    ic((jc(jj)+1):(jc(jj+1))) = jj;
+  endfor
+
+endfunction
+
 function val = get_object_data (obj_id)
 
   empty = is_empty (obj_id);
@@ -222,19 +233,27 @@ function val = get_object_data (obj_id)
 
       if (! is_sparse (obj_id))
         val = read_dataset (obj_id);
+
+        ## complex
+        if (isstruct (val) && all (isfield (val, {"real", "imag"})))
+          val = complex (val.real, val.imag);
+        endif
+
+        if (empty)
+          val = zeros (val, cls);
+        endif
+
       else
-        warning ("read_dataset: unhandled sparse variable");
-        val = [];
-      endif
+        val = read_vars (obj_id, {"data", "ir", "jc"}, true);
 
+        ## complex
+        if (isstruct (val.data) && all (isfield (val.data, {"real", "imag"})))
+          val.data = complex (val.data.real, val.data.imag);
+        endif
 
-      ## complex
-      if (isstruct (val) && all (isfield (val, {"real", "imag"})))
-        val = complex (val.real, val.imag);
-      endif
+        ## Convert CSR format to row idx
+        val = sparse (val.ir + 1, jc2ic (val.jc), val.data);
 
-      if (empty)
-        val = zeros (val, cls);
       endif
 
     case "char"
@@ -492,8 +511,7 @@ endfunction
 %! v73 = read_mat73 ('base_types_mat73.mat', 'ndim_logical');
 %! assert (v7.ndim_logical, v73.ndim_logical)
 
-## Sparse matrices are still unhandled, marking xtest
-%!xtest
+%!test
 %! v7 = load ('base_types_mat7.mat', 'sparse_double');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'sparse_double');
 %! assert (v7.sparse_double, v73.sparse_double)
@@ -518,7 +536,6 @@ endfunction
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cplx_ndim_single');
 %! assert (v7.cplx_ndim_single, v73.cplx_ndim_single)
 
-## Cell arrays are still unhandled, marking xtest
 %!test
 %! v7 = load ('base_types_mat7.mat', 'cell_any');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'cell_any');
