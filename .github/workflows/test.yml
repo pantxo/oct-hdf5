@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Check Out the Repo
         uses: actions/checkout@v2
+        with:
+          submodules: 'true'
 
       - name: Build oct-hdf5
         run: make -j $(nproc)
