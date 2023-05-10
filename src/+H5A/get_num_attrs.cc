@@ -56,3 +56,15 @@ See original function at \
 
   return ovl (octave_int64 (attr_count));
 }
+
+
+/*
+%!test
+%! fail ("H5A.get_num_attrs ()", "Invalid call");
+
+%!test
+%! fail ("H5A.get_num_attrs ('toto')", "LOC_ID must be a scalar numeric identifier");
+
+%!test
+%! fail ("H5E.set_auto (false); H5A.get_num_attrs (1); H5E.set_auto (true)", "unable determine number of attributes");
+*/

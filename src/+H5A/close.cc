@@ -47,7 +47,7 @@ See original function at \
   if (nargin != 1)
     print_usage ("H5A.close");
 
-  // Space ID
+  // Attribute ID
   hid_t attr_id = get_h5_id (args, 0, "ATTR_ID", "H5A.close", false);
 
   if (H5Aclose (attr_id) < 0)
@@ -55,3 +55,11 @@ See original function at \
 
   return retval;
 }
+
+/*
+%!test
+%! fail ("H5A.close ()", "Invalid call");
+
+%!test
+%! fail ("H5E.set_auto (false); H5A.close (123456789); H5E.set_auto (true)", "unable to close attribute");
+*/

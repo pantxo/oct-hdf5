@@ -144,3 +144,11 @@ See original function at \
 
   return retval;
 }
+
+/*
+%!test
+%! fail ("H5A.iterate ()", "Invalid call");
+
+%!test
+%! fail ("H5A.iterate (123456789, 1, 1, 1, 1, 1)", "FCN must be a function handle")
+*/

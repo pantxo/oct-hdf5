@@ -50,10 +50,10 @@ See original function at \
 
   int nargin = args.length ();
 
-  if (nargin < 4 && nargin > 6)
+  if (nargin < 4 || nargin > 6)
     print_usage ("H5A.create");
 
-  hid_t loc_id = get_h5_id (args, 0, "LOC_ID", "H5A.create");
+  hid_t loc_id = get_h5_id (args, 0, "LOC_ID", "H5A.create", false);
 
   std::string attr_name
     = args(1).xstring_value ("H5A.create: ATTR_NAME must be a string");
@@ -76,5 +76,20 @@ See original function at \
   if (attribute_id < 0)
     error ("H5A.create: unable to create attribute");
 
-  return ovl (octave_int64 (attribute_id));
+  return ovl (octave_int64 (1));
 }
+
+
+/*
+%!test
+%! fail ("H5A.create ()", "Invalid call");
+
+%!test
+%! fail ("H5A.create (123456789, 1, 1, 1, 1)", "ATTR_NAME must be a string");
+
+%!test
+%! fail ("H5E.set_auto (false); H5A.create (123456789, 'att', 1, 1, 1); H5E.set_auto (true)", "unable to create attribute");
+
+%!test
+%! fail ("H5A.create (123456789, 'att', 'blob', 1, 1)", "unknown TYPE_ID 'blob'");
+*/

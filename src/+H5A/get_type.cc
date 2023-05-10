@@ -56,7 +56,19 @@ See original function at \
   hid_t type_id = H5Aget_type (attr_id);
 
   if (type_id < 0)
-    error ("H5A.get_type: unable retrieve data type");
+    error ("H5A.get_type: unable to retrieve data type");
 
   return retval.append (octave_int64 (type_id));
 }
+
+
+/*
+%!test
+%! fail ("H5A.get_type ()", "Invalid call");
+
+%!test
+%! fail ("H5A.get_type ('toto')", "ATTR_ID must be a scalar numeric identifier");
+
+%!test
+%! fail ("H5E.set_auto (false); H5A.get_type (1); H5E.set_auto (true)", "unable to retrieve data type");
+*/

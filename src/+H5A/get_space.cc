@@ -38,7 +38,7 @@ Retrieve a copy of the dataspace for an attribute @var{attr_id}.\n\
 The dataspace identifier returned from this function must be \
 released with H5S.close or resource leaks will develop.\n\
 See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_GET_NUM_ATTRS}.\n\
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_GET_SPACE}.\n\
 \n\
 @seealso{H5S.close}\n\
 @end deftypefn")
@@ -56,7 +56,19 @@ See original function at \
   hid_t space_id = H5Aget_space (attr_id);
 
   if (space_id < 0)
-    error ("H5A.get_space: unable retrieve data space");
+    error ("H5A.get_space: unable to retrieve data space");
 
   return retval.append (octave_int64 (space_id));
 }
+
+
+/*
+%!test
+%! fail ("H5A.get_space ()", "Invalid call");
+
+%!test
+%! fail ("H5A.get_space ('toto')", "ATTR_ID must be a scalar numeric identifier");
+
+%!test
+%! fail ("H5E.set_auto (false); H5A.get_space (1); H5E.set_auto (true)", "unable to retrieve data space");
+*/

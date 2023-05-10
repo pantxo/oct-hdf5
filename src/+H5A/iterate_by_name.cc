@@ -158,3 +158,15 @@ See original function at \
 
   return retval;
 }
+
+
+/*
+%!test
+%! fail ("H5A.iterate_by_name ()", "Invalid call");
+
+%!test
+%! fail ("H5A.iterate_by_name (123456789, 1, 1, 1, 1, 1, 1, 1)", "NAME must be a string")
+
+%!test
+%! fail ("H5A.iterate_by_name (123456789, 'toto', 1, 1, 1, 1, 1, 1)", "FCN must be a function handle")
+*/
