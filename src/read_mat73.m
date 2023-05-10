@@ -556,3 +556,199 @@ endfunction
 %! v7 = load ('base_types_mat7.mat', 'struct_array');
 %! v73 = read_mat73 ('base_types_mat73.mat', 'struct_array');
 %! assert (v7.struct_array, v73.struct_array)
+
+%% Test hability to read matio test file
+%!test
+%! matio_test_cases ('var1');
+
+%!test
+%! matio_test_cases ('var2');
+
+%!test
+%! matio_test_cases ('var3');
+
+%!test
+%! matio_test_cases ('var4');
+
+%!test
+%! matio_test_cases ('var5');
+
+%!test
+%! matio_test_cases ('var6');
+
+%!test
+%! matio_test_cases ('var7');
+
+%!test
+%! matio_test_cases ('var8');
+
+%!test
+%! matio_test_cases ('var9');
+
+%!test
+%! matio_test_cases ('var10');
+
+%!test
+%! matio_test_cases ('var11');
+
+%!test
+%! matio_test_cases ('var12');
+
+%!test
+%! matio_test_cases ('var21');
+
+%!test
+%! matio_test_cases ('var22');
+
+%!test
+%! matio_test_cases ('var23');
+
+%!test
+%! matio_test_cases ('var24');
+
+%!test
+%! matio_test_cases ('var25');
+
+%!xtest
+%! matio_test_cases ('var26');
+
+%!xtest
+%! matio_test_cases ('var27');
+
+%!test
+%! matio_test_cases ('var28');
+
+%!test
+%! matio_test_cases ('var29');
+
+%!test
+%! matio_test_cases ('var30');
+
+%!test
+%! matio_test_cases ('var31');
+
+%!test
+%! matio_test_cases ('var32');
+
+%!test
+%! matio_test_cases ('var33');
+
+%!test
+%! matio_test_cases ('var34');
+
+%!test
+%! matio_test_cases ('var35');
+
+%!test
+%! matio_test_cases ('var36');
+
+%!test
+%! matio_test_cases ('var37');
+
+%!test
+%! matio_test_cases ('var38');
+
+%!test
+%! matio_test_cases ('var39');
+
+%!test
+%! matio_test_cases ('var48');
+
+%!test
+%! matio_test_cases ('var49');
+
+%!test
+%! matio_test_cases ('var50');
+
+%!test
+%! matio_test_cases ('var51');
+
+%!test
+%! matio_test_cases ('var52');
+
+%!test
+%! matio_test_cases ('var53');
+
+%!test
+%! matio_test_cases ('var54');
+
+%!test
+%! matio_test_cases ('var55');
+
+%!test
+%! matio_test_cases ('var56');
+
+%!test
+%! matio_test_cases ('var57');
+
+%!test
+%! matio_test_cases ('var58');
+
+%!test
+%! matio_test_cases ('var59');
+
+%!test
+%! matio_test_cases ('var60');
+
+%!test
+%! matio_test_cases ('var61');
+
+%!test
+%! matio_test_cases ('var62');
+
+%!test
+%! matio_test_cases ('var63');
+
+%!test
+%! matio_test_cases ('var64');
+
+%!test
+%! matio_test_cases ('var65');
+
+%!xtest
+%! matio_test_cases ('var66');
+
+%!test
+%! matio_test_cases ('var69');
+
+%!test
+%! matio_test_cases ('var70');
+
+%!test
+%! matio_test_cases ('var71');
+
+%!test
+%! matio_test_cases ('var72');
+
+%!test
+%! matio_test_cases ('var73');
+
+%!test
+%! matio_test_cases ('var74');
+
+%!test
+%! matio_test_cases ('var75');
+
+%!test
+%! matio_test_cases ('var76');
+
+%!test
+%! matio_test_cases ('var77');
+
+%!test
+%! matio_test_cases ('var80');
+
+%!test
+%! matio_test_cases ('var81');
+
+%!test
+%! matio_test_cases ('var90');
+
+%!test
+%! matio_test_cases ('var91');
+
+%!test
+%! matio_test_cases ('var92');
+
+%!test
+%! matio_test_cases ('var93');
