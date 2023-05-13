@@ -9,3 +9,6 @@ INDEX
 
 ## Ignore generated log file
 fntests.log
+
+## Ignore tarball
+oct-hdf5.tar.gz

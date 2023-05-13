@@ -27,10 +27,14 @@ all:
 index: all
 	$(OCTAVE) -f --eval "cd private; make_index ('$(PWD)')"
 
-check: all index
+dist: index 
+	$(OCTAVE) -f --eval "cd private; make_dist ('$(PWD)', '$(PWD)/..')"
+
+check: all
 	@$(OCTAVE) -f --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../inst --path $(PWD)/../src --eval "__oct_hdf5_tests__ ('$(PWD)')"
 
 clean:
 	rm -f ../inst/+H5*/*.oct
 	rm -f ./util/*.o
 	rm -f ./+H5*/*.o
+	rm -f ../INDEX

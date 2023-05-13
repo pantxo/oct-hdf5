@@ -1,6 +1,9 @@
 all:
 	$(MAKE) -s -C src
 
+dist:
+	$(MAKE) -s -C src dist
+
 index:
 	$(MAKE) -s -C src index
 
