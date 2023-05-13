@@ -14,8 +14,8 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*-
-## @deftypefn {} {@var{retval} =} make_index (@var{input1}, @var{input2})
-##
+## @deftypefn {} {} make_index (@var{basedir})
+## Write package index.
 ## @seealso{}
 ## @end deftypefn
 
