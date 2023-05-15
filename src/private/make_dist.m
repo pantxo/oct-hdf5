@@ -25,6 +25,10 @@ function make_dist (srcdir, targetdir)
   testdir = fullfile (srcdir, "..", "inst", "testdir");
   if (! exist (testdir, "dir"))
     mkdir (testdir);
+  else
+    warning ("off", "Octave:delete:no-such-file", "local")
+    ## Delete previously present files
+    delete (fullfile (testdir, "*"))
   endif
 
   copyfile (fullfile (srcdir, "..", "test", "data", "*.mat"), testdir);
