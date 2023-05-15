@@ -558,55 +558,55 @@ endfunction
 %! assert (v7.struct_array, v73.struct_array)
 
 %% Test hability to read matio test file
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var1');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var2');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var3');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var4');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var5');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var6');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var7');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var8');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var9');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var10');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var11');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var12');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var21');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var22');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var23');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var24');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var25');
 
 %!xtest
@@ -615,140 +615,140 @@ endfunction
 %!xtest
 %! matio_test_cases ('var27');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var28');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var29');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var30');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var31');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var32');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var33');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var34');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var35');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var36');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var37');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var38');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var39');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var48');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var49');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var50');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var51');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var52');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var53');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var54');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var55');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var56');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var57');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var58');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var59');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var60');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var61');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var62');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var63');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var64');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var65');
 
 %!xtest
 %! matio_test_cases ('var66');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var69');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var70');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var71');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var72');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var73');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var74');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var75');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var76');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var77');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var80');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var81');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var90');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var91');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var92');
 
-%!test
+%!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var93');
