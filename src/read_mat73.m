@@ -260,7 +260,28 @@ function val = get_object_data (obj_id)
 
       val = read_dataset (obj_id);
 
-      val = char (val);
+      if (strcmp (class (val), "uint8"))
+        ## ASCII
+        val = char (val);
+      else
+        ## UTF-16
+        type_id = H5D.get_type (obj_id);
+        order = H5T.get_order (type_id);
+        is_le = order == H5ML.get_constant_value ("H5T_ORDER_LE");
+        H5T.close (type_id);
+        tmpval = '';
+        for ii = 1:rows (val)
+          if (is_le)
+            tmp = native2unicode(typecast (val(ii,:), "uint8"), ...
+                                 "utf-16le");
+          else
+            tmp = native2unicode(typecast (val(ii,:), "uint8"), ...
+                                 "utf-16be");
+          endif
+          tmpval = [tmpval; tmp];
+        endfor
+        val = tmpval;
+      endif
 
       if (empty)
         val = '';
