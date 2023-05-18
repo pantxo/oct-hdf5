@@ -127,3 +127,15 @@ See original function at \
 
   return retval;
 }
+
+
+/*
+%!test
+%! fail ("H5D.read ()", "Invalid call");
+
+%!test
+%! fail ("H5D.read (1, 2, 3)", "Invalid call");
+
+%!test
+%! fail ("H5D.read (1, 2, 3, 4, 5, 6)", "Invalid call");
+*/

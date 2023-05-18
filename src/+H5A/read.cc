@@ -79,3 +79,15 @@ See original function at \
 
   return retval;
 }
+
+
+/*
+%!test
+%! fail ("H5A.read ()", "Invalid call");
+
+%!test
+%! fail ("H5A.read (1, 2, 3)", "Invalid call");
+
+%!test
+%! fail ("H5E.set_auto (false); data = H5A.read (123456789, 'toto'); H5E.set_auto (true)", "unknown MEM_TYPE_ID 'toto'");
+*/
