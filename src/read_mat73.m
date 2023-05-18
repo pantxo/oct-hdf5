@@ -578,6 +578,22 @@ endfunction
 %! v73 = read_mat73 ('base_types_mat73.mat', 'struct_array');
 %! assert (v7.struct_array, v73.struct_array)
 
+%!test
+%! v73 = read_mat73 ('non_ascii_char_mat73.mat');
+%! assert (v73.str_ch, '我喜欢你')
+
+%!test
+%! v73 = read_mat73 ('non_ascii_char_mat73.mat');
+%! assert (v73.str_hi, 'त्वयि स्निह्यामि')
+
+%!test
+%! v73 = read_mat73 ('non_ascii_char_mat73.mat');
+%! assert (v73.str_ar, 'أحبك')
+
+%!test
+%! v73 = read_mat73 ('non_ascii_char_mat73.mat');
+%! assert (v73.str_68047, '𐧏')
+
 %% Test hability to read matio test file
 %!testif ; exist (file_in_loadpath ("matio_test_cases_uncompressed_hdf_le.mat"), "file")
 %! matio_test_cases ('var1');
