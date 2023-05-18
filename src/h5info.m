@@ -14,9 +14,56 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*-
-## @deftypefn {} {@var{s} =} h5info (@var{fname}, @var{path})
+## @deftypefn {} {@var{s} =} h5info (@var{fname})
+## @deftypefnx {} {@var{s} =} h5info (@var{fname}, @var{loc})
+## Return hdf5 file content description as a structure.
 ##
-## @seealso{}
+## If a second optionnal argument @var{loc} is present,
+## it must specify the location of an existing dataset or group in the form
+## a UNIX-like absolute path strarting from the root group,
+## e.g. @qcode{"/GroupA/DS1"}.
+## 
+## The output structure contains fields depending of the described contents.
+##
+## For groups the fields are
+##  @multitable @columnfractions 0.33 0.02 0.65
+##  @item @code{Name} @tab @tab Name of the group
+##  @item @code{Groups} @tab @tab Child groups struct array
+##  @item @code{Datasets} @tab @tab Child datasets struct array
+##  @item @code{Datatype} @tab @tab Datatype struct info (see below)
+##  @item @code{Attributes} @tab @tab Attributes of the group
+##  @item @code{Links} @tab @tab Links to this group
+##  @end multitable
+##
+## For datasets the fields are
+##  @multitable @columnfractions 0.33 0.02 0.65
+##  @item @code{Name} @tab @tab Name of the dataset
+##  @item @code{Datatype} @tab @tab Datatype struct info (see below)
+##  @item @code{Dataspace} @tab @tab Dataset size
+##  @item @code{ChunkSize} @tab @tab Data Chunk size if applicable
+##  @item @code{FillValue} @tab @tab Fill value for uninitialized data
+##  @item @code{Filters} @tab @tab Unimplemented
+##  @item @code{Attributes} @tab @tab Attributes of the dataset
+##  @end multitable
+##
+## For attributes the fields are
+##  @multitable @columnfractions 0.33 0.02 0.65
+##  @item @code{Name} @tab @tab Name of the attribute
+##  @item @code{Datatype} @tab @tab Datatype struct info (see below)
+##  @item @code{Dataspace} @tab @tab Attribute size
+##  @item @code{Value} @tab @tab Value of the attribute
+##  @end multitable
+##
+## For datatype info the fields are
+##  @multitable @columnfractions 0.33 0.02 0.65
+##  @item @code{Name} @tab @tab Name of the type
+##  @item @code{Size} @tab @tab Size of the tyep in bytes
+##  @item @code{Class} @tab @tab Base HDF5 class of this type
+##  @item @code{Tytpe} @tab @tab HDF5 type string if the type is atomic or
+##     struct describing derived type. 
+##  @end multitable
+##
+## @seealso{h5readatt}
 ## @end deftypefn
 
 ## Author: Pantxo Diribarne <pantxo@dibona>
