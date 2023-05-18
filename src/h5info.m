@@ -22,7 +22,7 @@
 ## it must specify the location of an existing dataset or group in the form
 ## a UNIX-like absolute path strarting from the root group,
 ## e.g. @qcode{"/GroupA/DS1"}.
-## 
+##
 ## The output structure contains fields depending of the described contents.
 ##
 ## For groups the fields are
@@ -60,14 +60,11 @@
 ##  @item @code{Size} @tab @tab Size of the tyep in bytes
 ##  @item @code{Class} @tab @tab Base HDF5 class of this type
 ##  @item @code{Tytpe} @tab @tab HDF5 type string if the type is atomic or
-##     struct describing derived type. 
+##     struct describing derived type.
 ##  @end multitable
 ##
 ## @seealso{h5readatt}
 ## @end deftypefn
-
-## Author: Pantxo Diribarne <pantxo@dibona>
-## Created: 2021-05-09
 
 function s = h5info (fname, obj_name = "/")
 
@@ -207,6 +204,12 @@ function [status, od_out] = attr_op_func (loc_id, name, od_in)
   endswitch
 
   H5S.close (space_id);
+
+  try
+    as.Value = H5A.read (attr_id);
+  catch
+  end_try_catch
+
   H5A.close (attr_id);
 
   if (isempty (od_in))
