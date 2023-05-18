@@ -68,6 +68,12 @@
 
 function s = h5info (fname, obj_name = "/")
 
+  if (! exist ("fname", "var"))
+    print_usage ()
+  elseif (! exist (fname, "file"))
+    error ("h5info: FNAME must be an existing file name")
+  endif
+
   unwind_protect
     H5E.set_auto (false);
     file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
@@ -331,3 +337,17 @@ function [status, od_out] = op_func (loc_id, name, od_in)
 
   od_out = od_in;
 endfunction
+
+%!test
+% assert (fail ("h5info ()", "Invalid call"))
+
+%!test
+% fail ("h5info ('__some_non_existing_file__')", "FNAME must be an existing file name")
+
+%!test
+% fname = tempname ();
+% fid = fopen (fname, "w+");
+% fprintf (fid, "%s", "this is not an hdf5 file\n");
+% fclose (fid);
+% fail ("s = h5info (fname)", "unable to open file")
+
