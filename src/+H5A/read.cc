@@ -29,14 +29,24 @@ DEFUN_DLD(read, args, nargout,
 @deftypefnx {} {@var{data} = } H5A.read (@var{attr_id}, @var{mem_type_id})\n\
 Read an attribute specified with @var{attr_id}.\n\
 \n\
-The attribute's memory datatype is specified with @var{mem_type_id}.\n\
+Import data from dataset.\n\
 \n\
-The entire attribute is read and returned in @var{data}.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{attr_id} @tab @tab Location or attribute identifier\n\
+ @item @var{mem_type_id} @tab @tab Target datatype (use @code{H5ML_DEFAULT} \
+for automatic conversion)\n\
+ @end multitable\n\
 \n\
-Datatype conversion takes place at the time of a read or write and is\n\
-automatic.\n\
+@strong{Description:}\n\
 \n\
-@seealso{}\n\
+Only data with atomic HDF5 data types are handled. See @code{help H5D.read} \
+for details about automatic data type conversion.\n\
+\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5A_READ}.\n\
+\n\
+@seealso{H5D.read}\n\
 @end deftypefn")
 {
   octave_value_list retval;

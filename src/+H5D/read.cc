@@ -27,7 +27,50 @@ DEFUN_DLD(read, args, nargout,
           "-*- texinfo -*-\n\
 @deftypefn {} {@var{data} = } H5D.read (@var{dataset_id})\n\
 @deftypefnx {} {@var{data} = } H5D.read (@var{dataset_id}, @var{mem_type_id}, @var{mem_space_id}, @var{file_space_id}, @var{xfer_plist_id})\n\
-@seealso{}\n\
+Import data from dataset.\n\
+\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{dataset_id} @tab @tab Location or dataset identifier\n\
+ @item @var{mem_type_id} @tab @tab Target datatype (use @code{H5ML_DEFAULT} \
+for automatic conversion)\n\
+ @item @var{mem_space_id} @tab @tab Imported data dataspace identifier or \
+@code{H5S_ALL}\n\
+ @item @var{file_space_id} @tab @tab Original data dataspace identifier or \
+@code{H5S_ALL}\n\
+ @item @var{xfer_plist_id} @tab @tab Transfer property list identifier or \
+@code{H5P_DEFAULT}\n\
+ @end multitable\n\
+\n\
+@strong{Description:}\n\
+\n\
+Only data with atomic HDF5 data types are handled. Unless @var{mem_type_id} \
+is specified or different from 'H5ML_DEFAULT', automatic conversion to \
+Octave representation is as follows:\n\
+@table @asis\n\
+@item H5T_INTEGER\n\
+Corresponding integer type, e.g. H5T_STD_I8BE in file is converted \
+to H5T_NATIVE_INT8 in memory and returned as a @code{int8} class array.\n\
+@item H5T_FLOAT\n\
+Corresponding floating point type, e.g. H5T_IEEE_F32LE in file is converted \
+to H5T_NATIVE_FLOAT in memory and returned as a @code{single} class array.\n\
+@item H5T_STRING\n\
+Returned as a char array.\n\
+@item H5T_REFERENCE\n\
+Returned as a @code{int64} class array containing the reference \
+identifier(s).\n\
+See @code{H5T.dereference} for how to retrieve the actual object identifier.\n\
+@item H5T_COMPOUND\n\
+Returned as a struct with fields corresponding to field names in the compound \
+data type.\n\
+@item H5T_VLEN\n\
+Only H5T_STRING base types are handled. Returned as a char array.\n\
+@end table\n\
+\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5D_READ}.\n\
+\n\
+@seealso{H5D.open,H5A.read,H5T.dereference}\n\
 @end deftypefn")
 {
   octave_value_list retval;
