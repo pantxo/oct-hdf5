@@ -31,7 +31,7 @@ dist: index
 	$(OCTAVE) -f --eval "cd private; make_dist ('$(PWD)', '$(PWD)/..')"
 
 check: all
-	$(OCTAVE) -f --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../inst --path $(PWD)/../src --eval "__oct_hdf5_tests__ ('$(PWD)')"
+	$(OCTAVE) -f --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval "__oct_hdf5_tests__ ('$(PWD)')"
 
 clean:
 	rm -f ../inst/+H5*/*.oct

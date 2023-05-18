@@ -138,4 +138,34 @@ See original function at \
 
 %!test
 %! fail ("H5D.read (1, 2, 3, 4, 5, 6)", "Invalid call");
+
+%!test
+%! h5ex_d_rdwr ('int8')
+
+%!test
+%! h5ex_d_rdwr ('int16')
+
+%!test
+%! h5ex_d_rdwr ('int32')
+
+%!test
+%! h5ex_d_rdwr ('int64')
+
+%!test
+%! h5ex_d_rdwr ('uint8')
+
+%!test
+%! h5ex_d_rdwr ('uint16')
+
+%!test
+%! h5ex_d_rdwr ('uint32')
+
+%!test
+%! h5ex_d_rdwr ('uint64')
+
+%!test
+%! h5ex_d_rdwr ('single')
+
+%!test
+%! h5ex_d_rdwr ('double')
 */
