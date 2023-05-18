@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 DEFUN_DLD(set_size, args, nargout,
           "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_size (@var{type_id}, @var{size})\n\
-@var{size} is the size in bytes of the type or @qstring{\"H5T_VARIABLE\"}.\n\
+@var{size} is the size in bytes of the type or @qcode{\"H5T_VARIABLE\"}.\n\
 @seealso{}\n\
 @end deftypefn")
 {

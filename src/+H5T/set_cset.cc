@@ -25,8 +25,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 DEFUN_DLD(set_cset, args, nargout,
           "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_cset (@var{type_id}, @var{charset})\n\
-@var{charset} must be @qstring{\"H5T_CSET_ASCII\"} \
-or @qstring{\"H5T_CSET_UTF8\"}.\n\
+@var{charset} must be @qcode{\"H5T_CSET_ASCII\"} \
+or @qcode{\"H5T_CSET_UTF8\"}.\n\
 @seealso{}\n\
 @end deftypefn")
 {
