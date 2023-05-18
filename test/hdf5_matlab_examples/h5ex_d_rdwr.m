@@ -23,11 +23,16 @@ function h5ex_d_rdwr (dtype)
   types = {'int8', 'int16', 'int32', 'int64', ...
            'uint8', 'uint16', 'uint32', 'uint64', ...
            'single', 'double'};
-  h5types = {'H5T_STD_I8LE', 'H5T_STD_I16LE', ...
-             'H5T_STD_I32LE', 'H5T_STD_I64LE', ...
-             'H5T_STD_U8LE', 'H5T_STD_U16LE', ...
-             'H5T_STD_U32LE', 'H5T_STD_U64LE', ...
-             'H5T_NATIVE_FLOAT', 'H5T_NATIVE_DOUBLE'};
+  h5memtypes = {'H5T_NATIVE_INT8', 'H5T_NATIVE_INT16', ...
+                'H5T_NATIVE_INT32', 'H5T_NATIVE_INT64', ...
+                'H5T_NATIVE_UINT8', 'H5T_NATIVE_UINT16', ...
+                'H5T_NATIVE_UINT32', 'H5T_NATIVE_UINT64', ...
+                'H5T_NATIVE_FLOAT', 'H5T_NATIVE_DOUBLE'};
+  h5filetypes = {'H5T_STD_I8LE', 'H5T_STD_I16BE', ...
+                'H5T_MIPS_I32', 'H5T_ALPHA_I64', ...
+                'H5T_MIPS_U8', 'H5T_ALPHA_U16', ...
+                'H5T_STD_U32BE', 'H5T_STD_U64LE', ...
+                'H5T_ALPHA_F32', 'H5T_INTEL_F64'};
 
   t = strcmp (dtype, types);
   %%
@@ -57,12 +62,12 @@ function h5ex_d_rdwr (dtype)
   %% Create the dataset.  We will use all default properties for this
   %% example.
   %%
-  dset = H5D.create (file, DATASET,h5types{t},space,'H5P_DEFAULT');
+  dset = H5D.create (file, DATASET,h5filetypes{t},space,'H5P_DEFAULT');
 
   %%
   %% Write the data to the dataset.
   %%
-  H5D.write (dset,h5types{t},'H5S_ALL','H5S_ALL','H5P_DEFAULT', wdata);
+  H5D.write (dset,h5memtypes{t},'H5S_ALL','H5S_ALL','H5P_DEFAULT', wdata);
 
   %%
   %% Close and release resources.
@@ -72,7 +77,7 @@ function h5ex_d_rdwr (dtype)
   H5F.close(file);
 
   %%
-%%%% Now we begin the read section of this example.
+  %% Now we begin the read section of this example.
   %%
 
   %%
@@ -84,7 +89,7 @@ function h5ex_d_rdwr (dtype)
   %%
   %% Read the data using the default properties.
   %%
-  rdata = H5D.read (dset,h5types{t},'H5S_ALL','H5S_ALL','H5P_DEFAULT');
+  rdata = H5D.read (dset,h5memtypes{t},'H5S_ALL','H5S_ALL','H5P_DEFAULT');
 
   %%
   %% Close and release resources.
