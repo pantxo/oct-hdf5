@@ -76,8 +76,11 @@ function s = h5info (fname, obj_name = "/")
 
   unwind_protect
     H5E.set_auto (false);
-    file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
-
+    try
+      file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
+    catch ee
+      rethrow_h5error (ee)
+    end_try_catch
 
     ## Begin iteration.
     ## Get object info for the root group
@@ -97,16 +100,18 @@ function s = h5info (fname, obj_name = "/")
       H5F.close (file);
     endif
 
-    ## Walk the error stack to print the last error from hdf5
-    H5E.walk ("H5E_WALK_UPWARD", @error_walker);
-
     ## Restore previous error printing
     H5E.set_auto (false);
   end_unwind_protect
 endfunction
 
+function rethrow_h5error (ee)
+  H5E.walk ("H5E_WALK_UPWARD", @error_walker);
+endfunction
+
 function status = error_walker (n, s)
-  disp (s.desc)
+  msg = [lasterr() " (" s.desc ")"];
+  error (msg);
   status = -1;
 endfunction
 
@@ -350,4 +355,3 @@ endfunction
 % fprintf (fid, "%s", "this is not an hdf5 file\n");
 % fclose (fid);
 % fail ("s = h5info (fname)", "unable to open file")
-

@@ -17,9 +17,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
+#include <octave/error.h>
 #include <octave/oct.h>
 #include <octave/octave.h>
 #include <octave/parse.h>
+#include <octave/interpreter.h>
 #include <octave/interpreter.h>
 
 #include <hdf5.h>
@@ -30,7 +32,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 static octave_value current_err_cb;
 
 herr_t
-error_handler (unsigned n, const H5E_error2_t *err_desc, void* /*user_data*/)
+error_handler (unsigned n, const H5E_error2_t *err_desc, void* exception_ptr)
 {
   // Error structure
   octave_scalar_map m;
@@ -48,6 +50,10 @@ error_handler (unsigned n, const H5E_error2_t *err_desc, void* /*user_data*/)
   // Evaluate user supplied function
   herr_t retval = 0;
 
+
+  octave::execution_exception* exec_exception =
+    static_cast<octave::execution_exception*> (exception_ptr);
+
   try
     {
       retval = static_cast<herr_t> (octave::feval (current_err_cb, ovl (n, m),
@@ -55,8 +61,10 @@ error_handler (unsigned n, const H5E_error2_t *err_desc, void* /*user_data*/)
     }
   catch (const octave::execution_exception& ee)
     {
-      octave_stdout << "error: " << ee.message () << std::endl;
+      // Let the callback return an error status and store the exception
+      // for further rethrow.
       retval = -1;
+      *exec_exception = ee;
     }
 
   return retval;
@@ -64,8 +72,8 @@ error_handler (unsigned n, const H5E_error2_t *err_desc, void* /*user_data*/)
 
 DEFUN_DLD(walk, args, nargout,
           "-*- texinfo -*-\n\
-@deftypefn {} {} H5E.walk (@var{direction}, @var{fcn})\n\
-@seealso{H5E.clear}\n\
+@deftypefn {} {} H5E.walk (@var{direction}, @var{fcn})\n        \
+@seealso{H5E.clear}\n                                           \
 @end deftypefn")
 {
   octave_value_list retval;
@@ -88,9 +96,15 @@ DEFUN_DLD(walk, args, nargout,
 
   hid_t estack_id = H5Eget_current_stack ();
 
-  H5Ewalk (estack_id, direction, error_handler, nullptr);
+  octave::execution_exception ee;
+
+  herr_t herr = H5Ewalk (estack_id, direction, error_handler, &ee);
 
   H5Eclose_stack (estack_id);
 
-  return retval;
+  // Rethrow previously caugh error if necessary
+  if (! ee.message ().empty ())
+    throw ee;
+
+  return retval.append (herr);
 }
