@@ -236,7 +236,7 @@ function [status, od_out] = attr_op_func (loc_id, name, od_in)
   if (isempty (od_in))
     od_in = as;
   else
-    od_in(end+1) = as;
+    od_in = [od_in; as];
   endif
 
   status = 0;
