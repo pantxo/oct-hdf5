@@ -94,6 +94,15 @@ function s = h5info (fname, obj_name = "/")
     else
       s = s.Datasets;
     endif
+
+    ## Add Filename field for root group
+    if (strcmp (obj_name, "/"))
+      fields = fieldnames (s);
+      s.Filename = make_absolute_filename (fname);
+      fields = {'Filename', fields{:}};
+      s = orderfields (s, fields);
+    endif
+
   unwind_protect_cleanup
     ## Close and release resources.
     if (exist ("file", "var"))
@@ -250,6 +259,7 @@ function [status, od_out] = op_func (loc_id, name, od_in)
         debug_print ("%*s  Warning: Loop detected!\n", spaces, "");
       else
         child_od = group_struct (name, [od_in.addr infobuf.addr]);
+
         [status, ii, cod_out] = H5L.iterate_by_name (loc_id, ...
                                                      name, ...
                                                      "H5_INDEX_NAME", ...
@@ -343,15 +353,8 @@ function [status, od_out] = op_func (loc_id, name, od_in)
   od_out = od_in;
 endfunction
 
-%!test
-% assert (fail ("h5info ()", "Invalid call"))
+%!fail ("h5info ()", "Invalid call")
 
-%!test
-% fail ("h5info ('__some_non_existing_file__')", "FNAME must be an existing file name")
+%!fail ("h5info ('__some_non_existing_file__')", "FNAME must be an existing file name")
 
-%!test
-% fname = tempname ();
-% fid = fopen (fname, "w+");
-% fprintf (fid, "%s", "this is not an hdf5 file\n");
-% fclose (fid);
-% fail ("s = h5info (fname)", "unable to open file")
+%!fail ("h5info (which ('plot'))", "file signature not found")

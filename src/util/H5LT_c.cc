@@ -19,7 +19,6 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 {
   std::size_t size = H5Tget_size(dtype);
   s.assign ("Name", "");
-  s.assign ("Size", size);
 
   H5T_class_t tcls = H5Tget_class (dtype);
   std::string h5type_string;
@@ -90,7 +89,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           h5type_string = "undefined integer";
 
         s.assign ("Type", h5type_string);
-        return true;
+        break;
       }
     case H5T_FLOAT:
       {
@@ -116,7 +115,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           h5type_string = "undefined float";
 
         s.assign ("Type", h5type_string);
-        return true;
+        break;
       }
     case H5T_STRING:
       {
@@ -195,7 +194,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           {
             type_map.assign ("BaseType", "H5T_C_S1");
             s.assign ("Type", type_map);
-            return true;
+            break;
           }
 
         // Check differing endianness
@@ -216,7 +215,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           {
             type_map.assign ("BaseType", "H5T_C_S1");
             s.assign ("Type", type_map);
-            return true;
+            break;
           }
 
         /* If not equal to C variable-length string, check Fortran type.
@@ -240,7 +239,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           {
             type_map.assign ("BaseType", "H5T_FORTRAN_S1");
             s.assign ("Type", type_map);
-            return true;
+            break;
           }
 
         /* Change the endianness and see if they're equal. */
@@ -260,7 +259,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           {
             type_map.assign ("BaseType", "H5T_FORTRAN_S1");
             s.assign ("Type", type_map);
-            return true;
+            break;
           }
 
         /*  No match */
@@ -275,6 +274,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
       break;
     case H5T_REFERENCE:
       s.assign ("Class", "H5T_REFERENCE");
+      s.assign ("Type", "H5R_OBJECT");
       break;
     case H5T_ENUM:
       s.assign ("Class", "H5T_ENUM");
@@ -294,5 +294,8 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
     case H5T_NO_CLASS:
       s.assign ("Class", "H5T_NO_CLASS");
     }
+
+  s.assign ("Size", size);
+
   return true;
 }
