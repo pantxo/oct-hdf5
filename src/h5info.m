@@ -218,8 +218,8 @@ function [status, od_out] = attr_op_func (loc_id, name, od_in)
       as.Dataspace.MaxSize = maxdims;
       as.Dataspace.Type = "null";
     case cst.H5S_SCALAR
-      as.Dataspace.Size = 1;
-      as.Dataspace.MaxSize = 1;
+      as.Dataspace.Size = [];
+      as.Dataspace.MaxSize = [];
       as.Dataspace.Type = "scalar";
   endswitch
 
@@ -228,6 +228,7 @@ function [status, od_out] = attr_op_func (loc_id, name, od_in)
   try
     as.Value = H5A.read (attr_id);
   catch
+    disp (lasterr)
   end_try_catch
 
   H5A.close (attr_id);
@@ -302,11 +303,11 @@ function [status, od_out] = op_func (loc_id, name, od_in)
 
       switch (space_type)
         case cst.H5S_SIMPLE
-          ds.Dataspace.Size = dims;
-          ds.Dataspace.MaxSize = maxdims;
+          ds.Dataspace.Size = fliplr (dims);
+          ds.Dataspace.MaxSize = fliplr (maxdims);
         case cst.H5S_NULL
-          ds.Dataspace.Size = dims;
-          ds.Dataspace.MaxSize = maxdims;
+          ds.Dataspace.Size = fliplr (dims);
+          ds.Dataspace.MaxSize = fliplr (maxdims);
           ds.Dataspace.Type = "null";
         case cst.H5S_SCALAR
           ds.Dataspace.Size = 1;
@@ -328,7 +329,8 @@ function [status, od_out] = op_func (loc_id, name, od_in)
       ## Fill value
       fill_id = H5P.fill_value_defined (dcpl_id);
       if (fill_id == cst.H5D_FILL_VALUE_USER_DEFINED)
-        ## FIXME: implement this
+        ## FIXME: implement
+        ## ds.FillValue = H5P.get_fill_value (dcpl_id, type_id);
       endif
 
       H5P.close (dcpl_id);

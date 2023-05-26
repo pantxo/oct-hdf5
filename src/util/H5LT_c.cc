@@ -19,6 +19,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 {
   std::size_t size = H5Tget_size(dtype);
   s.assign ("Name", "");
+  s.assign ("Size", size);
 
   H5T_class_t tcls = H5Tget_class (dtype);
   std::string h5type_string;
@@ -89,7 +90,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           h5type_string = "undefined integer";
 
         s.assign ("Type", h5type_string);
-        break;
+        return true;
       }
     case H5T_FLOAT:
       {
@@ -115,7 +116,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
           h5type_string = "undefined float";
 
         s.assign ("Type", h5type_string);
-        break;
+        return true;
       }
     case H5T_STRING:
       {
@@ -192,9 +193,9 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 
         if (H5Tequal (tmp_type, str_type))
           {
-            type_map.assign ("BaseType", "H5T_C_S1");
+            type_map.assign ("CharacterType", "H5T_C_S1");
             s.assign ("Type", type_map);
-            break;
+            return true;
           }
 
         // Check differing endianness
@@ -213,9 +214,9 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 
         if (H5Tequal (tmp_type, str_type))
           {
-            type_map.assign ("BaseType", "H5T_C_S1");
+            type_map.assign ("CharacterType", "H5T_C_S1");
             s.assign ("Type", type_map);
-            break;
+            return true;
           }
 
         /* If not equal to C variable-length string, check Fortran type.
@@ -237,9 +238,9 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 
         if (H5Tequal (tmp_type, str_type))
           {
-            type_map.assign ("BaseType", "H5T_FORTRAN_S1");
+            type_map.assign ("CharacterType", "H5T_FORTRAN_S1");
             s.assign ("Type", type_map);
-            break;
+            return true;
           }
 
         /* Change the endianness and see if they're equal. */
@@ -257,9 +258,9 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 
         if (H5Tequal (tmp_type, str_type))
           {
-            type_map.assign ("BaseType", "H5T_FORTRAN_S1");
+            type_map.assign ("CharacterType", "H5T_FORTRAN_S1");
             s.assign ("Type", type_map);
-            break;
+            return true;
           }
 
         /*  No match */
@@ -294,8 +295,5 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
     case H5T_NO_CLASS:
       s.assign ("Class", "H5T_NO_CLASS");
     }
-
-  s.assign ("Size", size);
-
   return true;
 }

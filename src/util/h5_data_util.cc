@@ -113,7 +113,7 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
   else if (cls == "H5T_STRING")
     {
       std::string typ = info_struct.getfield ("Type").scalar_map_value ()
-        .getfield ("BaseType").string_value ();
+        .getfield ("CharacterType").string_value ();
 
       if (typ != "H5T_C_S1")
         error ("H5D.read: unhandled string type %s", typ.c_str ());
