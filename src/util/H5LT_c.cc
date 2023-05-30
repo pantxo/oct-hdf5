@@ -17,9 +17,12 @@
 bool
 dtype_to_struct (hid_t dtype, octave_scalar_map& s)
 {
-  std::size_t size = H5Tget_size(dtype);
   s.assign ("Name", "");
+  s.assign ("Class", "");
+  s.assign ("Type", "");
+  std::size_t size = H5Tget_size(dtype);
   s.assign ("Size", size);
+  s.assign ("Attributes", Matrix ());
 
   H5T_class_t tcls = H5Tget_class (dtype);
   std::string h5type_string;
@@ -271,7 +274,18 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
       s.assign ("Class", "H5T_OPAQUE");
       break;
     case H5T_COMPOUND:
-      s.assign ("Class", "H5T_COMPOUND");
+      {
+        s.assign ("Class", "H5T_COMPOUND");
+        octave_scalar_map types;
+        // FIXME: add "Member" field, a struct array of member type structs
+        // size_t nfields = H5Tget_nmembers (type_id);
+        // for (size_t ii = 0; ii < nfields; ii++)
+        // {
+        //   char *name = H5Tget_member_name (type_id, ii);
+        //   hid_t field_type_id  = H5Tget_member_type (type_id, ii);
+        // }
+        s.assign ("Type", types);
+      }
       break;
     case H5T_REFERENCE:
       s.assign ("Class", "H5T_REFERENCE");

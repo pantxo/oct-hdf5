@@ -41,10 +41,6 @@ DEFUN_DLD(dtype_to_struct, args, nargout,
   hid_t type_id = get_h5_id (args, 0, "DATASET_ID", "H5LT.dtype_to_struct");
 
   octave_scalar_map s;
-  s.assign ("Name", "");
-  s.assign ("Class", "");
-  s.assign ("Type", "");
-  s.assign ("Attributes", Matrix ());
 
   if (! dtype_to_struct (type_id, s))
     error ("H5LT.dtype_to_struct: unable retrieve struct info");
