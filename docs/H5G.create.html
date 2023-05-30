@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Low-level function for working with hdf5 files.: H5G.create</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+    <style>
+    var {
+      font-style: italics;
+      font-weight: bold;
+    }
+    td {
+      vertical-align: top;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="bg-dark">
+      <div class="container-xl">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href=index.html>
+              <img src="assets/oct-hdf5.png" alt="oct-hdf5" class="d-inline-block align-top" width="25" height="25">
+              Low-level function for working with hdf5 files.
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html#H5G">
+                    <i class="fas fa-list-alt"></i>
+                    H5G
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://gnu-octave.github.io/packages/">
+                  <img src="assets/octave-logo.svg" alt="GNU Octave logo" class="d-inline-block align-top" width="25" height="25">
+                    Octave Packages
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.octave.org">
+                    <i class="fas fa-home"></i>
+                    GNU Octave website
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container-xl my-4">
+      <div class="card rounded">
+        <div class="card-header card-header-mod">
+          <div class="row d-flex flex-wrap align-items-center">
+            <div class="col-sm-3 col-md-5 mb-2 mb-sm-0">
+              <h3 class="d-inline-block mr-2">
+              Function&nbsp;Reference: <b><code>H5G.create</code></b>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+dl>
+<dt><u>:</u> <var>group_id</var> = <b>H5G.create</b><i> (<var>loc_id</var>, <var>name</var>)</i></dt>
+<dt><u>:</u> <var>group_id</var> = <b>H5G.create</b><i> (<var>loc_id</var>, <var>name</var>, <var>lcpl_id</var>, <var>gcpl_id</var>, <var>gapl_id</var>)</i></dt>
+</dl>
+<p>Create a new group in a file.
+After a group has been created, links to datasets and to other groups can
+be added.
+</p>
+<div class="ms-5">
+<p>The <var>loc_id</var> and <var>name</var> parameters specify where the group is
+located. <var>loc_id</var> may be a file, group, dataset, named datatype or
+attribute in the file.  If an attribute, dataset, or named datatype is
+specified for <var>loc_id</var> then the group will be created at the location
+where the attribute, dataset, or named datatype is attached.
+<var>name</var> is the link to the group; <var>name</var> may be either an absolute
+path in the file (the links from the root group to the new group) or a
+relative path from <var>loc_id</var> (the link(s) from the group specified by
+<var>loc_id</var> to the new group).
+</p>
+<p><var>lcpl_id</var>, <var>gcpl_id</var>, and <var>gapl_id</var> (optional) are property list
+identifiers. These property lists govern how the link to the group is
+created, how the group is created, and how the group can be accessed in
+the future, respectively. The default is <code>'H5P_DEFAULT'</code>.
+Currently, there are no APIs for the group access property list;
+use <code>'H5P_DEFAULT'</code>.
+</p>
+<p>To conserve and release resources, the group should be closed when access
+is no longer required.
+</p>
+<p><strong>See also: </strong>
+  <a href="H5G.open.html">H5G.open</a>, 
+  <a href="H5G.close.html">H5G.close</a>
+</p>
+<p><strong>Source Code: </strong>
+  <a href="">H5G.create</a>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

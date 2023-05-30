@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Low-level function for working with hdf5 files.: H5D.create</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+    <style>
+    var {
+      font-style: italics;
+      font-weight: bold;
+    }
+    td {
+      vertical-align: top;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="bg-dark">
+      <div class="container-xl">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href=index.html>
+              <img src="assets/oct-hdf5.png" alt="oct-hdf5" class="d-inline-block align-top" width="25" height="25">
+              Low-level function for working with hdf5 files.
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html#H5D">
+                    <i class="fas fa-list-alt"></i>
+                    H5D
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://gnu-octave.github.io/packages/">
+                  <img src="assets/octave-logo.svg" alt="GNU Octave logo" class="d-inline-block align-top" width="25" height="25">
+                    Octave Packages
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.octave.org">
+                    <i class="fas fa-home"></i>
+                    GNU Octave website
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container-xl my-4">
+      <div class="card rounded">
+        <div class="card-header card-header-mod">
+          <div class="row d-flex flex-wrap align-items-center">
+            <div class="col-sm-3 col-md-5 mb-2 mb-sm-0">
+              <h3 class="d-inline-block mr-2">
+              Function&nbsp;Reference: <b><code>H5D.create</code></b>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+dl>
+<dt><u>:</u> <var>dataset_id</var> = <b>H5D.create</b><i> (<var>loc_id</var>, <var>name</var>, <var>dtype_id</var>, <var>space_id</var>, <var>lcpl_id</var>)</i></dt>
+<dt><u>:</u> <var>dataset_id</var> = <b>H5D.create</b><i> (<var>loc_id</var>, <var>name</var>, <var>dtype_id</var>, <var>space_id</var>, <var>lcpl_id</var>, <var>dcpl_id</var>, <var>dapl_id</var>)</i></dt>
+</dl>
+<p>Create a new dataset named <var>name</var> at the location specified by
+<var>loc_id</var>.
+</p>
+<div class="ms-5">
+<p>The function associates constant and initial persistent properties with
+that dataset, including <var>dtype_id</var>, the datatype of each data element
+as stored in the file; <var>space_id</var>, the dataspace of the dataset;
+and other initial properties as defined in the dataset creation property
+and access property lists, <var>dcpl_id</var> and <var>dapl_id</var>, respectively.
+Once created, the dataset is opened for access.
+</p>
+<p><var>loc_id</var> may be a file, group, dataset, named datatype or attribute.
+If an attribute, dataset, or named datatype is specified for <var>loc_id</var>
+then the dataset will be created at the location where the attribute,
+dataset, or named datatype is attached.  <var>name</var> may be either an
+absolute path in the file or a relative path from <var>loc_id</var> naming the
+dataset.
+</p>
+<p>If <var>dtype_id</var> is either a fixed-length or variable-length string,
+it is important to set the string length when defining the datatype.
+String datatypes are derived from <code>'H5T_C_S1'</code>
+(or <code>'H5T_FORTRAN_S1'</code> for Fortran codes), which defaults to 1
+character in size. See <code>H5T.set_size</code> function.
+</p>
+<p>If <var>dtype_id</var> is a committed datatype, and if the file location
+associated with the committed datatype is different from the file location
+where the dataset will be created, the datatype is copied and converted
+to a transient type.
+</p>
+<p>The link creation property list, <var>lcpl_id</var>, governs creation of the
+link(s) by which the new dataset is accessed and the creation of any
+intermediate groups that may be missing.
+</p>
+<p>The datatype and dataspace properties and the dataset creation and access
+property lists are attached to the dataset, so the caller may derive new
+datatypes, dataspaces, and creation and access properties from the old ones
+and reuse them in calls to create additional datasets.
+</p>
+<p>Once created, the dataset is ready to receive raw data. Immediately
+attempting to read raw data from the dataset will probably return the
+fill value.
+</p>
+<p>To conserve and release resources, the dataset should be closed when access
+is no longer required.
+</p>
+<p><strong>See also: </strong>
+  <a href="H5D.open.html">H5D.open</a>, 
+  <a href="H5D.close.html">H5D.close</a>
+</p>
+<p><strong>Source Code: </strong>
+  <a href="">H5D.create</a>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

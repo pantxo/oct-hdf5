@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Low-level function for working with hdf5 files.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+    <style>
+    var {
+      font-style: italics;
+      font-weight: bold;
+    }
+    td {
+      vertical-align: top;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="bg-dark">
+      <div class="container-xl">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href=https://gnu-octave.github.io/packages/oct-hdf5>
+              <img src="assets/oct-hdf5.png" alt="oct-hdf5" class="d-inline-block align-top" width="25" height="25">
+              Low-level function for working with hdf5 files.
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://gnu-octave.github.io/packages/">
+                  <img src="assets/octave-logo.svg" alt="GNU Octave logo" class="d-inline-block align-top" width="25" height="25">
+                    Octave Packages
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.octave.org">
+                    <i class="fas fa-home"></i>
+                    GNU Octave website
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container-xl my-4">
+      <div class="card rounded">
+        <div class="card-header card-header-mod">
+          <div class="row d-flex flex-wrap align-items-center">
+            <div class="col-sm-3 col-md-2 mb-2 mb-sm-0">
+              <img src="assets/oct-hdf5.png" class="d-block m-auto" alt="oct-hdf5">
+            </div>
+            <div class="col-sm-9 col-md-10">
+              <h3 class="d-inline-block mr-2">oct-hdf5</h3>
+              <b>0.1.1&nbsp;2023-04-02</b>
+              <p class="indent">
+                Collection of Matlab compatible lowlevel functions to handle hdf5 files.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+           <p>Select Category:
+             <select name="cat" onchange="location = this.options[this.selectedIndex].value;">
+             <option value="#High Level Functions">High Level Functions</option>
+             <option value="#H5A">H5A</option>
+             <option value="#H5D">H5D</option>
+             <option value="#H5E">H5E</option>
+             <option value="#H5F">H5F</option>
+             <option value="#H5G">H5G</option>
+             <option value="#H5I">H5I</option>
+             <option value="#H5L">H5L</option>
+             <option value="#H5LT">H5LT</option>
+             <option value="#H5ML">H5ML</option>
+             <option value="#H5O">H5O</option>
+             <option value="#H5P">H5P</option>
+             <option value="#H5R">H5R</option>
+             <option value="#H5S">H5S</option>
+             <option value="#H5T">H5T</option>
+             </select>
+           <p>
+
+           <h3 class="category">
+             <a name="High Level Functions">High Level Functions</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="h5info.html">h5info</a>
+                   </code></b>
+                 </td>
+                 <td>Return hdf5 file content description as a structure.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="h5readatt.html">h5readatt</a>
+                   </code></b>
+                 </td>
+                 <td>Read data associated to a group or dataset attribute ATTR, at location
+LOC.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="read_mat73.html">read_mat73</a>
+                   </code></b>
+                 </td>
+                 <td>Read variables from a HDF5 files formated according to Matlab's v7.3
+format and return them as a struct.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5A">H5A</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.close.html">H5A.close</a>
+                   </code></b>
+                 </td>
+                 <td>Terminates access to the attribute specified by ATTR_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.create.html">H5A.create</a>
+                   </code></b>
+                 </td>
+                 <td>Create an attribute, ATTR_NAME, which is attached to the object
+specified by the identifier LOC_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.get_num_attrs.html">H5A.get_num_attrs</a>
+                   </code></b>
+                 </td>
+                 <td>Return the number of attributes if successful; otherwise return a
+negative value.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.get_space.html">H5A.get_space</a>
+                   </code></b>
+                 </td>
+                 <td>Retrieve a copy of the dataspace for an attribute ATTR_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.get_type.html">H5A.get_type</a>
+                   </code></b>
+                 </td>
+                 <td>Return a datatype identifier if successful; otherwise returns a negative
+value.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.iterate.html">H5A.iterate</a>
+                   </code></b>
+                 </td>
+                 <td>Iterate over the attributes attached to the dataset or group specified
+with LOC_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.iterate_by_name.html">H5A.iterate_by_name</a>
+                   </code></b>
+                 </td>
+                 <td>Iterate over the attributes attached to the dataset or group specified
+with LOC_ID and OBJ_NAME.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.open.html">H5A.open</a>
+                   </code></b>
+                 </td>
+                 <td>Open an existing attribute, NAME, that is attached to an object
+specified by an object identifier, OBJ_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.open_name.html">H5A.open_name</a>
+                   </code></b>
+                 </td>
+                 <td>Open an attribute specified by its name, NAME, which is attached to the
+object specified with LOC_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.read.html">H5A.read</a>
+                   </code></b>
+                 </td>
+                 <td>Read an attribute specified with ATTR_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5A.write.html">H5A.write</a>
+                   </code></b>
+                 </td>
+                 <td>Write an attribute, specified with ATTRIBUTE_ID.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5D">H5D</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.close.html">H5D.close</a>
+                   </code></b>
+                 </td>
+                 <td>End access to a dataset specified by DATASET_ID and releases resources
+used by it.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.create.html">H5D.create</a>
+                   </code></b>
+                 </td>
+                 <td>Create a new dataset named NAME at the location specified by LOC_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.get_create_plist.html">H5D.get_create_plist</a>
+                   </code></b>
+                 </td>
+                 <td>Return an identifier for a copy of the dataset creation property list
+associated with the dataset specified by DATASET_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.get_space.html">H5D.get_space</a>
+                   </code></b>
+                 </td>
+                 <td>Make a copy of the dataspace of the dataset specified by DATASET_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.get_type.html">H5D.get_type</a>
+                   </code></b>
+                 </td>
+                 <td>Return an identifier for a copy of the datatype for a dataset.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.open.html">H5D.open</a>
+                   </code></b>
+                 </td>
+                 <td>Open the existing dataset specified by a location identifier and name,
+LOC_ID and NAME, respectively.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.read.html">H5D.read</a>
+                   </code></b>
+                 </td>
+                 <td>Import data from dataset.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5D.write.html">H5D.write</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5E">H5E</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5E.get_class_name.html">H5E.get_class_name</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5E.walk.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5E.get_major.html">H5E.get_major</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5E.walk.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5E.get_msg.html">H5E.get_msg</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5E.walk.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5E.oclear.html">H5E.oclear</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5E.walk.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5E.set_auto.html">H5E.set_auto</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5E.walk.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5E.walk.html">H5E.walk</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5E.clear.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5F">H5F</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5F.close.html">H5F.close</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5F.create.html">H5F.create</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5F.open.html">H5F.open</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5F.close.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5G">H5G</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5G.close.html">H5G.close</a>
+                   </code></b>
+                 </td>
+                 <td>Release resources used by a group which was opened by 'H5G.create' or
+'H5G_OPEN'.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5G.create.html">H5G.create</a>
+                   </code></b>
+                 </td>
+                 <td>Create a new group in a file.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5G.open.html">H5G.open</a>
+                   </code></b>
+                 </td>
+                 <td>Open an existing group, NAME, at the location specified by LOC_ID.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5I">H5I</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5I.get_name.html">H5I.get_name</a>
+                   </code></b>
+                 </td>
+                 <td>Retrieve a name for the object identified by OBJ_ID.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5L">H5L</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5L.iterate.html">H5L.iterate</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5L.iterate_by_name.html">H5L.iterate_by_name</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5LT">H5LT</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5LT.dtype_to_struct.html">H5LT.dtype_to_struct</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5LT.dtype_to_text.html">H5LT.dtype_to_text</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5ML">H5ML</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5ML.compare_values.html">H5ML.compare_values</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5ML.get_constant_names.html">H5ML.get_constant_names</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5ML.get_constant_value.html">H5ML.get_constant_value</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5O">H5O</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5O.close.html">H5O.close</a>
+                   </code></b>
+                 </td>
+                 <td>Closes the object, dataset, or named datatype specified by OBJECT_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5O.get_info_by_name.html">H5O.get_info_by_name</a>
+                   </code></b>
+                 </td>
+                 <td>The INFO_STRUCT structure contains fields: fileno; /* File number that
+object is located in addr; /* Object address in file type; /* Basic
+object type (group, dataset, etc.)  rc; /* Reference count of object
+atime; /* Access time mtime; ...</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5O.open.html">H5O.open</a>
+                   </code></b>
+                 </td>
+                 <td>Open a group, dataset, or committed (named) datatype specified by a
+location, LOC_ID, and a path name, NAME</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5P">H5P</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5P.close.html">H5P.close</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5P.create.html">H5P.create</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5P.fill_value_defined.html">H5P.fill_value_defined</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5D.get_create_plist.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5P.get_chunk.html">H5P.get_chunk</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5D.get_crreate_plist.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5P.get_layout.html">H5P.get_layout</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5D.get_create_plist.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5R">H5R</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5R.create.html">H5R.create</a>
+                   </code></b>
+                 </td>
+                 <td>Create the reference, REF, of the type specified in REF_TYPE, pointing
+to the object name located at LOC_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5R.dereference.html">H5R.dereference</a>
+                   </code></b>
+                 </td>
+                 <td>Given a reference, REF, to an object or a region in an object, open that
+object and return an identifier.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5R.get_obj_type.html">H5R.get_obj_type</a>
+                   </code></b>
+                 </td>
+                 <td>See also: H5O.close.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5S">H5S</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5S.close.html">H5S.close</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5S.create.html">H5S.create</a>
+                   </code></b>
+                 </td>
+                 <td>Create a new dataspace of a particular type.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5S.create_simple.html">H5S.create_simple</a>
+                   </code></b>
+                 </td>
+                 <td>Create a new simple dataspace and open it for access, returning a
+dataspace identifier.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5S.get_simple_extent_dims.html">H5S.get_simple_extent_dims</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5S.get_simple_extent_type.html">H5S.get_simple_extent_type</a>
+                   </code></b>
+                 </td>
+                 <td>Determine the current class SPACE_TYPE of a dataspace SPACE_ID.</td>
+               </tr>
+             </tbody>
+           </table>
+           <h3 class="category">
+             <a name="H5T">H5T</a>
+           </h3>
+           <table class="table table-striped">
+             <tbody>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.array_create.html">H5T.array_create</a>
+                   </code></b>
+                 </td>
+                 <td>Create a new array datatype object.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.close.html">H5T.close</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.copy.html">H5T.copy</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.get_class.html">H5T.get_class</a>
+                   </code></b>
+                 </td>
+                 <td>Get the class of the data type specified by TYPE_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.get_order.html">H5T.get_order</a>
+                   </code></b>
+                 </td>
+                 <td>Get the byte order of the data type specified by TYPE_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.get_size.html">H5T.get_size</a>
+                   </code></b>
+                 </td>
+                 <td>See also: .</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.set_cset.html">H5T.set_cset</a>
+                   </code></b>
+                 </td>
+                 <td>CHARSET must be "H5T_CSET_ASCII" or "H5T_CSET_UTF8".</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.set_order.html">H5T.set_order</a>
+                   </code></b>
+                 </td>
+                 <td>Set the byte order of the data type specified by TYPE_ID.</td>
+               </tr>
+               <tr>
+                 <td>
+                   <b><code>
+                   <a href="H5T.set_size.html">H5T.set_size</a>
+                   </code></b>
+                 </td>
+                 <td>SIZE is the size in bytes of the type or "H5T_VARIABLE".</td>
+               </tr>
+             </tbody>
+           </table>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

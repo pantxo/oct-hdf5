@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Low-level function for working with hdf5 files.: H5A.iterate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+    <style>
+    var {
+      font-style: italics;
+      font-weight: bold;
+    }
+    td {
+      vertical-align: top;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="bg-dark">
+      <div class="container-xl">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href=index.html>
+              <img src="assets/oct-hdf5.png" alt="oct-hdf5" class="d-inline-block align-top" width="25" height="25">
+              Low-level function for working with hdf5 files.
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html#H5A">
+                    <i class="fas fa-list-alt"></i>
+                    H5A
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://gnu-octave.github.io/packages/">
+                  <img src="assets/octave-logo.svg" alt="GNU Octave logo" class="d-inline-block align-top" width="25" height="25">
+                    Octave Packages
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.octave.org">
+                    <i class="fas fa-home"></i>
+                    GNU Octave website
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container-xl my-4">
+      <div class="card rounded">
+        <div class="card-header card-header-mod">
+          <div class="row d-flex flex-wrap align-items-center">
+            <div class="col-sm-3 col-md-5 mb-2 mb-sm-0">
+              <h3 class="d-inline-block mr-2">
+              Function&nbsp;Reference: <b><code>H5A.iterate</code></b>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+dl>
+<dt><u>oct-hdf5:</u> [<var>status</var>, <var>idx_out</var>, <var>opdata_out</var>] = <b>H5A.iterate</b><i> (<var>loc_id</var>, <var>idx_type</var>, <var>order</var>, <var>idx_in</var>,  <var>fcn</var>, <var>opdata_in</var>)</i></dt>
+</dl>
+<p>Iterate over the attributes attached to the dataset or group specified
+with <var>loc_id</var>.
+</p>
+<div class="ms-5">
+<p>For each attribute, user-provided data, <var>op_data</var>, with additional
+information as defined below, is passed to a user-defined function, 
+<var>fcn</var>, which operates on that attribute.
+</p>
+<p>The order of the iteration and the attributes iterated over are specified
+by three parameters: the index type, <var>idx_type</var>; the order in which
+the index is to be traversed, <var>order</var>; and the attribute’s position
+in the index, <var>idx_in</var>.
+</p>
+<p>The type of index specified by <var>idx_type</var> can be one of the following:
+</p><dl compact="compact">
+<dt> <code>'H5_INDEX_NAME'</code></dt>
+</dl>
+<p>An alpha-numeric index by attribute name.
+</p></dd>
+<dt> <code>'H5_INDEX_CRT_ORDER'</code></dt>
+</dl>
+<p>An index by creation order.
+</p></dd>
+</dl>
+
+<p>The order in which the index is to be traversed, as specified by <var>order</var>,
+can be one of the following:
+</p><dl compact="compact">
+<dt> <code>'H5_ITER_INC'</code></dt>
+</dl>
+<p>Iteration is from beginning to end, i.e., a top-down iteration incrementing
+the index position at each step.
+</p></dd>
+<dt> <code>'H5_ITER_DEC'</code></dt>
+</dl>
+<p>Iteration starts at the end of the index, i.e., a bottom-up iteration
+decrementing the index position at each step.
+</p></dd>
+<dt> <code>'H5_ITER_NATIVE'</code></dt>
+</dl>
+<p>HDF5 iterates in the fastest-available order. No information is provided
+as to the order, but HDF5 ensures that each element in the index will be
+visited if the iteration completes successfully.
+</p></dd>
+</dl>
+
+<p>The next attribute to be operated on is specified by <var>idx_in</var>,
+a position in the index. The index of the last attibute operated on is
+returned as <var>idx_out</var>
+</p>
+<p>For example, if <var>idx_type</var>, <var>order</var>, and <var>idx_in</var> are set to
+<code>'H5_INDEX_NAME'</code>, <code>'H5_ITER_INC'</code>, and <code>5</code>, respectively,
+the attribute in question is the fifth attribute from the beginning of the
+alpha-numeric index of attribute names.  If order were set to
+<code>'H5_ITER_DEC'</code>, it would be the fifth attribute from the end of
+the index.
+</p>
+<p>The prototype for the <var>fcn</var> callback function is as follows:
+</p><p><code>[<var>status</var>, <var>op_data_out</var>] = op_fcn (<var>location_id</var>,
+<var>attr_name</var>, <var>op_data_in</var>)</code>
+</p>
+<p>The operation receives the location identifier <var>location_id</var> for the
+group or dataset being iterated over; the name of the current object
+dataset or attribute, <var>attr_name</var>; and the operator data passed into
+iterate function, <var>op_data_in</var>.
+</p>
+<p>Valid return values <var>status</var> from an operator and the resulting
+H5A.iterate_by_name and <var>fcn</var> behavior are as follows:
+</p><dl compact="compact">
+<dt> <code><var>status</var> == 0</code></dt>
+</dl>
+<p>Causes the iterator to continue, returning zero when all attributes have
+been processed.
+</p></dd>
+<dt> <code><var>status</var> &gt; 0</code></dt>
+</dl>
+<p>Causes the iterator to immediately return that positive value, indicating
+short-circuit success. The iterator can be restarted at the next attribute,
+as indicated by the return value <var>idx_out</var>.
+</p></dd>
+<dt> <code><var>status</var> &lt; 0</code></dt>
+</dl>
+<p>Causes the iterator to immediately return that value, indicating failure.
+The iterator can be restarted at the next attribute, as indicated by the
+return value of <var>idx_out</var>.
+</p></dd>
+</dl>
+<p>See original function at <a href="https://portal.hdfgroup.org/display/HDF5/H5A_ITERATE2">https://portal.hdfgroup.org/display/HDF5/H5A_ITERATE2</a>.
+</p>
+<p><strong>See also: </strong>
+  <a href="H5A.iterate_by_name.html">H5A.iterate_by_name</a>
+</p>
+<p><strong>Source Code: </strong>
+  <a href="">H5A.iterate</a>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
