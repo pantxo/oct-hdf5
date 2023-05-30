@@ -277,13 +277,23 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
       {
         s.assign ("Class", "H5T_COMPOUND");
         octave_scalar_map types;
-        // FIXME: add "Member" field, a struct array of member type structs
-        // size_t nfields = H5Tget_nmembers (type_id);
-        // for (size_t ii = 0; ii < nfields; ii++)
-        // {
-        //   char *name = H5Tget_member_name (type_id, ii);
-        //   hid_t field_type_id  = H5Tget_member_type (type_id, ii);
-        // }
+        size_t nfields = H5Tget_nmembers (dtype);
+        dim_vector dv(nfields, 1);
+        Cell names (dv);
+        Cell datatypes (dv);
+        for (size_t ii = 0; ii < nfields; ii++)
+          {
+            char *name = H5Tget_member_name (dtype, ii);
+            hid_t field_type_id  = H5Tget_member_type (dtype, ii);
+            octave_scalar_map val;
+            dtype_to_struct (field_type_id, val);
+            names(ii) = std::string (name);
+            datatypes(ii) = val;
+          }
+        octave_map member(dv);
+        member.assign ("Name", names);
+        member.assign ("Datatype", datatypes);
+        types.assign ("Member", member);
         s.assign ("Type", types);
       }
       break;
