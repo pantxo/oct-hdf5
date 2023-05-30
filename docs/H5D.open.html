@@ -77,17 +77,20 @@ dl>
 <var>loc_id</var> and <var>name</var>, respectively.
 </p>
 <div class="ms-5">
-<p><var>loc_id</var> may be a file,
-group, dataset, named datatype or attribute.  If an attribute, dataset,
-or named datatype is specified for <var>loc_id</var> then the dataset will be
-opened at the location where the attribute, dataset, or named datatype
-is attached.
+
+<p><strong>Parameters:</strong>
+ </p><table>
+<tr><td width="33%"><var>loc_id</var></td><td width="2%"></td><td width="65%">Location identifier; may be a file, group, named datatype, dataset, or attribute</td></tr>
+<tr><td width="33%"><var>name</var></td><td width="2%"></td><td width="65%">Dataset name</td></tr>
+<tr><td width="33%"><var>dapl_id</var></td><td width="2%"></td><td width="65%">Dataset access property list</td></tr>
+</table>
+
+
+<p><strong>Description:</strong>
 </p>
-<p>The dataset access property list, <var>dapl_id</var>, provides information
-regarding access to the dataset.
-</p>
-<p>To conserve and release resources, the dataset should be closed when access
-is no longer required.
+<p>The dataset identifier <var>dataset_id</var> returned from this function must
+be released with H5D.close or resource leaks will develop.
+See original function at <a href="https://portal.hdfgroup.org/display/HDF5/H5D_OPEN">https://portal.hdfgroup.org/display/HDF5/H5D_OPEN</a>.
 </p>
 <p><strong>See also: </strong>
   <a href="H5D.close.html">H5D.close</a>

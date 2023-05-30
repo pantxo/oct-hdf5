@@ -35,6 +35,7 @@ Open the existing dataset specified by a location identifier and name,\n\
 named datatype, dataset, or attribute\n\
  @item @var{name} @tab @tab Dataset name\n\
  @item @var{dapl_id} @tab @tab Dataset access property list\n\
+ @end multitable\n\
 \n\
 \n\
 @strong{Description:}\n\

@@ -76,11 +76,16 @@ dl>
 <p>Make a copy of the dataspace of the dataset specified by <var>dataset_id</var>.
 </p>
 <div class="ms-5">
-<p>The function returns an identifier for the new copy of the dataspace.
+
+<p><strong>Parameters:</strong>
+ </p><table>
+<tr><td width="33%"><var>dataset_id</var></td><td width="2%"></td><td width="65%">Identifier of a dataset</td></tr>
+</table>
+
+<p><strong>Description:</strong>
 </p>
-<p>A dataspace identifier returned from this function should be released with
-<code>H5S.close</code> when the identifier is no longer needed so that resource
-leaks will not occur.
+<p>The dataspace identifier returned from this function must be released with H5S.close or resource leaks will develop.
+See original function at <a href="https://portal.hdfgroup.org/display/HDF5/H5D_GET_SPACE">https://portal.hdfgroup.org/display/HDF5/H5D_GET_SPACE</a>.
 </p>
 <p><strong>See also: </strong>
   <a href="H5S.close.html">H5S.close</a>

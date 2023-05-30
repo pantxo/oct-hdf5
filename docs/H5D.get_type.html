@@ -76,13 +76,18 @@ dl>
 <p>Return an identifier for a copy of the datatype for a dataset.
 </p>
 <div class="ms-5">
-<p>If a dataset has a named datatype, then an identifier to the opened
-datatype is returned.  Otherwise, the returned datatype is read-only.
-If atomization of the datatype fails, then the datatype is closed.
+
+<p><strong>Parameters:</strong>
+ </p><table>
+<tr><td width="33%"><var>dataset_id</var></td><td width="2%"></td><td width="65%">Identifier of a dataset</td></tr>
+</table>
+
+
+<p><strong>Description:</strong>
 </p>
-<p>A datatype identifier returned from this function should be released with
-<code>H5T.close</code> when the identifier is no longer needed so that resource
-leaks will not occur.
+<p>The datatype identifier <var>type_id</var> returned from this function must
+be released with H5T.close or resource leaks will develop.
+See original function at <a href="https://portal.hdfgroup.org/display/HDF5/H5D_GET_TYPE">https://portal.hdfgroup.org/display/HDF5/H5D_GET_TYPE</a>.
 </p>
 <p><strong>See also: </strong>
   <a href="H5T.close.html">H5T.close</a>

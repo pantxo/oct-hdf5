@@ -74,50 +74,24 @@ dl>
 <dt><u>:</u> <var>dataset_id</var> = <b>H5D.create</b><i> (<var>loc_id</var>, <var>name</var>, <var>dtype_id</var>, <var>space_id</var>, <var>lcpl_id</var>)</i></dt>
 <dt><u>:</u> <var>dataset_id</var> = <b>H5D.create</b><i> (<var>loc_id</var>, <var>name</var>, <var>dtype_id</var>, <var>space_id</var>, <var>lcpl_id</var>, <var>dcpl_id</var>, <var>dapl_id</var>)</i></dt>
 </dl>
-<p>Create a new dataset named <var>name</var> at the location specified by
-<var>loc_id</var>.
+<p>Create a dataset, <var>name</var>, which is attached to the object
+specified by the identifier <var>loc_id</var>.
 </p>
 <div class="ms-5">
-<p>The function associates constant and initial persistent properties with
-that dataset, including <var>dtype_id</var>, the datatype of each data element
-as stored in the file; <var>space_id</var>, the dataspace of the dataset;
-and other initial properties as defined in the dataset creation property
-and access property lists, <var>dcpl_id</var> and <var>dapl_id</var>, respectively.
-Once created, the dataset is opened for access.
+<p><strong>Parameters:</strong>
+ </p><table>
+<tr><td width="33%"><var>loc_id</var></td><td width="2%"></td><td width="65%">Location or object identifier</td></tr>
+<tr><td width="33%"><var>name</var></td><td width="2%"></td><td width="65%">Dataset name</td></tr>
+<tr><td width="33%"><var>dtype_id</var></td><td width="2%"></td><td width="65%">Datatype identifier</td></tr>
+<tr><td width="33%"><var>space_id</var></td><td width="2%"></td><td width="65%">Dataspace identifier</td></tr>
+<tr><td width="33%"><var>lcpl_id</var></td><td width="2%"></td><td width="65%">Link creation property list identifier</td></tr>
+<tr><td width="33%"><var>dcpl_id</var></td><td width="2%"></td><td width="65%">Dataset creation property list identifier</td></tr>
+<tr><td width="33%"><var>dapl_id</var></td><td width="2%"></td><td width="65%">Dataset access property list identifier</td></tr>
+</table>
+
+<p><strong>Description:</strong>
 </p>
-<p><var>loc_id</var> may be a file, group, dataset, named datatype or attribute.
-If an attribute, dataset, or named datatype is specified for <var>loc_id</var>
-then the dataset will be created at the location where the attribute,
-dataset, or named datatype is attached.  <var>name</var> may be either an
-absolute path in the file or a relative path from <var>loc_id</var> naming the
-dataset.
-</p>
-<p>If <var>dtype_id</var> is either a fixed-length or variable-length string,
-it is important to set the string length when defining the datatype.
-String datatypes are derived from <code>'H5T_C_S1'</code>
-(or <code>'H5T_FORTRAN_S1'</code> for Fortran codes), which defaults to 1
-character in size. See <code>H5T.set_size</code> function.
-</p>
-<p>If <var>dtype_id</var> is a committed datatype, and if the file location
-associated with the committed datatype is different from the file location
-where the dataset will be created, the datatype is copied and converted
-to a transient type.
-</p>
-<p>The link creation property list, <var>lcpl_id</var>, governs creation of the
-link(s) by which the new dataset is accessed and the creation of any
-intermediate groups that may be missing.
-</p>
-<p>The datatype and dataspace properties and the dataset creation and access
-property lists are attached to the dataset, so the caller may derive new
-datatypes, dataspaces, and creation and access properties from the old ones
-and reuse them in calls to create additional datasets.
-</p>
-<p>Once created, the dataset is ready to receive raw data. Immediately
-attempting to read raw data from the dataset will probably return the
-fill value.
-</p>
-<p>To conserve and release resources, the dataset should be closed when access
-is no longer required.
+<p>See original function at <a href="https://portal.hdfgroup.org/display/HDF5/H5D_CREATE2">https://portal.hdfgroup.org/display/HDF5/H5D_CREATE2</a>.
 </p>
 <p><strong>See also: </strong>
   <a href="H5D.open.html">H5D.open</a>, 
