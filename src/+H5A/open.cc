@@ -64,14 +64,10 @@ See original function at \
   return ovl (octave_int64 (attr_id));
 }
 
-
 /*
-%!test
-%! fail ("H5A.open ()", "Invalid call");
+%!fail ("H5A.open ()", "Invalid call");
 
-%!test
-%! fail ("H5A.open (123456789, 1, 1)", "NAME must be a string")
+%!fail ("H5A.open (123456789, 1, 1)", "NAME must be a string")
 
-%!test
-%! fail ("H5A.open (123456789, 'toto', 'toto')", "unknown AAPL_ID 'toto'")
+%!fail ("H5A.open (123456789, 'toto', 'toto')", "unknown AAPL_ID 'toto'")
 */

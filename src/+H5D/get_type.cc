@@ -27,13 +27,19 @@ DEFUN_DLD(get_type, args, nargout,
 @deftypefn {} {@var{type_id} = } H5D.get_type (@var{dataset_id})\n\
 Return an identifier for a copy of the datatype for a dataset.\n\
 \n\
-If a dataset has a named datatype, then an identifier to the opened\n\
-datatype is returned.  Otherwise, the returned datatype is read-only.\n\
-If atomization of the datatype fails, then the datatype is closed.\n\
 \n\
-A datatype identifier returned from this function should be released with\n\
-@code{H5T.close} when the identifier is no longer needed so that resource\n\
-leaks will not occur.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{dataset_id} @tab @tab Identifier of a dataset\n\
+ @end multitable\n\
+\n\
+\n\
+@strong{Description:}\n\
+\n\
+The datatype identifier @var{type_id} returned from this function must\n\
+be released with H5T.close or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5D_GET_TYPE}.\n\
 \n\
 @seealso{H5T.close}\n\
 @end deftypefn")
@@ -55,3 +61,11 @@ leaks will not occur.\n\
 
   return retval.append (octave_int64 (type_id));
 }
+
+/*
+%!fail ("H5D.get_type ()", "Invalid call");
+
+%!fail ("H5D.get_type ('toto')", "DATASET_ID must be a scalar numeric identifier");
+
+%!fail ("H5E.set_auto (false); H5A.get_type (-12345); H5E.set_auto (true)", "unable to retrieve data type");
+*/

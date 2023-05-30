@@ -28,10 +28,12 @@ DEFUN_DLD(get_type, args, nargout,
 Return a datatype identifier if successful; otherwise returns a negative \
 value.\n\
 \n\
+\n\
 @strong{Parameters:}\n\
  @multitable @columnfractions 0.33 0.02 0.65\n\
  @item @var{attr_id} @tab @tab Identifier of an attribute\n\
  @end multitable\n\
+\n\
 \n\
 @strong{Description:}\n\
 \n\
@@ -61,14 +63,10 @@ See original function at \
   return retval.append (octave_int64 (type_id));
 }
 
-
 /*
-%!test
-%! fail ("H5A.get_type ()", "Invalid call");
+%!fail ("H5A.get_type ()", "Invalid call");
 
-%!test
-%! fail ("H5A.get_type ('toto')", "ATTR_ID must be a scalar numeric identifier");
+%!fail ("H5A.get_type ('toto')", "ATTR_ID must be a scalar numeric identifier");
 
-%!test
-%! fail ("H5E.set_auto (false); H5A.get_type (1); H5E.set_auto (true)", "unable to retrieve data type");
+%!fail ("H5E.set_auto (false); H5A.get_type (1); H5E.set_auto (true)", "unable to retrieve data type");
 */

@@ -30,6 +30,18 @@ used by it.\n\
 \n\
 Further use of the dataset identifier is illegal in calls to\n\
 the dataset API.\n\
+\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{dataset_id} @tab @tab Dataset to release access to\n\
+ @end multitable\n\
+\n\
+\n\
+@strong{Description:}\n\
+\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5D_CLOSE}.\n\
+\n\
 @seealso{H5D.open,H5D.create}\n\
 @end deftypefn")
 {
@@ -48,3 +60,11 @@ the dataset API.\n\
 
   return retval;
 }
+
+/*
+%!fail ("H5D.close ()", "Invalid call")
+
+%!fail ("H5D.close (1, 2)", "Invalid call")
+
+%!fail ("H5D.close (-123456)", "unable to close dataset")
+*/

@@ -27,11 +27,18 @@ DEFUN_DLD(get_space, args, nargout,
 @deftypefn {} {@var{space_id} = } H5D.get_space (@var{dataset_id})\n\
 Make a copy of the dataspace of the dataset specified by @var{dataset_id}.\n\
 \n\
-The function returns an identifier for the new copy of the dataspace.\n\
 \n\
-A dataspace identifier returned from this function should be released with\n\
-@code{H5S.close} when the identifier is no longer needed so that resource\n\
-leaks will not occur.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{dataset_id} @tab @tab Identifier of a dataset\n\
+ @end multitable\n\
+\n\
+@strong{Description:}\n\
+\n\
+The dataspace identifier returned from this function must be \
+released with H5S.close or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5D_GET_SPACE}.\n\
 \n\
 @seealso{H5S.close}\n\
 @end deftypefn")
@@ -49,7 +56,15 @@ leaks will not occur.\n\
   hid_t space_id = H5Dget_space (dataset_id);
 
   if (space_id < 0)
-    error ("H5D.get_space: unable retrieve data space");
+    error ("H5D.get_space: unable to retrieve data space");
 
   return retval.append (octave_int64 (space_id));
 }
+
+/*
+%!fail ("H5D.get_space ()", "Invalid call");
+
+%!fail ("H5D.get_space ('toto')", "DATASET_ID must be a scalar numeric identifier");
+
+%!fail ("H5E.set_auto (false); H5D.get_space (1); H5E.set_auto (true)", "unable to retrieve data space");
+*/

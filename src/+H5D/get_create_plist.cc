@@ -28,8 +28,16 @@ DEFUN_DLD(get_create_plist, args, nargout,
 Return an identifier for a copy of the dataset creation property list\n\
 associated with the dataset specified by @var{dataset_id}.\n\
 \n\
-The creation property list identifier should be released with\n\
-@code{H5P.close}.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{dataset_id} @tab @tab Dataset identifier\n\
+ @end multitable\n\
+\n\
+\n\
+@strong{Description:}\n\
+\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5D_GET_CREATE_PLIST}.\n\
 \n\
 @seealso{H5P.close}\n\
 @end deftypefn")
@@ -47,7 +55,13 @@ The creation property list identifier should be released with\n\
   hid_t dcpl_id = H5Dget_create_plist (dataset_id);
 
   if (dcpl_id < 0)
-    error ("H5D.get_create_plist: unable retrieve creation property list");
+    error ("H5D.get_create_plist: unable to retrieve creation property list");
 
   return retval.append (octave_int64 (dcpl_id));
 }
+
+/*
+%!fail ("H5D.get_create_plist ()", "Invalid call");
+
+%!fail ("H5E.set_auto (false);H5D.get_create_plist (-123456);H5E.set_auto (true);", "unable to retrieve creation property list");
+*/

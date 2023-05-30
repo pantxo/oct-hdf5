@@ -28,17 +28,21 @@ DEFUN_DLD(open, args, nargout,
 Open the existing dataset specified by a location identifier and name,\n\
 @var{loc_id} and @var{name}, respectively.\n\
 \n\
-@var{loc_id} may be a file,\n\
-group, dataset, named datatype or attribute.  If an attribute, dataset,\n\
-or named datatype is specified for @var{loc_id} then the dataset will be\n\
-opened at the location where the attribute, dataset, or named datatype\n\
-is attached.\n\
 \n\
-The dataset access property list, @var{dapl_id}, provides information\n\
-regarding access to the dataset.\n\
+@strong{Parameters:}\n\
+ @multitable @columnfractions 0.33 0.02 0.65\n\
+ @item @var{loc_id} @tab @tab Location identifier; may be a file, group, \
+named datatype, dataset, or attribute\n\
+ @item @var{name} @tab @tab Dataset name\n\
+ @item @var{dapl_id} @tab @tab Dataset access property list\n\
 \n\
-To conserve and release resources, the dataset should be closed when access\n\
-is no longer required.\n\
+\n\
+@strong{Description:}\n\
+\n\
+The dataset identifier @var{dataset_id} returned from this function must\n\
+be released with H5D.close or resource leaks will develop.\n\
+See original function at \
+@url{https://portal.hdfgroup.org/display/HDF5/H5D_OPEN}.\n\
 \n\
 @seealso{H5D.close}\n\
 @end deftypefn")
@@ -67,3 +71,11 @@ is no longer required.\n\
 
   return ovl (octave_int64 (dataset_id));
 }
+
+/*
+%!fail ("H5D.open ()", "Invalid call");
+
+%!fail ("H5D.open (123456789, 1, 1)", "NAME must be a string")
+
+%!fail ("H5D.open (123456789, 'toto', 'toto')", "unknown DAPL_ID 'toto'")
+*/

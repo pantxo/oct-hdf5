@@ -33,6 +33,7 @@ Retrieve a copy of the dataspace for an attribute @var{attr_id}.\n\
  @item @var{attr_id} @tab @tab Identifier of an attribute\n\
  @end multitable\n\
 \n\
+\n\
 @strong{Description:}\n\
 \n\
 The dataspace identifier returned from this function must be \
@@ -61,14 +62,10 @@ See original function at \
   return retval.append (octave_int64 (space_id));
 }
 
-
 /*
-%!test
-%! fail ("H5A.get_space ()", "Invalid call");
+%!fail ("H5A.get_space ()", "Invalid call");
 
-%!test
-%! fail ("H5A.get_space ('toto')", "ATTR_ID must be a scalar numeric identifier");
+%!fail ("H5A.get_space ('toto')", "ATTR_ID must be a scalar numeric identifier");
 
-%!test
-%! fail ("H5E.set_auto (false); H5A.get_space (1); H5E.set_auto (true)", "unable to retrieve data space");
+%!fail ("H5E.set_auto (false); H5A.get_space (1); H5E.set_auto (true)", "unable to retrieve data space");
 */
