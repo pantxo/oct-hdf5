@@ -259,7 +259,15 @@ function [status, od_out] = op_func (loc_id, name, od_in)
       if (group_check (od_in.addr, infobuf.addr))
         debug_print ("%*s  Warning: Loop detected!\n", spaces, "");
       else
-        child_od = group_struct (name, [od_in.addr infobuf.addr]);
+        if (strcmp (od_in.Name, "__g__"))
+          basename = "";
+        elseif (strcmp (od_in.Name, "/"))
+          basename = "/";
+        else
+          basename = [od_in.Name "/"];
+        endif
+
+        child_od = group_struct ([basename name], [od_in.addr infobuf.addr]);
 
         [status, ii, cod_out] = H5L.iterate_by_name (loc_id, ...
                                                      name, ...
@@ -280,7 +288,7 @@ function [status, od_out] = op_func (loc_id, name, od_in)
 
         cod_out.Attributes = att_out;
 
-        od_in.Groups(end+1) = cod_out;
+        od_in.Groups = [od_in.Groups; cod_out];
       endif
 
     case cst.H5O_TYPE_DATASET
@@ -344,7 +352,7 @@ function [status, od_out] = op_func (loc_id, name, od_in)
                                                    "H5P_DEFAULT");
       ds.Attributes = att_out;
 
-      od_in.Datasets(end+1) = ds;
+      od_in.Datasets = [od_in.Datasets; ds];
 
     case cst.H5O_TYPE_NAMED_DATATYPE
 
@@ -360,3 +368,49 @@ endfunction
 %!fail ("h5info ('__some_non_existing_file__')", "FNAME must be an existing file name")
 
 %!fail ("h5info (which ('plot'))", "file signature not found")
+
+## Make sure Octave's output is consistent with ML's. Skip 'FillValue' which
+## is currently not implemented in Octave.
+
+%!test
+%! load ('h5info_mat7.mat')
+%! h5_info_oct = h5info (file_in_loadpath ('base_types_mat73.mat'));
+%! fields = fieldnames (h5_info.Datasets);
+%! for ii = 1:numel (h5_info.Datasets)
+%!   for jj = 1:numel (fields)
+%!     field = fields{jj};
+%!     if (strcmp (field, "FillValue"))
+%!       continue;
+%!     endif
+%!     assert (h5_info.Datasets(ii).(field), h5_info_oct.Datasets(ii).(field));
+%!   endfor
+%! endfor
+
+%!test
+%! warning ("off", "Octave:data-file-in-path", "local")
+%! load ('h5info_mat7.mat')
+%! h5_info_oct = h5info (file_in_loadpath ('base_types_mat73.mat'));
+%! fields = fieldnames (h5_info.Groups);
+%! for ii = 1:numel (h5_info.Groups)
+%!   for jj = 1:numel (fields)
+%!     field = fields{jj};
+%!     if (strcmp (field, "FillValue"))
+%!       continue;
+%!     endif
+%!     val1 = h5_info.Groups(ii).(field);
+%!     val2 = h5_info_oct.Groups(ii).(field);
+%!     if (isstruct (val1))
+%!       subfields = fieldnames (val1);
+%!
+%!       for kk = 1:numel (subfields);
+%!         subfield = subfields{kk};
+%!         if (strcmp (subfield, "FillValue"))
+%!           continue;
+%!         endif
+%!         val11 = val1.(subfield);
+%!         val22 = val2.(subfield);
+%!         assert (val11, val22);
+%!       endfor
+%!     endif
+%!   endfor
+%! endfor

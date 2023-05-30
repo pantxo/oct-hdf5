@@ -305,7 +305,13 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
       s.assign ("Class", "H5T_ENUM");
       break;
     case H5T_VLEN:
-      s.assign ("Class", "H5T_VLEN");
+      {
+        s.assign ("Class", "H5T_VLEN");
+        hid_t base_type_id = H5Tget_super (dtype);
+        octave_scalar_map info_struct;
+        dtype_to_struct (base_type_id, info_struct);
+        s.assign ("Type", info_struct);
+      }
       break;
     case H5T_ARRAY:
       s.assign ("Class", "H5T_ARRAY");
