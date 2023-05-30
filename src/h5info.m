@@ -110,7 +110,7 @@ function s = h5info (fname, obj_name = "/")
     endif
 
     ## Restore previous error printing
-    H5E.set_auto (false);
+    H5E.set_auto (true);
   end_unwind_protect
 endfunction
 
