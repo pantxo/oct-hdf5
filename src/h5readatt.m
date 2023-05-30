@@ -29,45 +29,80 @@
 
 function data = h5readatt (fname, path, attr)
 
-  file = H5F.open (fname);
-
-  infobuf = H5O.get_info_by_name (file, path, "H5P_DEFAULT");
-
-  obj_id = [];
-  attr_id = [];
+  if (nargin != 3)
+    print_usage ()
+  elseif (! exist (fname, "file"))
+    error ("h5readatt: FNAME must be an existing file name")
+  endif
 
   unwind_protect
 
+    file = [];
+    obj_id = [];
+    attr_id = [];
 
-    switch (infobuf.type)
+    H5E.set_auto (false);
+    try
+      file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
+    catch
+      rethrow_h5error ()
+    end_try_catch
 
-      case H5ML.get_constant_value ("H5O_TYPE_GROUP")
-        obj_id = H5G.open (file, path, "H5P_DEFAULT");
-        attr_id = H5A.open (obj_id, attr, "H5P_DEFAULT");
-        data = H5A.read (attr_id);
+    try
+      obj_id = H5O.open (file, path, "H5P_DEFAULT");
+    catch
+      rethrow_h5error ()
+    end_try_catch
 
-      case H5ML.get_constant_value ("H5O_TYPE_DATASET")
-        obj_id = H5D.open (file, path, "H5P_DEFAULT");
-        attr_id = H5A.open (obj_id, attr, "H5P_DEFAULT");
-        data = H5A.read (attr_id);
+    try
+      attr_id = H5A.open (obj_id, attr, "H5P_DEFAULT");
+    catch
+      rethrow_h5error ()
+    end_try_catch
 
-      otherwise
-        error ("h5readatt: unhandled object type")
-
-    endswitch
+    try
+      data = H5A.read (attr_id);
+    catch
+      rethrow_h5error ()
+    end_try_catch
 
   unwind_protect_cleanup
 
-    if (! isempty (attr_id))
-      H5A.close (attr_id);
+    if (! isempty (file))
+      H5F.close (file);
     endif
 
     if (! isempty (obj_id))
       H5O.close (obj_id);
     endif
 
-    H5F.close (file);
+    if (! isempty (attr_id))
+      H5A.close (attr_id);
+    endif
 
+    ## Restore previous error printing
+    H5E.set_auto (true);
   end_unwind_protect
 
 endfunction
+
+function rethrow_h5error ()
+  H5E.walk ("H5E_WALK_UPWARD", @error_walker);
+endfunction
+
+function status = error_walker (n, s)
+  msg = [lasterr() " (" s.desc ")"];
+  error (msg);
+  status = -1;
+endfunction
+
+%!fail ('h5readatt ()', 'Invalid call')
+
+%!fail ("h5readatt ('__some_non_existing_file__', 'some_location', 'some_att')", "FNAME must be an existing file name")
+
+%!fail ("h5readatt (file_in_loadpath ('base_types_mat73.mat'), 'some_location', 'some_att')", "object 'some_location' doesn't exist")
+
+%!fail ("h5readatt (file_in_loadpath ('base_types_mat73.mat'), '/char_vector', 'some_att')", "can't locate attribute")
+
+%!test
+%! assert (h5readatt (file_in_loadpath ('base_types_mat73.mat'), '/char_vector', 'MATLAB_class'), 'char')

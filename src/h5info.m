@@ -78,8 +78,8 @@ function s = h5info (fname, obj_name = "/")
     H5E.set_auto (false);
     try
       file = H5F.open (fname, "H5F_ACC_RDONLY", "H5P_DEFAULT");
-    catch ee
-      rethrow_h5error (ee)
+    catch
+      rethrow_h5error ()
     end_try_catch
 
     ## Begin iteration.
@@ -114,7 +114,7 @@ function s = h5info (fname, obj_name = "/")
   end_unwind_protect
 endfunction
 
-function rethrow_h5error (ee)
+function rethrow_h5error ()
   H5E.walk ("H5E_WALK_UPWARD", @error_walker);
 endfunction
 
