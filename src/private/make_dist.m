@@ -32,13 +32,13 @@ function make_dist (srcdir, targetdir)
   endif
 
   copyfile (fullfile (srcdir, "..", "test", "data", "*.mat"), testdir);
-  
+
   matio_test_file = fullfile (srcdir, "..", "test", "matio_test_datasets", ...
                               "matio_test_cases_uncompressed_hdf_le.mat");
   if (exist (matio_test_file, "file"))
     copyfile (matio_test_file, testdir);
   endif
-  
+
   copyfile (fullfile (srcdir, "..", "test", "matio_test_cases.m"), testdir);
 
   ## PKG_ADD/DEL files
@@ -58,7 +58,7 @@ function make_dist (srcdir, targetdir)
            "src/Makefile", "src/*.m", ...
            "src/+H5*/Makefile", "src/+H5*/*.cc", ...
            "src/util/*.h", "src/util/*.cc", "src/util/Makefile", ...
-           "inst/PKG_ADD", "inst/PKG_DEL", "inst/testdir/*"};
+           "doc/*", "inst/PKG_ADD", "inst/PKG_DEL", "inst/testdir/*"};
 
   files = cellfun (@(f) fullfile ("oct-hdf5", f), files, "uni", false);
 
