@@ -168,4 +168,10 @@ See original function at \
 
 %!test
 %! h5ex_d_rdwr ('double')
+
+%!test
+%! f = H5F.open (file_in_loadpath ('h5ex_t_vlstring.h5'));
+%! d = H5D.open (f, "/DS1");
+%! assert (H5D.read (d), {'Parting';'is such';'sweet';'sorrow.'})
+
 */
