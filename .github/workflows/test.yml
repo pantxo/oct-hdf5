@@ -21,7 +21,7 @@ jobs:
       - name: Check Out the Repo
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: 'false'
 
       - name: Build oct-hdf5
         run: make -j $(nproc)
