@@ -135,33 +135,63 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
             nstrings *= dv(--ndims);
         }
 
-      OCTAVE_LOCAL_BUFFER (char, str, (slen+1) * nstrings);
-
       herr_t status;
-      if (read_fcn == 0)
-        status = H5Dread (object_id, mem_type_id, mem_space_id,
-                          file_space_id, xfer_plist_id, str);
+
+      // H5Dread expects a char** with memory allocated for dimensions only
+      // for vlstrings . In this case HDF5 allocates the necessary
+      // memory for the actual char internally so we finally have to reclaim
+      // owwnership of the pointer and free it ourselves.
+      char **rdata;
+      rdata = (char **)malloc (nstrings * sizeof (char *));
+
+      // Check if this is a vl string
+      octave_value sz = info_struct.getfield ("Type").scalar_map_value ()
+        .getfield ("Length");
+      bool is_vlstring = sz.is_string ()
+        && sz.string_value ().compare ("H5T_VARIABLE") == 0;
+
+      if (! is_vlstring)
+        {
+          rdata[0] = (char *)malloc ((slen+1) * nstrings * sizeof (char));
+          for (int ii = 1; ii < nstrings; ii++)
+            rdata[ii] = rdata[0] + ii * (slen + 1);
+          mem_type_id = H5Tcopy (H5T_C_S1);
+          H5Tset_size (mem_type_id, slen + 1);
+        }
       else
-        status = H5Aread (object_id, mem_type_id, str);
+        mem_space_id = H5Dget_space (object_id);
+
+      if (read_fcn == 0)
+        if (is_vlstring)
+          status = H5Dread (object_id, mem_type_id, mem_space_id,
+                            file_space_id, xfer_plist_id, rdata);
+        else
+          status = H5Dread (object_id, mem_type_id, mem_space_id,
+                            file_space_id, xfer_plist_id, rdata[0]);
+      else
+        if (is_vlstring)
+          status = H5Aread (object_id, mem_type_id, rdata);
+        else
+          status = H5Aread (object_id, mem_type_id, rdata[0]);
 
       if (status < 0)
         error ("%s: unable to read string data", caller.c_str ());
 
       if (nstrings == 1)
-        retval = octave_value (std::string (str));
+        retval = octave_value (std::string (rdata[0]));
       else
         {
           Cell cell_str (dv);
-          char strtmp[slen+1];
 
           for (int ii = 0; ii < nstrings; ii++)
-            {
-              std::strcpy (strtmp, &str[ii*slen]);
-              cell_str(ii) = octave_value (std::string (strtmp));
-            }
+            cell_str(ii) = octave_value (std::string (rdata[ii]));
 
           retval = octave_value (cell_str);
         }
+
+      if (is_vlstring)
+        H5Dvlen_reclaim (mem_type_id, mem_space_id, H5P_DEFAULT, rdata);
+      free (rdata);
     }
   else if (cls == "H5T_REFERENCE")
     {
