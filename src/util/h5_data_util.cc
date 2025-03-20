@@ -359,8 +359,6 @@ __h5write__ (const std::string& caller, const octave_value& ov,
     }
   else if (H5Tequal (mem_type_id, H5T_NATIVE_INT64) > 0)
     {
-      mem_type_id = H5T_NATIVE_INT64;
-
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
                            xfer_plist_id,
@@ -371,8 +369,6 @@ __h5write__ (const std::string& caller, const octave_value& ov,
     }
   else if (H5Tequal (mem_type_id, H5T_NATIVE_UINT8) > 0)
     {
-      mem_type_id = H5T_NATIVE_UINT8;
-
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
                            xfer_plist_id,
