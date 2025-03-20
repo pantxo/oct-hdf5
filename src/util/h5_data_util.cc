@@ -174,9 +174,6 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
         else
           status = H5Aread (object_id, mem_type_id, rdata[0]);
 
-      if (status < 0)
-        error ("%s: unable to read string data", caller.c_str ());
-
       if (nstrings == 1)
         retval = octave_value (std::string (rdata[0]));
       else
@@ -189,9 +186,19 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
           retval = octave_value (cell_str);
         }
 
+      // Cleanup
       if (is_vlstring)
-        H5Dvlen_reclaim (mem_type_id, mem_space_id, H5P_DEFAULT, rdata);
+        {
+          H5Dvlen_reclaim (mem_type_id, mem_space_id, H5P_DEFAULT, rdata);
+          H5Sclose (mem_space_id);
+        }
+      else
+        H5Tclose (mem_type_id);
+      
       free (rdata);
+
+      if (status < 0)
+        error ("%s: unable to read string data", caller.c_str ());
     }
   else if (cls == "H5T_REFERENCE")
     {
