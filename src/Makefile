@@ -27,8 +27,11 @@ all:
 index: all
 	$(OCTAVE) -f --eval "cd private; make_index ('$(PWD)')"
 
-dist: index 
+dist: index
 	$(OCTAVE) -f --eval "cd private; make_dist ('$(PWD)', '$(PWD)/..')"
+
+docs: dist
+	$(OCTAVE) -f --eval "cd private; make_docs ('$(PWD)/..')"
 
 check: all
 	$(OCTAVE) -f --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval "__oct_hdf5_tests__ ('$(PWD)')"
