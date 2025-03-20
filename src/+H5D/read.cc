@@ -172,6 +172,9 @@ See original function at \
 %!test
 %! f = H5F.open (file_in_loadpath ('h5ex_t_vlstring.h5'));
 %! d = H5D.open (f, "/DS1");
-%! assert (H5D.read (d), {'Parting';'is such';'sweet';'sorrow.'})
+%! t = H5D.read (d);
+%! H5D.close (d);
+%! H5F.close (f);
+%! assert (t, {'Parting';'is such';'sweet';'sorrow.'})
 
 */
