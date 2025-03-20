@@ -50,5 +50,6 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
 void
 __h5write__ (const std::string& caller, const octave_value& ov,
              hid_t object_id, hid_t mem_type_id, hid_t mem_space_id = H5S_ALL,
-             hid_t file_space_id = H5S_ALL, hid_t xfer_plist_id = H5P_DEFAULT);
+             hid_t file_space_id = H5S_ALL, hid_t xfer_plist_id = H5P_DEFAULT,
+             hid_t field_type_id = H5_INDEX_UNKNOWN);
 #endif

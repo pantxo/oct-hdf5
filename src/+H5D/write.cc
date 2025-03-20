@@ -63,3 +63,27 @@ DEFUN_DLD(write, args, nargout,
 
   return retval;
 }
+
+/*
+%!test
+% data = 122 + 245.56i;
+% fname = tempname ();
+% fid = H5F.create (tempname (), 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
+% typeid = H5T.copy ('H5T_IEEE_F64LE');
+% sizeid = H5S.create_simple(ndims (data), fliplr (size (data)),
+%                            fliplr (size (data)));
+% elemsize = H5T.get_size (typeid);
+% memtype = H5T.create ('H5T_COMPOUND', elemsize * 2);
+% H5T.insert (memtype, 'Real', 0, typeid);
+% H5T.insert (memtype, 'Imag', elemsize, typeid);
+% oid = H5D.create (fid, '/a', memtype, sizeid, 'H5P_DEFAULT');
+% data = struct ('Real', real (data), 'Imag', imag (data));
+% H5D.write (oid, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', data);
+% H5T.close (memtype);
+% H5T.close (typeid);
+% H5D.close(oid);
+% H5F.close(fid);
+% ## We went so far, it's ok
+% delete (fname);
+% assert (true)
+*/

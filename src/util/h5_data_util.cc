@@ -282,7 +282,7 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
 void
 __h5write__ (const std::string& caller, const octave_value& ov,
              hid_t object_id, hid_t mem_type_id, hid_t mem_space_id,
-             hid_t file_space_id, hid_t xfer_plist_id)
+             hid_t file_space_id, hid_t xfer_plist_id, hid_t field_type_id)
 {
   // Decide which hdf5 function to call based on caller name
   int wrt_fcn;
@@ -314,7 +314,11 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         mem_type_id = H5Aget_type (object_id);
     }
 
-  if (H5Tequal (mem_type_id, H5T_NATIVE_DOUBLE) > 0)
+  hid_t sub_type_id = mem_type_id;
+  if (field_type_id != H5_INDEX_UNKNOWN)
+    sub_type_id = field_type_id;
+
+  if (H5Tequal (sub_type_id, H5T_NATIVE_DOUBLE) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -324,7 +328,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
                            ov.array_value ().data ());
 
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_FLOAT) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_FLOAT) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -334,7 +338,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.float_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_INT8) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_INT8) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -344,7 +348,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.int8_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_INT16) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_INT16) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -354,7 +358,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.int16_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_INT32) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_INT32) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -364,7 +368,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.int32_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_INT64) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_INT64) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -374,7 +378,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.int64_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_UINT8) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_UINT8) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -384,7 +388,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.uint8_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_UINT16) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_UINT16) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -394,7 +398,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.uint16_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_UINT32) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_UINT32) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -404,7 +408,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.uint32_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_NATIVE_UINT64) > 0)
+  else if (H5Tequal (sub_type_id, H5T_NATIVE_UINT64) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -414,7 +418,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.uint64_array_value ().data ());
     }
-  else if (H5Tequal (mem_type_id, H5T_STD_REF_OBJ) > 0)
+  else if (H5Tequal (sub_type_id, H5T_STD_REF_OBJ) > 0)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -424,7 +428,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.int64_array_value ().data ());
     }
-  else if (H5Tget_class (mem_type_id) == H5T_STRING)
+  else if (H5Tget_class (sub_type_id) == H5T_STRING)
     {
       if (wrt_fcn == 0)
         status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
@@ -434,7 +438,38 @@ __h5write__ (const std::string& caller, const octave_value& ov,
         status = H5Awrite (object_id, mem_type_id,
                            ov.string_value ().c_str ());
     }
+  else if (H5Tget_class (sub_type_id) == H5T_COMPOUND)
+    {
+      // Expect a scalar input structure
+      octave_scalar_map data =
+        ov.xscalar_map_value ("H5D.write: expecting a scalar structure "
+                              "for compound data type");
+      
+      size_t nfields = H5Tget_nmembers (sub_type_id);
 
+      for (size_t ii = 0; ii < nfields; ii++)
+        {
+          char *name = H5Tget_member_name (sub_type_id, ii);
+          if (data.isfield (name))
+            {
+              hid_t field_type_id  = H5Tget_member_type (sub_type_id, ii);
+
+              size_t sz = H5Tget_size (field_type_id);
+
+              hid_t type_id = H5Tcreate (H5T_COMPOUND, sz);
+
+              H5Tinsert (type_id, name, 0, field_type_id);
+
+              const octave_value val = data.getfield (name);
+
+              __h5write__ (caller, val, object_id, type_id,
+                           mem_space_id, file_space_id, xfer_plist_id,
+                           field_type_id);
+              // We went that far, all is ok.
+              status = 0;
+            }
+        }
+    }
   if (auto_type)
     H5Tclose (mem_type_id);
 
