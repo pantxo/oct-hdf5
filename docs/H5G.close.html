@@ -10,13 +10,40 @@
     <script type="text/javascript" async
       src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
     </script>
+    <script type="text/javascript">
+      window.addEventListener("load", () => {
+        for (let i of document.querySelectorAll(".collapse ul")) {
+          let tog = document.createElement("div");
+          tog.innerHTML = i.previousSibling.textContent;
+          tog.className = "toggle";
+          tog.onclick = () => tog.classList.toggle("show");
+          i.parentElement.removeChild(i.previousSibling);
+          i.parentElement.insertBefore(tog, i);
+        }
+      });
+    </script>
     <style>
+    h6:hover {
+      color: gray;
+    }
     var {
       font-style: italics;
       font-weight: bold;
     }
     td {
       vertical-align: top;
+    }
+    [id^="togList"],                        /* HIDE CHECKBOX */
+    [id^="togList"] ~ .list,                /* HIDE LIST */
+    [id^="togList"] + label  span + span,   /* HIDE "Collapse" */
+    [id^="togList"]:checked + label span{   /* HIDE "Expand" (IF CHECKED) */
+      display:none;
+    }
+    [id^="togList"]:checked + label span + span{
+      display:inline-block;                 /* SHOW "Collapse" (IF CHECKED) */
+    }
+    [id^="togList"]:checked ~ .list{
+      display:block;                        /* SHOW LIST (IF CHECKED) */
     }
     </style>
   </head>
@@ -59,17 +86,258 @@
       </div>
     </div>
     <div class="container-xl my-4">
-      <div class="card rounded">
-        <div class="card-header card-header-mod">
-          <div class="row d-flex flex-wrap align-items-center">
-            <div class="col-sm-3 col-md-5 mb-2 mb-sm-0">
-              <h3 class="d-inline-block mr-2">
-              Function&nbsp;Reference: <b><code>H5G.close</code></b>
-              </h3>
-            </div>
+      <div class="row flex-nowrap" style="min-height:0">
+        <div class="col-md-2 bg-light" style="overflow-y: scroll; width: 250px;">
+          <div class="p-2" style="text-align: center;">
+            <h3>Categories &</h3>
+            <h4 style="color: blue">Functions List</h4>
           </div>
-        </div>
-        <div class="card-body">
+			<div class="row">
+				<input id="togList1" type="checkbox">
+				<label for="togList1">
+					<span><h6>H5A</h6></span>
+					<span><h6>H5A</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5A.close.html" class="text-decoration-none font-monospace"><small>H5A.close</small></a></li>
+					<li><a href="H5A.create.html" class="text-decoration-none font-monospace"><small>H5A.create</small></a></li>
+					<li><a href="H5A.get_num_attrs.html" class="text-decoration-none font-monospace"><small>H5A.get_num_attrs</small></a></li>
+					<li><a href="H5A.get_space.html" class="text-decoration-none font-monospace"><small>H5A.get_space</small></a></li>
+					<li><a href="H5A.get_type.html" class="text-decoration-none font-monospace"><small>H5A.get_type</small></a></li>
+					<li><a href="H5A.iterate.html" class="text-decoration-none font-monospace"><small>H5A.iterate</small></a></li>
+					<li><a href="H5A.iterate_by_name.html" class="text-decoration-none font-monospace"><small>H5A.iterate_by_name</small></a></li>
+					<li><a href="H5A.open.html" class="text-decoration-none font-monospace"><small>H5A.open</small></a></li>
+					<li><a href="H5A.open_name.html" class="text-decoration-none font-monospace"><small>H5A.open_name</small></a></li>
+					<li><a href="H5A.read.html" class="text-decoration-none font-monospace"><small>H5A.read</small></a></li>
+					<li><a href="H5A.write.html" class="text-decoration-none font-monospace"><small>H5A.write</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList2" type="checkbox">
+				<label for="togList2">
+					<span><h6>H5D</h6></span>
+					<span><h6>H5D</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5D.close.html" class="text-decoration-none font-monospace"><small>H5D.close</small></a></li>
+					<li><a href="H5D.create.html" class="text-decoration-none font-monospace"><small>H5D.create</small></a></li>
+					<li><a href="H5D.get_create_plist.html" class="text-decoration-none font-monospace"><small>H5D.get_create_plist</small></a></li>
+					<li><a href="H5D.get_space.html" class="text-decoration-none font-monospace"><small>H5D.get_space</small></a></li>
+					<li><a href="H5D.get_type.html" class="text-decoration-none font-monospace"><small>H5D.get_type</small></a></li>
+					<li><a href="H5D.open.html" class="text-decoration-none font-monospace"><small>H5D.open</small></a></li>
+					<li><a href="H5D.read.html" class="text-decoration-none font-monospace"><small>H5D.read</small></a></li>
+					<li><a href="H5D.write.html" class="text-decoration-none font-monospace"><small>H5D.write</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList3" type="checkbox">
+				<label for="togList3">
+					<span><h6>H5E</h6></span>
+					<span><h6>H5E</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5E.get_class_name.html" class="text-decoration-none font-monospace"><small>H5E.get_class_name</small></a></li>
+					<li><a href="H5E.get_major.html" class="text-decoration-none font-monospace"><small>H5E.get_major</small></a></li>
+					<li><a href="H5E.get_msg.html" class="text-decoration-none font-monospace"><small>H5E.get_msg</small></a></li>
+					<li><a href="H5E.oclear.html" class="text-decoration-none font-monospace"><small>H5E.oclear</small></a></li>
+					<li><a href="H5E.set_auto.html" class="text-decoration-none font-monospace"><small>H5E.set_auto</small></a></li>
+					<li><a href="H5E.walk.html" class="text-decoration-none font-monospace"><small>H5E.walk</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList4" type="checkbox">
+				<label for="togList4">
+					<span><h6>H5F</h6></span>
+					<span><h6>H5F</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5F.close.html" class="text-decoration-none font-monospace"><small>H5F.close</small></a></li>
+					<li><a href="H5F.create.html" class="text-decoration-none font-monospace"><small>H5F.create</small></a></li>
+					<li><a href="H5F.open.html" class="text-decoration-none font-monospace"><small>H5F.open</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList5" type="checkbox" checked>
+				<label for="togList5">
+					<span><h6>H5G</h6></span>
+					<span><h6>H5G</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5G.close.html" class="text-decoration-none font-monospace fw-bolder"><small>H5G.close</small></a></li>
+					<li><a href="H5G.create.html" class="text-decoration-none font-monospace"><small>H5G.create</small></a></li>
+					<li><a href="H5G.open.html" class="text-decoration-none font-monospace"><small>H5G.open</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList6" type="checkbox">
+				<label for="togList6">
+					<span><h6>H5I</h6></span>
+					<span><h6>H5I</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5I.get_name.html" class="text-decoration-none font-monospace"><small>H5I.get_name</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList7" type="checkbox">
+				<label for="togList7">
+					<span><h6>H5L</h6></span>
+					<span><h6>H5L</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5L.iterate.html" class="text-decoration-none font-monospace"><small>H5L.iterate</small></a></li>
+					<li><a href="H5L.iterate_by_name.html" class="text-decoration-none font-monospace"><small>H5L.iterate_by_name</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList8" type="checkbox">
+				<label for="togList8">
+					<span><h6>H5LT</h6></span>
+					<span><h6>H5LT</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5LT.dtype_to_struct.html" class="text-decoration-none font-monospace"><small>H5LT.dtype_to_struct</small></a></li>
+					<li><a href="H5LT.dtype_to_text.html" class="text-decoration-none font-monospace"><small>H5LT.dtype_to_text</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList9" type="checkbox">
+				<label for="togList9">
+					<span><h6>H5ML</h6></span>
+					<span><h6>H5ML</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5ML.compare_values.html" class="text-decoration-none font-monospace"><small>H5ML.compare_values</small></a></li>
+					<li><a href="H5ML.get_constant_names.html" class="text-decoration-none font-monospace"><small>H5ML.get_constant_names</small></a></li>
+					<li><a href="H5ML.get_constant_value.html" class="text-decoration-none font-monospace"><small>H5ML.get_constant_value</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList10" type="checkbox">
+				<label for="togList10">
+					<span><h6>H5O</h6></span>
+					<span><h6>H5O</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5O.close.html" class="text-decoration-none font-monospace"><small>H5O.close</small></a></li>
+					<li><a href="H5O.get_info_by_name.html" class="text-decoration-none font-monospace"><small>H5O.get_info_by_name</small></a></li>
+					<li><a href="H5O.open.html" class="text-decoration-none font-monospace"><small>H5O.open</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList11" type="checkbox">
+				<label for="togList11">
+					<span><h6>H5P</h6></span>
+					<span><h6>H5P</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5P.close.html" class="text-decoration-none font-monospace"><small>H5P.close</small></a></li>
+					<li><a href="H5P.create.html" class="text-decoration-none font-monospace"><small>H5P.create</small></a></li>
+					<li><a href="H5P.fill_value_defined.html" class="text-decoration-none font-monospace"><small>H5P.fill_value_defined</small></a></li>
+					<li><a href="H5P.get_chunk.html" class="text-decoration-none font-monospace"><small>H5P.get_chunk</small></a></li>
+					<li><a href="H5P.get_layout.html" class="text-decoration-none font-monospace"><small>H5P.get_layout</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList12" type="checkbox">
+				<label for="togList12">
+					<span><h6>H5R</h6></span>
+					<span><h6>H5R</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5R.create.html" class="text-decoration-none font-monospace"><small>H5R.create</small></a></li>
+					<li><a href="H5R.dereference.html" class="text-decoration-none font-monospace"><small>H5R.dereference</small></a></li>
+					<li><a href="H5R.get_obj_type.html" class="text-decoration-none font-monospace"><small>H5R.get_obj_type</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList13" type="checkbox">
+				<label for="togList13">
+					<span><h6>H5S</h6></span>
+					<span><h6>H5S</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5S.close.html" class="text-decoration-none font-monospace"><small>H5S.close</small></a></li>
+					<li><a href="H5S.create.html" class="text-decoration-none font-monospace"><small>H5S.create</small></a></li>
+					<li><a href="H5S.create_simple.html" class="text-decoration-none font-monospace"><small>H5S.create_simple</small></a></li>
+					<li><a href="H5S.get_simple_extent_dims.html" class="text-decoration-none font-monospace"><small>H5S.get_simple_extent_dims</small></a></li>
+					<li><a href="H5S.get_simple_extent_type.html" class="text-decoration-none font-monospace"><small>H5S.get_simple_extent_type</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList14" type="checkbox">
+				<label for="togList14">
+					<span><h6>H5T</h6></span>
+					<span><h6>H5T</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="H5T.array_create.html" class="text-decoration-none font-monospace"><small>H5T.array_create</small></a></li>
+					<li><a href="H5T.close.html" class="text-decoration-none font-monospace"><small>H5T.close</small></a></li>
+					<li><a href="H5T.copy.html" class="text-decoration-none font-monospace"><small>H5T.copy</small></a></li>
+					<li><a href="H5T.create.html" class="text-decoration-none font-monospace"><small>H5T.create</small></a></li>
+					<li><a href="H5T.get_class.html" class="text-decoration-none font-monospace"><small>H5T.get_class</small></a></li>
+					<li><a href="H5T.get_order.html" class="text-decoration-none font-monospace"><small>H5T.get_order</small></a></li>
+					<li><a href="H5T.get_size.html" class="text-decoration-none font-monospace"><small>H5T.get_size</small></a></li>
+					<li><a href="H5T.insert.html" class="text-decoration-none font-monospace"><small>H5T.insert</small></a></li>
+					<li><a href="H5T.set_cset.html" class="text-decoration-none font-monospace"><small>H5T.set_cset</small></a></li>
+					<li><a href="H5T.set_order.html" class="text-decoration-none font-monospace"><small>H5T.set_order</small></a></li>
+					<li><a href="H5T.set_size.html" class="text-decoration-none font-monospace"><small>H5T.set_size</small></a></li>
+				</ul>
+				</div>
+			</div>
+			<div class="row">
+				<input id="togList15" type="checkbox">
+				<label for="togList15">
+					<span><h6>High Level Functions</h6></span>
+					<span><h6>High Level Functions</h6></span>
+				</label>
+				<div class="list">
+				<ul style="list-style-type: none; padding-left: 20px;">
+					<li><a href="h5info.html" class="text-decoration-none font-monospace"><small>h5info</small></a></li>
+					<li><a href="h5readatt.html" class="text-decoration-none font-monospace"><small>h5readatt</small></a></li>
+					<li><a href="read_mat73.html" class="text-decoration-none font-monospace"><small>read_mat73</small></a></li>
+				</ul>
+				</div>
+			</div>
+
+			  </div>
+			  <div class="col-md-10">
+          <div class="card rounded">
+            <div class="card-header card-header-mod">
+              <div class="row d-flex flex-wrap align-items-center">
+                <h3 class="d-inline-block mr-2">
+                Function&nbsp;Reference: <b><code>H5G.close</code></b>
+                </h3>
+              </div>
+            </div>
+            <div class="card-body">
 dl>
 <dt><u>:</u> <b>H5G.close</b><i> (<var>group_id</var>)</i></dt>
 </dl>
@@ -88,6 +356,8 @@ or <code>H5G_OPEN</code>.
   <a href="">H5G.close</a>
 </div>
 
+            </div>
+          </div>
         </div>
       </div>
     </div>
