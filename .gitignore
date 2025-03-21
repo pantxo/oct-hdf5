@@ -12,3 +12,6 @@ fntests.log
 
 ## Ignore tarball
 oct-hdf5.tar.gz
+
+## Ignore all files in the docs dir
+docs/*
