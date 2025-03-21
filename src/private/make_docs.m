@@ -23,7 +23,7 @@ function make_docs (basedir)
 
   docdir = fullfile (basedir, "docs");
   if (! exist (docdir, "dir"))
-    mkdir (testdir);
+    mkdir (docdir);
   else
     warning ("off", "Octave:delete:no-such-file", "local")
     ## Delete previously present files
