@@ -44,7 +44,7 @@ Only data with atomic HDF5 data types are handled. See @code{help H5D.read} \
 for details about automatic data type conversion.\n\
 \n\
 See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_READ}.\n\
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
 \n\
 @seealso{H5D.read}\n\
 @end deftypefn")

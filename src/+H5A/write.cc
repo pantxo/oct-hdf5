@@ -41,6 +41,9 @@ in size. See @code{H5T.set_size}.\n\
 Datatype conversion takes place at the time of a read or write and is\n\
 automatic.\n\
 \n\
+See original function at \
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
+\n\
 @seealso{H5A.read}\n\
 @end deftypefn")
 {

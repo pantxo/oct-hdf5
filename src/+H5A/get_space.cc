@@ -38,10 +38,11 @@ Retrieve a copy of the dataspace for an attribute @var{attr_id}.\n\
 \n\
 The dataspace identifier returned from this function must be \
 released with H5S.close or resource leaks will develop.\n\
-See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_GET_SPACE}.\n\
 \n\
-@seealso{H5S.close}\n\
+See original function at \
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
+\n\
+@seealso{H5A.open}\n\
 @end deftypefn")
 {
   octave_value_list retval;

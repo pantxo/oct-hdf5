@@ -41,7 +41,7 @@ specified by the identifier @var{loc_id}.\n\
 @strong{Description:}\n\
 \n\
 See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_CREATE}.\n\
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
 \n\
 @seealso{H5A.open,H5A.close}\n\
 @end deftypefn")

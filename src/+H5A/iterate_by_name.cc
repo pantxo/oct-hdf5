@@ -105,9 +105,9 @@ return value of @var{idx_out}.\n\
 The link access property list, @var{lapl_id}, may provide information\n\
 regarding the properties of links required to access the object,\n\
 @var{obj_name}.  See 'Link Access Properties' in the H5P APIs.\n\
-See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_ITERATE_BY_NAME}.\n\
 \n\
+See original function at \
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
 @seealso{H5A.iterate}\n\
 @end deftypefn")
 {

@@ -1,6 +1,6 @@
 /*
 
-Copyright (C) 2021-2023 Pantxo Diribarne
+Copyright (C) 2021-2025 Pantxo Diribarne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Terminates access to the attribute specified by @var{attr_id}.\n\
 @strong{Description:}\n\
 \n\
 See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_CLOSE}.\n\
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
 \n\
 @seealso{H5A.open}\n\
 @end deftypefn")

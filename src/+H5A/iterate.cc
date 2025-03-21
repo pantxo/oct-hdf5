@@ -98,8 +98,9 @@ Causes the iterator to immediately return that value, indicating failure.\n\
 The iterator can be restarted at the next attribute, as indicated by the\n\
 return value of @var{idx_out}.\n\
 @end table\n\
+\n\
 See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_ITERATE2}.\n\
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
 \n\
 @seealso{H5A.iterate_by_name}\n\
 @end deftypefn")

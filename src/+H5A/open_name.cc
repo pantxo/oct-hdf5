@@ -34,6 +34,9 @@ which may have any sort of attribute.\n\
 The attribute identifier @var{attr_id} returned by this function must be\n\
 released with H5A.close or resource leaks will develop.\n\
 \n\
+See original function at \
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
+\n\
 @seealso{H5A.close}\n\
 @end deftypefn")
 {

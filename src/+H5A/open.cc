@@ -36,9 +36,9 @@ further purpose, including reading, writing, or any modification.\n\
 \n\
 The attribute identifier @var{attr_id} returned by this function must be\n\
 released with H5A.close or resource leaks will develop.\n\
-See original function at \
-@url{https://portal.hdfgroup.org/display/HDF5/H5A_OPEN}.\n\
 \n\
+See original function at \
+@url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_a.html}.\n\
 @seealso{H5A.close}\n\
 @end deftypefn")
 {
