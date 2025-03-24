@@ -1,0 +1,103 @@
+octfile_template = fullfile (fileparts (mfilename ("fullpath")), ...
+                             "__H5%s__.oct");
+
+## A
+octfile = sprintf (octfile_template, "A");
+autoload ("__H5A_close__", octfile)
+autoload ("__H5A_create__", octfile)
+autoload ("__H5A_get_num_attrs__", octfile)
+autoload ("__H5A_get_space__", octfile)
+autoload ("__H5A_get_type__", octfile)
+autoload ("__H5A_iterate__", octfile)
+autoload ("__H5A_iterate_by_name__", octfile)
+autoload ("__H5A_open__", octfile)
+autoload ("__H5A_open_name__", octfile)
+autoload ("__H5A_read__", octfile)
+autoload ("__H5A_write__", octfile)
+## D
+octfile = sprintf (octfile_template, "D");
+autoload ("__H5D_close__", octfile)
+autoload ("__H5D_create__", octfile)
+autoload ("__H5D_get_create_plist__", octfile)
+autoload ("__H5D_get_space__", octfile)
+autoload ("__H5D_get_type__", octfile)
+autoload ("__H5D_open__", octfile)
+autoload ("__H5D_read__", octfile)
+autoload ("__H5D_write__", octfile)
+## E
+octfile = sprintf (octfile_template, "E");
+autoload ("__H5E_get_class_name__", octfile)
+autoload ("__H5E_get_major__", octfile)
+autoload ("__H5E_get_msg__", octfile)
+autoload ("__H5E_oclear__", octfile)
+autoload ("__H5E_set_auto__", octfile)
+autoload ("__H5E_walk__", octfile)
+## F
+octfile = sprintf (octfile_template, "F");
+autoload ("__H5F_close__", octfile)
+autoload ("__H5F_create__", octfile)
+autoload ("__H5F_open__", octfile)
+## G
+octfile = sprintf (octfile_template, "G");
+autoload ("__H5G_close__", octfile)
+autoload ("__H5G_create__", octfile)
+autoload ("__H5G_open__", octfile)
+## I
+octfile = sprintf (octfile_template, "I");
+autoload ("__H5I_get_name__", octfile)
+## L
+octfile = sprintf (octfile_template, "L");
+autoload ("__H5L_iterate__", octfile)
+autoload ("__H5L_iterate_by_name__", octfile)
+## LT
+octfile = sprintf (octfile_template, "LT");
+autoload ("__H5LT_dtype_to_struct__", octfile)
+autoload ("__H5LT_dtype_to_text__", octfile)
+## ML
+octfile = sprintf (octfile_template, "ML");
+autoload ("__H5ML_compare_values__", octfile)
+autoload ("__H5ML_get_constant_names__", octfile)
+autoload ("__H5ML_get_constant_value__", octfile)
+## O
+octfile = sprintf (octfile_template, "O");
+autoload ("__H5O_close__", octfile)
+autoload ("__H5O_get_info_by_name__", octfile)
+autoload ("__H5O_open__", octfile)
+## P
+octfile = sprintf (octfile_template, "P");
+autoload ("__H5P_close__", octfile)
+autoload ("__H5P_create__", octfile)
+autoload ("__H5P_fill_value_defined__", octfile)
+autoload ("__H5P_get_chunk__", octfile)
+autoload ("__H5P_get_layout__", octfile)
+## R
+octfile = sprintf (octfile_template, "R");
+autoload ("__H5R_create__", octfile)
+autoload ("__H5R_dereference__", octfile)
+autoload ("__H5R_get_obj_type__", octfile)
+## S
+octfile = sprintf (octfile_template, "S");
+autoload ("__H5S_close__", octfile)
+autoload ("__H5S_create__", octfile)
+autoload ("__H5S_create_simple__", octfile)
+autoload ("__H5S_get_simple_extent_dims__", octfile)
+autoload ("__H5S_get_simple_extent_type__", octfile)
+## T
+octfile = sprintf (octfile_template, "T");
+autoload ("__H5T_array_create__", octfile)
+autoload ("__H5T_close__", octfile)
+autoload ("__H5T_copy__", octfile)
+autoload ("__H5T_create__", octfile)
+autoload ("__H5T_get_class__", octfile)
+autoload ("__H5T_get_order__", octfile)
+autoload ("__H5T_get_size__", octfile)
+autoload ("__H5T_insert__", octfile)
+autoload ("__H5T_set_cset__", octfile)
+autoload ("__H5T_set_order__", octfile)
+autoload ("__H5T_set_size__", octfile)
+
+## Add test directory
+addpath (fullfile (fileparts (mfilename ('fullpath')), 'testdir'))
+
+## Cleanup
+clear octfile octfile_template

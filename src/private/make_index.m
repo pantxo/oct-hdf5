@@ -21,8 +21,8 @@
 
 function make_index (basedir)
   fname = fullfile (basedir, '..', "INDEX");
-  dirs = {"+H5A", "+H5D", "+H5E", "+H5F", "+H5G", "+H5I", "+H5L", "+H5LT", ...
-          "+H5ML", "+H5O", "+H5P", "+H5R", "+H5S", "+H5T"};
+  dirs = {"H5A", "H5D", "H5E", "H5F", "H5G", "H5I", "H5L", "H5LT", ...
+          "H5ML", "H5O", "H5P", "H5R", "H5S", "H5T"};
 
   hl_fun = {"h5info", "h5readatt", "read_mat73"};
 
@@ -38,12 +38,12 @@ function make_index (basedir)
     fprintf (fid, "  %s\n", hl_fun{ii});
   endfor
 
+  addpath (fullfile (basedir, "..", "inst"));
   for ii = 1:numel (dirs)
-    fprintf (fid, "%s\n", dirs{ii}(2:end));
-    fcn_list = {dir(fullfile (basedir, "..", "inst", dirs{ii}, "*.oct")).name};
+    fprintf (fid, "%s\n", dirs{ii});
+    fcn_list = methods (dirs{ii})(2:end);
     for jj = 1:numel (fcn_list)
-      [~, fcn] = fileparts (fcn_list{jj});
-      fprintf (fid, "  %s.%s\n", dirs{ii}(2:end), fcn);
+      fprintf (fid, "  %s.%s\n", dirs{ii}, fcn_list{jj});
     endfor
   endfor
 

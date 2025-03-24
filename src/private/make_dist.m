@@ -1,4 +1,4 @@
-## Copyright (C) 2023 Pantxo Diribarne
+## Copyright (C) 2023-2025 Pantxo Diribarne
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ function make_dist (srcdir, targetdir)
   endif
 
   copyfile (fullfile (srcdir, "..", "test", "data", "*.mat"), testdir);
+  copyfile (fullfile (srcdir, "..", "test", "data", "*.h5"), testdir);
 
   matio_test_file = fullfile (srcdir, "..", "test", "matio_test_datasets", ...
                               "matio_test_cases_uncompressed_hdf_le.mat");
@@ -40,12 +41,10 @@ function make_dist (srcdir, targetdir)
   endif
 
   copyfile (fullfile (srcdir, "..", "test", "matio_test_cases.m"), testdir);
+  copyfile (fullfile (srcdir, "..", "test", "hdf5_matlab_examples", ...
+                      "h5ex_d_rdwr.m"), testdir);
 
   ## PKG_ADD/DEL files
-  fid = fopen (fullfile (srcdir, "..", "inst", "PKG_ADD"), "w+");
-  str = "addpath (fullfile (fileparts (mfilename ('fullpath')), 'testdir'))";
-  fprintf (fid, "%s\n", str);
-  fclose (fid);
   fid = fopen (fullfile (srcdir, "..", "inst", "PKG_DEL"), "w+");
   str = "rmpath (fullfile (fileparts (mfilename ('fullpath')), 'testdir'))";
   fprintf (fid, "%s\n", str);
@@ -56,10 +55,15 @@ function make_dist (srcdir, targetdir)
 
   files = {"DESCRIPTION", "INDEX", "COPYING", "Makefile", ...
            "src/Makefile", "src/*.m", ...
-           "src/+H5*/Makefile", "src/+H5*/*.cc", ...
+           "src/*.cc", ...
            "src/util/*.h", "src/util/*.cc", "src/util/Makefile", ...
-           "doc/oct-hdf5*", "inst/PKG_ADD", "inst/PKG_DEL", "inst/testdir/*"};
-
+           "doc/oct-hdf5*", "inst/PKG_ADD", "inst/PKG_DEL", ...
+           "inst/testdir/*", };
+  classes = dir (fullfile (srcdir, "..", "inst", "@*"));
+  classfiles = cellfun (@(nm) fullfile ("inst", nm, [nm(2:end) ".m"]),
+                        {classes.name}, "uni", false);
+  files = [files, classfiles];
+  
   files = cellfun (@(f) fullfile ("oct-hdf5", f), files, "uni", false);
 
   tarname = fullfile (targetdir, "oct-hdf5.tar.gz");
