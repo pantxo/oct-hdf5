@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_oct_util.h"
 #include "./util/h5_data_util.h"
 
+// PKG_ADD: autoload ("__H5A_close__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_close__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_close__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} { } H5A.close (@var{attr_id})\n\
@@ -65,7 +67,8 @@ See original function at \
 %! fail ("H5E.set_auto (false); H5A.close (123456789); H5E.set_auto (true)", "unable to close attribute");
 */
 
-
+// PKG_ADD: autoload ("__H5A_create__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_create__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id})\n\
@@ -133,7 +136,8 @@ See original function at \
 %!fail ("H5A.create (123456789, 'att', 'blob', 1, 1)", "unknown TYPE_ID 'blob'");
 */
 
-
+// PKG_ADD: autoload ("__H5A_get_num_attrs__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_get_num_attrs__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_get_num_attrs__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{attr_count} =} H5A.get_num_attrs (@var{loc_id})\n\
@@ -182,7 +186,8 @@ See original function at \
 %! fail ("H5E.set_auto (false); H5A.get_num_attrs (1); H5E.set_auto (true)", "unable determine number of attributes");
 */
 
-
+// PKG_ADD: autoload ("__H5A_get_space__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_get_space__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_get_space__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{space_id} = } H5A.get_space (@var{attr_id})\n\
@@ -232,7 +237,8 @@ See original function at \
 %!fail ("H5E.set_auto (false); H5A.get_space (1); H5E.set_auto (true)", "unable to retrieve data space");
 */
 
-
+// PKG_ADD: autoload ("__H5A_get_type__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_get_type__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_get_type__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{type_id} = } H5A.get_type (@var{attr_id})\n\
@@ -283,7 +289,8 @@ See original function at \
 %!fail ("H5E.set_auto (false); H5A.get_type (1); H5E.set_auto (true)", "unable to retrieve data type");
 */
 
-
+// PKG_ADD: autoload ("__H5A_iterate__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_iterate__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_iterate__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate (@var{loc_id}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in})\n\
@@ -415,7 +422,8 @@ See original function at \
 %! fail ("H5A.iterate (123456789, 1, 1, 1, 1, 1)", "FCN must be a function handle")
 */
 
-
+// PKG_ADD: autoload ("__H5A_iterate_by_name__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_iterate_by_name__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_iterate_by_name__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate_by_name (@var{loc_id}, @var{name}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in}, @var{lapd_id})\n\
@@ -564,7 +572,8 @@ See original function at \
 %! fail ("H5A.iterate_by_name (123456789, 'toto', 1, 1, 1, 1, 1, 1)", "FCN must be a function handle")
 */
 
-
+// PKG_ADD: autoload ("__H5A_open__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_open__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_open__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{attr_id} =} H5A.open (@var{obj_id}, @var{name}, @var{aapl_id})\n\
@@ -615,7 +624,8 @@ See original function at \
 %!fail ("H5A.open (123456789, 'toto', 'toto')", "unknown AAPL_ID 'toto'")
 */
 
-
+// PKG_ADD: autoload ("__H5A_open_name__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_open_name__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_open_name__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{attr_id} =} H5A.open_name (@var{loc_id}, @var{name})\n\
@@ -654,7 +664,8 @@ See original function at \
   return ovl (octave_int64 (attr_id));
 }
 
-
+// PKG_ADD: autoload ("__H5A_read__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_read__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_read__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{data} = } H5A.read (@var{attr_id})\n\
@@ -724,7 +735,8 @@ See original function at \
 %! fail ("H5E.set_auto (false); data = H5A.read (123456789, 'toto'); H5E.set_auto (true)", "unknown MEM_TYPE_ID 'toto'");
 */
 
-
+// PKG_ADD: autoload ("__H5A_write__", "__H5A__.oct");
+// PKG_DEL: autoload ("__H5A_write__", "__H5A__.oct", "remove");
 DEFUN_DLD(__H5A_write__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5A.write (@var{attribute_id}, @var{mem_type_id}, @var{data})\n\

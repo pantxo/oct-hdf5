@@ -21,14 +21,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <hdf5.h>
 
 #include "./util/h5_oct_util.h"
-
+// PKG_ADD: autoload ("__H5O_close__", "__H5O__.oct")
+// PKG_DEL: autoload ("__H5O_close__", "__H5O__.oct", "remove")
 DEFUN_DLD(__H5O_close__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5O.close (@var{object_id})\n\
 Closes the object, dataset, or named datatype specified by @var{object_id}.\n\
 \n\
 This function is the companion to @code{H5O.open}, and has the same\n\
-effect as calling @code{H5G.close}, @code{H5D.close}, or @code{H5T.close}.\n\
+effect as calling @code{H5G.close}, @code{H5O.close}, or @code{H5T.close}.\n\
 \n\
 @code{H5O.close} is not used to close a dataspace, attribute, property list,\n\
 or file.\n\
@@ -51,7 +52,8 @@ or file.\n\
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5O_get_info_by_name__", "__H5O__.oct")
+// PKG_DEL: autoload ("__H5O_get_info_by_name__", "__H5O__.oct", "remove")
 DEFUN_DLD(__H5O_get_info_by_name__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{info_struct} =} H5O.get_info_by_name (@var{loc_id}, @var{name}, @var{lapl_id})\n\
@@ -107,7 +109,8 @@ num_attrs; /* # of attributes attached to object \n\
   return ovl (info_struct);
 }
 
-
+// PKG_ADD: autoload ("__H5O_open__", "__H5O__.oct")
+// PKG_DEL: autoload ("__H5O_open__", "__H5O__.oct", "remove")
 DEFUN_DLD(__H5O_open__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{dataset_id} =} H5O.open (@var{loc_id}, @var{name}, @var{lapl_id})\n\

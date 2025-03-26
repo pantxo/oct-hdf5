@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "./util/h5_oct_util.h"
 
+// PKG_ADD: autoload ("__H5L_iterate__", "__H5L__.oct")
+// PKG_DEL: autoload ("__H5L_iterate__", "__H5L__.oct", "remove")
 DEFUN_DLD(__H5L_iterate__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5L.iterate (@var{group_id}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in})\n\
@@ -69,7 +71,8 @@ DEFUN_DLD(__H5L_iterate__, args, nargout,
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5L_iterate_by_name__", "__H5L__.oct")
+// PKG_DEL: autoload ("__H5L_iterate_by_name__", "__H5L__.oct", "remove")
 DEFUN_DLD(__H5L_iterate_by_name__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5L.iterateiterate_by_name (@var{group_id}, @var{name}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in}, @var{lapl_id})\n\

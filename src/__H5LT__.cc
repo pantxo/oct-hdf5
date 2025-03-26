@@ -24,6 +24,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/H5LT_c.h"
 #include "./util/h5_oct_util.h"
 
+// PKG_ADD: autoload ("__H5LT_dtype_to_struct__", "__H5LT__.oct")
+// PKG_DEL: autoload ("__H5LT_dtype_to_struct__", "__H5LT__.oct", "remove")
 DEFUN_DLD(__H5LT_dtype_to_struct__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{str} = } H5LT.dtype_to_struct (@var{type_id})\n\
@@ -48,7 +50,8 @@ DEFUN_DLD(__H5LT_dtype_to_struct__, args, nargout,
   return retval.append (s);
 }
 
-
+// PKG_ADD: autoload ("__H5LT_dtype_to_text__", "__H5LT__.oct")
+// PKG_DEL: autoload ("__H5LT_dtype_to_text__", "__H5LT__.oct", "remove")
 DEFUN_DLD(__H5LT_dtype_to_text__, args, nargout, 
 "-*- texinfo -*-\n\
 // @deftypefn {} {@var{str} = } H5LT.dtype_to_text (@var{type_id})\n\

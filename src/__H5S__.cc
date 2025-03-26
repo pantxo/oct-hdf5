@@ -21,7 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <hdf5.h>
 
 #include "./util/h5_oct_util.h"
-
+// PKG_ADD: autoload ("__H5S_close__", "__H5S__.oct")
+// PKG_DEL: autoload ("__H5S_close__", "__H5S__.oct", "remove")
 DEFUN_DLD(__H5S_close__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5S.close (@var{space_id})\n\
@@ -44,7 +45,8 @@ DEFUN_DLD(__H5S_close__, args, nargout,
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5S_create__", "__H5S__.oct")
+// PKG_DEL: autoload ("__H5S_create__", "__H5S__.oct", "remove")
 DEFUN_DLD(__H5S_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_id} =} create (@var{type})\n\
@@ -89,7 +91,8 @@ with @code{H5S.close} so that resource leaks will not occur.\n\
   return ovl (octave_int64 (sid));
 }
 
-
+// PKG_ADD: autoload ("__H5S_create_simple__", "__H5S__.oct")
+// PKG_DEL: autoload ("__H5S_create_simple__", "__H5S__.oct", "remove")
 DEFUN_DLD(__H5S_create_simple__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_id} =} create_simple (@var{rank}, @var{dims}, @var{max_dims})\n \
@@ -170,7 +173,8 @@ of egual to the elemnts in DIMS");
   return ovl (octave_int64 (sid));
 }
 
-
+// PKG_ADD: autoload ("__H5S_get_simple_extent_dims__", "__H5S__.oct")
+// PKG_DEL: autoload ("__H5S_get_simple_extent_dims__", "__H5S__.oct", "remove")
 DEFUN_DLD(__H5S_get_simple_extent_dims__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {[@var{ndims}, @var{dims}, @var{maxdims}] = } H5S.get_simple_extent_dims (@var{space_id})\n\
@@ -220,7 +224,8 @@ DEFUN_DLD(__H5S_get_simple_extent_dims__, args, nargout,
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5S_get_simple_extent_type__", "__H5S__.oct")
+// PKG_DEL: autoload ("__H5S_get_simple_extent_type__", "__H5S__.oct", "remove")
 DEFUN_DLD(__H5S_get_simple_extent_type__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_type} =} H5S.get_simple_extent_type (@var{space_id})\

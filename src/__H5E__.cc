@@ -68,7 +68,8 @@ error_handler (unsigned n, const H5E_error2_t *err_desc, void* exception_ptr)
 
   return retval;
 }
-
+// PKG_ADD: autoload ("__H5E_get_class_name__", "__H5E__.oct")
+// PKG_DEL: autoload ("__H5E_get_class_name__", "__H5E__.oct", "remove")
 DEFUN_DLD(__H5E_get_class_name__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{cname} =} H5E.get_class_name (@var{class_id})\n\
@@ -94,7 +95,8 @@ DEFUN_DLD(__H5E_get_class_name__, args, nargout,
   return retval.append (std::string (cname_char));
 }
 
-
+// PKG_ADD: autoload ("__H5E_get_major__", "__H5E__.oct")
+// PKG_DEL: autoload ("__H5E_get_major__", "__H5E__.oct", "remove")
 DEFUN_DLD(__H5E_get_major__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{err_msg} =} H5E.get_major (@var{maj_num})\n\
@@ -125,7 +127,8 @@ DEFUN_DLD(__H5E_get_major__, args, nargout,
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5E_get_msg__", "__H5E__.oct")
+// PKG_DEL: autoload ("__H5E_get_msg__", "__H5E__.oct", "remove")
 DEFUN_DLD(__H5E_get_msg__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{msg} =} H5E.get_msg (@var{msg_id})\n\
@@ -156,7 +159,8 @@ DEFUN_DLD(__H5E_get_msg__, args, nargout,
   return retval.append (std::string (msg));
 }
 
-
+// PKG_ADD: autoload ("__H5E_oclear__", "__H5E__.oct")
+// PKG_DEL: autoload ("__H5E_oclear__", "__H5E__.oct", "remove")
 DEFUN_DLD(__H5E_oclear__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5E.oclear ()\n\
@@ -180,7 +184,8 @@ DEFUN_DLD(__H5E_oclear__, args, nargout,
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5E_set_auto__", "__H5E__.oct")
+// PKG_DEL: autoload ("__H5E_set_auto__", "__H5E__.oct", "remove")
 DEFUN_DLD(__H5E_set_auto__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5E.set_auto (@var{tf})\n\
@@ -211,7 +216,8 @@ DEFUN_DLD(__H5E_set_auto__, args, nargout,
   return retval;
 }
 
-
+// PKG_ADD: autoload ("__H5E_walk__", "__H5E__.oct")
+// PKG_DEL: autoload ("__H5E_walk__", "__H5E__.oct", "remove")
 DEFUN_DLD(__H5E_walk__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5E.walk (@var{direction}, @var{fcn})\n        \

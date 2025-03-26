@@ -45,10 +45,10 @@ function make_dist (srcdir, targetdir)
                       "h5ex_d_rdwr.m"), testdir);
 
   ## PKG_ADD/DEL files
-  fid = fopen (fullfile (srcdir, "..", "inst", "PKG_DEL"), "w+");
-  str = "rmpath (fullfile (fileparts (mfilename ('fullpath')), 'testdir'))";
-  fprintf (fid, "%s\n", str);
-  fclose (fid);
+  ## fid = fopen (fullfile (srcdir, "..", "inst", "PKG_DEL"), "w+");
+  ## str = "rmpath (fullfile (fileparts (mfilename ('fullpath')), 'testdir'))";
+  ## fprintf (fid, "%s\n", str);
+  ## fclose (fid);
 
   ## Archive all
   olddir = cd (fullfile (srcdir, "..",".."));
@@ -57,7 +57,7 @@ function make_dist (srcdir, targetdir)
            "src/Makefile", "src/*.m", ...
            "src/*.cc", ...
            "src/util/*.h", "src/util/*.cc", "src/util/Makefile", ...
-           "doc/oct-hdf5*", "inst/PKG_ADD", "inst/PKG_DEL", ...
+           "doc/oct-hdf5*", ...
            "inst/testdir/*", };
   classes = dir (fullfile (srcdir, "..", "inst", "@*"));
   classfiles = cellfun (@(nm) fullfile ("inst", nm, [nm(2:end) ".m"]),
