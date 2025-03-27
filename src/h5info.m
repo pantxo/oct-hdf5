@@ -67,6 +67,7 @@
 ## @end deftypefn
 
 ## PKG_ADD: addpath (fullfile (fileparts (mfilename ("fullpath")), "testdir"));
+## PKG_DEL: rmpath (fullfile (fileparts (mfilename ("fullpath")), "testdir"));
 function s = h5info (fname, obj_name = "/")
 
   if (! exist ("fname", "var"))
