@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "./util/h5_oct_util.h"
 
-// PKG_ADD: autoload ("__H5R_create__", "__H5R__.oct")
-// PKG_DEL: autoload ("__H5R_create__", "__H5R__.oct", "remove")
+// PKG_ADD: autoload ("__H5R_create__", "__H5R__.oct");
+// PKG_DEL: autoload ("__H5R_create__", "__H5R__.oct", "remove");
 DEFUN_DLD(__H5R_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{ref} =} H5R.create (@var{loc_id}, @var{name}, @var{ref_type}, @var{space_id})\n\
@@ -91,8 +91,8 @@ references and should be set to -1 if the reference is an object reference,\n\
   return retval;
 }
 
-// PKG_ADD: autoload ("__H5R_dereference__", "__H5R__.oct")
-// PKG_DEL: autoload ("__H5R_dereference__", "__H5R__.oct", "remove")
+// PKG_ADD: autoload ("__H5R_dereference__", "__H5R__.oct");
+// PKG_DEL: autoload ("__H5R_dereference__", "__H5R__.oct", "remove");
 DEFUN_DLD(__H5R_dereference__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{ref_obj_id} = } H5R.dereference (@var{obj_id}, @var{ref_type}, @var{ref})\n\
@@ -152,8 +152,8 @@ function such as @code{H5O.close} or @code{H5D.close} for datasets.\n\
   return retval.append (octave_int64 (out_ref));
 }
 
-// PKG_ADD: autoload ("__H5R_get_obj_type__", "__H5R__.oct")
-// PKG_DEL: autoload ("__H5R_get_obj_type__", "__H5R__.oct", "remove")
+// PKG_ADD: autoload ("__H5R_get_obj_type__", "__H5R__.oct");
+// PKG_DEL: autoload ("__H5R_get_obj_type__", "__H5R__.oct", "remove");
 DEFUN_DLD(__H5R_get_obj_type__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{obj_type} = } H5R.get_obj_type (@var{loc_id}, @var{ref_type}, @var{ref})\n\

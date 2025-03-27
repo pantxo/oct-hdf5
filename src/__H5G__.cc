@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "./util/h5_oct_util.h"
 
-// PKG_ADD: autoload ("__H5G_close__", "__H5G__.oct")
-// PKG_DEL: autoload ("__H5G_close__", "__H5G__.oct", "remove")
+// PKG_ADD: autoload ("__H5G_close__", "__H5G__.oct");
+// PKG_DEL: autoload ("__H5G_close__", "__H5G__.oct", "remove");
 DEFUN_DLD(__H5G_close__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5G.close (@var{group_id})\n\
@@ -52,8 +52,8 @@ Failure to release a group with this call will result in resource leaks.\n\
   return retval;
 }
 
-// PKG_ADD: autoload ("__H5G_create__", "__H5G__.oct")
-// PKG_DEL: autoload ("__H5G_create__", "__H5G__.oct", "remove")
+// PKG_ADD: autoload ("__H5G_create__", "__H5G__.oct");
+// PKG_DEL: autoload ("__H5G_create__", "__H5G__.oct", "remove");
 DEFUN_DLD(__H5G_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{group_id} =} H5G.create (@var{loc_id}, @var{name})\n\
@@ -119,8 +119,8 @@ is no longer required.\n\
   return ovl (octave_int64 (group_id));
 }
 
-// PKG_ADD: autoload ("__H5G_open__", "__H5G__.oct")
-// PKG_DEL: autoload ("__H5G_open__", "__H5G__.oct", "remove")
+// PKG_ADD: autoload ("__H5G_open__", "__H5G__.oct");
+// PKG_DEL: autoload ("__H5G_open__", "__H5G__.oct", "remove");
 DEFUN_DLD(__H5G_open__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{group_id} =} H5G.open (@var{loc_id}, @var{name}, @var{gapl_id})\n\

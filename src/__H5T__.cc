@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <hdf5.h>
 
 #include "./util/h5_oct_util.h"
-// PKG_ADD: autoload ("__H5T_array_create__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_array_create__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_array_create__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_array_create__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_array_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{type_id} =} H5T.array_create (@var{base_type_id}, @var{dims})\n\
@@ -91,8 +91,8 @@ sizes specified in @var{dims} must be greater than 0 (zero).\n\
   return ovl (octave_int64 (type_id));
 }
 
-// PKG_ADD: autoload ("__H5T_close__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_close__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_close__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_close__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_close__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.close (@var{type_id})\n\
@@ -115,8 +115,8 @@ DEFUN_DLD(__H5T_close__, args, nargout,
   return retval;
 }
 
-// PKG_ADD: autoload ("__H5T_copy__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_copy__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_copy__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_copy__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_copy__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{type_id} =} H5T.copy (@var{type_id})\n\
@@ -141,8 +141,8 @@ DEFUN_DLD(__H5T_copy__, args, nargout,
   return ovl (octave_int64 (copied_type_id));
 }
 
-// PKG_ADD: autoload ("__H5T_create__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_create__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_create__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_create__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{type_id}} H5T.create (@var{class}, @var{size})\n\
@@ -191,8 +191,8 @@ See original function at \
 %!fail ("H5T.create ()", "Invalid call");
 */
 
-// PKG_ADD: autoload ("__H5T_get_class__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_get_class__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_get_class__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_get_class__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_get_class__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{class_id} =} H5T.get_class (@var{type_id})\n\
@@ -223,8 +223,8 @@ The output can be @qcode{'H5T_INTEGER'}, @qcode{'H5T_FLOAT'},\n\
   return ovl (octave_int64 (class_id));
 }
 
-// PKG_ADD: autoload ("__H5T_get_order__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_get_order__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_get_order__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_get_order__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_get_order__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{byte_order} =} H5T.get_order (@var{type_id})\n\
@@ -254,8 +254,8 @@ or @qcode{'H5T_ORDER_NONE'}.\n\
   return ovl (octave_int64 (byte_order));
 }
 
-// PKG_ADD: autoload ("__H5T_get_size__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_get_size__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_get_size__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_get_size__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_get_size__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{sz} =} H5T.get_size (@var{type_id})\n\
@@ -280,8 +280,8 @@ DEFUN_DLD(__H5T_get_size__, args, nargout,
   return ovl (octave_int64 (sz));
 }
 
-// PKG_ADD: autoload ("__H5T_insert__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_insert__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_insert__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_insert__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_insert__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {} H5T.insert (@var{parent_id}, @var{name}, @var{offset}, @var{member_id})\n\
@@ -333,8 +333,8 @@ See original function at \
 %!fail ("H5T.insert ()", "Invalid call");
 */
 
-// PKG_ADD: autoload ("__H5T_set_cset__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_set_cset__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_set_cset__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_set_cset__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_set_cset__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_cset (@var{type_id}, @var{charset})\n\
@@ -362,8 +362,8 @@ or @qcode{\"H5T_CSET_UTF8\"}.\n\
   return retval;
 }
 
-// PKG_ADD: autoload ("__H5T_set_order__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_set_order__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_set_order__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_set_order__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_set_order__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_order (@var{type_id}, @var{byte_order})\n                       \
@@ -397,8 +397,8 @@ The input @var{byte_order} can be @qcode{'H5T_ORDER_LE'},\n\
   return retval;
 }
 
-// PKG_ADD: autoload ("__H5T_set_size__", "__H5T__.oct")
-// PKG_DEL: autoload ("__H5T_set_size__", "__H5T__.oct", "remove")
+// PKG_ADD: autoload ("__H5T_set_size__", "__H5T__.oct");
+// PKG_DEL: autoload ("__H5T_set_size__", "__H5T__.oct", "remove");
 DEFUN_DLD(__H5T_set_size__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_size (@var{type_id}, @var{size})\n\

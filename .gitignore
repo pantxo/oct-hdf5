@@ -4,6 +4,9 @@
 ## Ignore object files
 *.o
 
+## Ignore oct files
+*.oct
+
 ## Ignore generated INDEX
 INDEX
 

@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <hdf5.h>
 
 #include "./util/h5_oct_util.h"
-// PKG_ADD: autoload ("__H5ML_compare_values__", "__H5ML__.oct")
-// PKG_DEL: autoload ("__H5ML_compare_values__", "__H5ML__.oct", "remove")
+// PKG_ADD: autoload ("__H5ML_compare_values__", "__H5ML__.oct");
+// PKG_DEL: autoload ("__H5ML_compare_values__", "__H5ML__.oct", "remove");
 DEFUN_DLD(__H5ML_compare_values__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{tf} =} H5ML.compare_values (@var{val1}, @var{val2})\n\
@@ -42,8 +42,8 @@ DEFUN_DLD(__H5ML_compare_values__, args, nargout,
   return retval.append (val1 == val2);
 }
 
-// PKG_ADD: autoload ("__H5ML_get_constant_names__", "__H5ML__.oct")
-// PKG_DEL: autoload ("__H5ML_get_constant_names__", "__H5ML__.oct", "remove")
+// PKG_ADD: autoload ("__H5ML_get_constant_names__", "__H5ML__.oct");
+// PKG_DEL: autoload ("__H5ML_get_constant_names__", "__H5ML__.oct", "remove");
 DEFUN_DLD(__H5ML_get_constant_names__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{names} =} H5ML.get_constant_names ()\n\
@@ -72,8 +72,8 @@ DEFUN_DLD(__H5ML_get_constant_names__, args, nargout,
   return ovl (names);
 }
 
-// PKG_ADD: autoload ("__H5ML_get_constant_value__", "__H5ML__.oct")
-// PKG_DEL: autoload ("__H5ML_get_constant_value__", "__H5ML__.oct", "remove")
+// PKG_ADD: autoload ("__H5ML_get_constant_value__", "__H5ML__.oct");
+// PKG_DEL: autoload ("__H5ML_get_constant_value__", "__H5ML__.oct", "remove");
 DEFUN_DLD(__H5ML_get_constant_value__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{retval} =} H5ML.get_constant_value (@var{name})\n\

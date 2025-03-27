@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <hdf5.h>
 
 #include "./util/h5_oct_util.h"
-// PKG_ADD: autoload ("__H5F_close__", "__H5F__.oct")
-// PKG_DEL: autoload ("__H5F_close__", "__H5F__.oct", "remove")
+// PKG_ADD: autoload ("__H5F_close__", "__H5F__.oct");
+// PKG_DEL: autoload ("__H5F_close__", "__H5F__.oct", "remove");
 DEFUN_DLD(__H5F_close__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5F.close (@var{file_id})\n\
@@ -43,8 +43,8 @@ DEFUN_DLD(__H5F_close__, args, nargout,
   return ovl ();
 }
 
-// PKG_ADD: autoload ("__H5F_create__", "__H5F__.oct")
-// PKG_DEL: autoload ("__H5F_create__", "__H5F__.oct", "remove")
+// PKG_ADD: autoload ("__H5F_create__", "__H5F__.oct");
+// PKG_DEL: autoload ("__H5F_create__", "__H5F__.oct", "remove");
 DEFUN_DLD(__H5F_create__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{fid} =} H5F.create (@var{fname})\n\
@@ -90,8 +90,8 @@ DEFUN_DLD(__H5F_create__, args, nargout,
   return ovl (octave_int64 (file_id));
 }
 
-// PKG_ADD: autoload ("__H5F_open__", "__H5F__.oct")
-// PKG_DEL: autoload ("__H5F_open__", "__H5F__.oct", "remove")
+// PKG_ADD: autoload ("__H5F_open__", "__H5F__.oct");
+// PKG_DEL: autoload ("__H5F_open__", "__H5F__.oct", "remove");
 DEFUN_DLD(__H5F_open__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{fid} =} H5F.open (@var{fname})\n\

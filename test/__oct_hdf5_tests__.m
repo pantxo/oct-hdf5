@@ -22,7 +22,7 @@
 
 function __oct_hdf5_tests__ (basedir)
   # getting all the test files
-  oct_files = dir (fullfile (basedir, "..", "inst", "**", "*.oct"));
+  oct_files = dir (fullfile (basedir,"*.oct"));
   m_files = dir (fullfile (basedir, "*.m"));
   
   m_files_to_test = fullfile ({m_files.folder}, {m_files.name});

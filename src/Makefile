@@ -4,8 +4,10 @@ CFLAGS = -Wall -g
 INCLUDES = $(shell ${OCTAVE} -f --eval "printf ('%s', __octave_config_info__().build_environment.HDF5_CPPFLAGS)")
 LIBS = $(shell ${OCTAVE} -f --eval "printf ('%s %s', __octave_config_info__().build_environment.HDF5_LDFLAGS, __octave_config_info__().build_environment.HDF5_LIBS)")
 PWD =  $(shell pwd)
-OBJS = $(patsubst %.cc,%.oct,$(wildcard *.cc))
+SOURCES = $(wildcard *.cc)
+OBJS = $(patsubst %.cc,%.oct,$(SOURCES))
 UTIL_OBJS = ./util/h5_oct_util.o ./util/h5_data_util.o ./util/H5LT_c.o
+PKG_ADD     = $(shell grep -Pho '(?<=// PKG_ADD: ).*' $(SOURCES))
 
 export OCTAVE MKOCTFILE CFLAGS LIBS INCLUDES
 
@@ -41,7 +43,7 @@ docs: dist
 	$(OCTAVE) -f --eval "cd private; make_docs ('$(PWD)/..')"
 
 check: all
-	$(OCTAVE) -f --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval "__oct_hdf5_tests__ ('$(PWD)')"
+	@$(OCTAVE) -f --silent --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval 'warning ("off");' --eval '${PKG_ADD}' --eval "__oct_hdf5_tests__ ('$(PWD)')"
 
 clean:
 	rm -f ./*.oct

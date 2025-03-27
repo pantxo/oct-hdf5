@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "./util/h5_oct_util.h"
 
-// PKG_ADD: autoload ("__H5I_get_name__", "__H5I__.oct")
-// PKG_DEL: autoload ("__H5I_get_name__", "__H5I__.oct", "remove")
+// PKG_ADD: autoload ("__H5I_get_name__", "__H5I__.oct");
+// PKG_DEL: autoload ("__H5I_get_name__", "__H5I__.oct", "remove");
 DEFUN_DLD(__H5I_get_name__, args, nargout, 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{info_struct} =} H5I.get_name (@var{obj_id})\n\
