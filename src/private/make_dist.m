@@ -32,7 +32,6 @@ function make_dist (srcdir, targetdir)
   endif
 
   copyfile (fullfile (srcdir, "..", "test", "data", "*.mat"), testdir);
-  copyfile (fullfile (srcdir, "..", "test", "data", "*.h5"), testdir);
 
   matio_test_file = fullfile (srcdir, "..", "test", "matio_test_datasets", ...
                               "matio_test_cases_uncompressed_hdf_le.mat");
