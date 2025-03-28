@@ -43,12 +43,6 @@ function make_dist (srcdir, targetdir)
   copyfile (fullfile (srcdir, "..", "test", "hdf5_matlab_examples", ...
                       "*.m"), testdir);
 
-  ## PKG_ADD/DEL files
-  ## fid = fopen (fullfile (srcdir, "..", "inst", "PKG_DEL"), "w+");
-  ## str = "rmpath (fullfile (fileparts (mfilename ('fullpath')), 'testdir'))";
-  ## fprintf (fid, "%s\n", str);
-  ## fclose (fid);
-
   ## Archive all
   olddir = cd (fullfile (srcdir, "..",".."));
 
@@ -67,7 +61,6 @@ function make_dist (srcdir, targetdir)
 
   tarname = fullfile (targetdir, "oct-hdf5.tar.gz");
   tar (tarname, files);
-
 
   cd (olddir);
 endfunction

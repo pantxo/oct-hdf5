@@ -123,7 +123,7 @@ See original function at \
   if (attribute_id < 0)
     error ("H5A.create: unable to create attribute");
 
-  return ovl (octave_int64 (1));
+  return ovl (octave_int64 (attribute_id));
 }
 
 /*
@@ -784,4 +784,9 @@ See original function at \
   return retval;
 }
 
+/*
 
+%!test
+%! h5ex_t_stringatt ()
+
+*/

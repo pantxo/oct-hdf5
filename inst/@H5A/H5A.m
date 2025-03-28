@@ -415,8 +415,8 @@ classdef H5A
     ## 
     ## @seealso{H5A.read}
     ## @end deftypefn
-    function attribute_id = write (varargin)
-      attribute_id = __H5A_write__ (varargin{:});
+    function write (varargin)
+      __H5A_write__ (varargin{:});
     endfunction
 
   endmethods
