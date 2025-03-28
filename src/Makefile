@@ -6,32 +6,26 @@ LIBS = $(shell ${OCTAVE} -f --eval "printf ('%s %s', __octave_config_info__().bu
 PWD =  $(shell pwd)
 SOURCES = $(wildcard *.cc)
 OBJS = $(patsubst %.cc,%.oct,$(SOURCES))
-UTIL_OBJS = ./util/h5_oct_util.o ./util/h5_data_util.o ./util/H5LT_c.o
+SOURCES_UTIL = $(wildcard *.cc)
+OBJS_UTIL = $(patsubst %.cc,%.o,$(SOURCES_UTIL))
 PKG_ADD     = $(shell grep -Pho '(?<=// PKG_ADD: ).*' $(SOURCES))
-
-export OCTAVE MKOCTFILE CFLAGS LIBS INCLUDES
 
 all: $(OBJS)
 
-./util/%.o:
-	$(MAKE) -s -C util
+%.o: %.cc
+	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -c -o $@ $<
 
-__H5A__.oct: __H5A__.cc ${UTIL_OBJS} ./util/H5LT_c.o ./util/h5_data_util.o
-	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -c -o $<.o $<
-	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} ${UTIL_OBJS} $<.o
+__H5A__.oct: __H5A__.o ./util/h5_oct_util.o ./util/H5LT_c.o ./util/h5_data_util.o
+	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} $< ./util/h5_oct_util.o ./util/H5LT_c.o ./util/h5_data_util.o
 
-__H5D__.oct: __H5D__.cc ${UTIL_OBJS} ./util/H5LT_c.o ./util/h5_data_util.o
-	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -c -o $<.o $<
-	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} ${UTIL_OBJS} $<.o
+__H5D__.oct: __H5D__.o ./util/h5_oct_util.o ./util/H5LT_c.o ./util/h5_data_util.o
+	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} $< ./util/h5_oct_util.o ./util/H5LT_c.o ./util/h5_data_util.o
 
-__H5LT__.oct: __H5LT__.cc ${UTIL_OBJS}
-	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -c -o $<.o $<
-	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} -lhdf5_hl ${UTIL_OBJS} $<.o
+__H5LT__.oct: __H5LT__.o ./util/h5_oct_util.o ./util/H5LT_c.o
+	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} -lhdf5_hl $< ./util/h5_oct_util.o ./util/H5LT_c.o
 
-
-%.oct: %.cc ${UTIL_OBJS}
-	$(MKOCTFILE) ${CFLAGS} ${INCLUDES} -c -o $<.o $<
-	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} ${UTIL_OBJS} $<.o
+%.oct: %.o  ./util/h5_oct_util.o ./util/H5LT_c.o
+	$(MKOCTFILE) ${CFLAGS} -o $@ ${LIBS} $< ./util/h5_oct_util.o ./util/H5LT_c.o
 
 index: all
 	$(OCTAVE) -f --eval "cd private; make_index ('$(PWD)')"
