@@ -789,4 +789,7 @@ See original function at \
 %!test
 %! h5ex_t_stringatt ()
 
+%!test
+%! h5ex_t_vlstringatt ()
+
 */

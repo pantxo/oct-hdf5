@@ -158,8 +158,10 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
           mem_type_id = H5Tcopy (H5T_C_S1);
           H5Tset_size (mem_type_id, slen + 1);
         }
-      else
+      else if (read_fcn == 0)
         mem_space_id = H5Dget_space (object_id);
+      else
+        mem_space_id = H5Aget_space (object_id);
 
       if (read_fcn == 0)
         if (is_vlstring)
