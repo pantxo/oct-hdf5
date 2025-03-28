@@ -36,8 +36,11 @@ dist: index
 docs: dist
 	$(OCTAVE) -f --eval "cd private; make_docs ('$(PWD)/..')"
 
+run:
+	@$(OCTAVE) -f --persist --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval 'warning ("off", "Octave:autoload-relative-file-name");' --eval '${PKG_ADD}'
+
 check: all
-	@$(OCTAVE) -f --silent --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval 'warning ("off");' --eval '${PKG_ADD}' --eval "__oct_hdf5_tests__ ('$(PWD)')"
+	@$(OCTAVE) -f --silent --path $(PWD)/../test --path $(PWD)/../test/data --path $(PWD)/../test/matio_test_datasets --path $(PWD)/../test/hdf5_matlab_examples --path $(PWD)/../inst --path $(PWD)/../src --eval 'warning ("off", "Octave:autoload-relative-file-name");' --eval '${PKG_ADD}' --eval "__oct_hdf5_tests__ ('$(PWD)')"
 
 clean:
 	rm -f ./*.oct
