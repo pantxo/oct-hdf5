@@ -498,12 +498,10 @@ See original function at \
 %! h5ex_d_rdwr ('double')
 
 %!test
-%! f = H5F.open (file_in_loadpath ('h5ex_t_vlstring.h5'));
-%! d = H5D.open (f, "/DS1");
-%! t = H5D.read (d);
-%! H5D.close (d);
-%! H5F.close (f);
-%! assert (t, {'Parting';'is such';'sweet';'sorrow.'})
+%! h5ex_t_vlstring ()
+
+%!test
+%! h5ex_t_string ()
 
 */
 
@@ -572,5 +570,3 @@ DEFUN_DLD(__H5D_write__, args, nargout,
 % delete (fname);
 % assert (true)
 */
-
-

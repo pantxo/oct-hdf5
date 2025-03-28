@@ -176,7 +176,7 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
 
       if (nstrings == 1)
         retval = octave_value (std::string (rdata[0]));
-      else
+      else if (is_vlstring)
         {
           Cell cell_str (dv);
 
@@ -184,6 +184,15 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
             cell_str(ii) = octave_value (std::string (rdata[ii]));
 
           retval = octave_value (cell_str);
+        }
+      else
+        {
+          dim_vector dv2(nstrings, std::strlen (rdata[0]));
+          char fill_val[] = " ";
+          charMatrix cm (dv2, *fill_val);
+          for (int ii = 0; ii < nstrings; ii++)
+            cm.insert (rdata[ii], ii, 0);
+          retval = octave_value (cm);
         }
 
       // Cleanup
@@ -194,7 +203,7 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
         }
       else
         H5Tclose (mem_type_id);
-      
+
       free (rdata);
 
       if (status < 0)
@@ -430,13 +439,62 @@ __h5write__ (const std::string& caller, const octave_value& ov,
     }
   else if (H5Tget_class (sub_type_id) == H5T_STRING)
     {
-      if (wrt_fcn == 0)
-        status = H5Dwrite (object_id, mem_type_id, mem_space_id, file_space_id,
-                           xfer_plist_id,
-                           ov.string_value ().c_str ());
+      dim_vector dims = ov.dims ();
+      htri_t is_vlstr  = H5Tis_variable_str (sub_type_id);
+
+      if (is_vlstr)
+        {
+          char **str_array;
+          if (ov.is_string ())
+            {
+              str_array = (char**) malloc (sizeof (char*));
+              str_array[0] = (char *) malloc (ov.numel () + 1);
+              std::strcpy (str_array[0], ov.string_value ().c_str ());
+            }
+          else if (ov.iscellstr ())
+            {
+              str_array = (char**) malloc (ov.numel() * sizeof (char*));
+              Cell cellstr = ov.cellstr_value ();
+              octave_idx_type nrows = cellstr.numel ();
+              std::string str;
+              for (int ii = 0; ii < nrows; ii++)
+                {
+                  str = cellstr(ii).string_value ();
+                  str_array[ii] = (char *) malloc ((str.size () + 1)
+                                                   * sizeof (char*));
+
+                  if (ii < nrows-1)
+                    str_array[ii+1] = str_array[ii] + ii * (str.size () + 1);
+
+                  std::strcpy (str_array[ii], str.c_str ());
+                }
+            }
+          else
+            error ("%s: expect a single line char array "
+                   "or cell array of strings", caller.c_str ());
+
+          if (wrt_fcn == 0)
+            status = H5Dwrite (object_id, sub_type_id, mem_space_id,
+                               file_space_id, xfer_plist_id,
+                               str_array);
+          else
+            status = H5Awrite (object_id, sub_type_id,
+                               str_array);
+
+          free (str_array);
+        }
       else
-        status = H5Awrite (object_id, mem_type_id,
-                           ov.string_value ().c_str ());
+        {
+          charMatrix cm = ov.xchar_matrix_value ("%s: expecting char array for fixed length strings", caller.c_str ());
+
+          if (wrt_fcn == 0)
+            status = H5Dwrite (object_id, sub_type_id, mem_space_id,
+                               file_space_id, xfer_plist_id,
+                               cm.data ());
+          else
+            status = H5Awrite (object_id, sub_type_id,
+                               cm.data ());
+        }
     }
   else if (H5Tget_class (sub_type_id) == H5T_COMPOUND)
     {
@@ -444,7 +502,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
       octave_scalar_map data =
         ov.xscalar_map_value ("H5D.write: expecting a scalar structure "
                               "for compound data type");
-      
+
       size_t nfields = H5Tget_nmembers (sub_type_id);
 
       for (size_t ii = 0; ii < nfields; ii++)
