@@ -41,7 +41,7 @@ function make_dist (srcdir, targetdir)
 
   copyfile (fullfile (srcdir, "..", "test", "matio_test_cases.m"), testdir);
   copyfile (fullfile (srcdir, "..", "test", "hdf5_matlab_examples", ...
-                      "h5ex_d_rdwr.m"), testdir);
+                      "*.m"), testdir);
 
   ## PKG_ADD/DEL files
   ## fid = fopen (fullfile (srcdir, "..", "inst", "PKG_DEL"), "w+");
