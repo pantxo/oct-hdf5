@@ -1,16 +1,19 @@
 all:
 	$(MAKE) -s -C src
 
-dist: index
+dist:
 	$(MAKE) -s -C src dist
 
-index: all
+index:
 	$(MAKE) -s -C src index
 
-docs: dist
+docs:
 	$(MAKE) -s -C src docs
 
-check: all
+run:
+	$(MAKE) -s -C src run
+
+check:
 	$(MAKE) -s -C src check
 
 clean:
