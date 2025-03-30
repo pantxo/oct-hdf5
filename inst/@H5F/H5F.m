@@ -34,7 +34,19 @@ classdef H5F
 
     ## -*- texinfo -*-
     ## @deftypefn {} {} H5F.close (@var{file_id})
-    ## @seealso{}
+    ## Terminates access to an HDF5 file.
+    ## 
+    ## @strong{Parameters:}
+    ##  @multitable @columnfractions 0.33 0.02 0.65
+    ##  @item @var{file_id} @tab @tab File identifier
+    ##  @end multitable
+    ## 
+    ## @strong{Description:}
+    ## 
+    ## See original function at 
+    ## @url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_f.html}.
+    ## 
+    ## @seealso{H5F.open}
     ## @end deftypefn
     function close (varargin)
       __H5F_close__ (varargin{:});
@@ -45,7 +57,22 @@ classdef H5F
     ## @deftypefnx {} {@var{fid} =} H5F.create (@var{fname}, @var{flags})
     ## @deftypefnx {} {@var{fid} =} H5F.create (@var{fname}, @var{flags}, @var{fcpl_id})
     ## @deftypefnx {} {@var{fid} =} H5F.create (@var{fname}, @var{flags}, @var{fcpl_id}, @var{fapl_id})
-    ## @seealso{}
+    ## Creates an HDF5 file.
+    ## 
+    ## @strong{Parameters:}
+    ##  @multitable @columnfractions 0.33 0.02 0.65
+    ##  @item @var{fname} @tab @tab Name of the file to create
+    ##  @item @var{flags} @tab @tab File access flags. One of @{@qcode{"H5F_ACC_TRUNC"} | @qcode{"H5F_ACC_EXCL"}@}. The default is @qcode{"H5F_ACC_TRUNC"}.
+    ##  @item @var{fcpl_id} @tab @tab File creation property list identifier.  The default is @qcode{"H5P_DEFAULT"}.
+    ##  @item @var{fapl_id} @tab @tab File access property list identifier.  The default is @qcode{"H5P_DEFAULT"}.
+    ##  @end multitable
+    ## 
+    ## @strong{Description:}
+    ## 
+    ## See original function at 
+    ## @url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_f.html}.
+    ## 
+    ## @seealso{H5F.open, H5F.close}
     ## @end deftypefn
     function fid = create (varargin)
       fid = __H5F_create__ (varargin{:});
@@ -55,6 +82,20 @@ classdef H5F
     ## @deftypefn {} {@var{fid} =} H5F.open (@var{fname})
     ## @deftypefnx {} {@var{fid} =} H5F.open (@var{fname}, @var{flags})
     ## @deftypefnx {} {@var{fid} =} H5F.open (@var{fname}, @var{flags}, @var{fapl_id})
+    ## Opens an existing HDF5 file. 
+    ## 
+    ## @strong{Parameters:}
+    ##  @multitable @columnfractions 0.33 0.02 0.65
+    ##  @item @var{fname} @tab @tab Name of the file to be opened 
+    ##  @item @var{flags} @tab @tab File access flags. One of @{@qcode{"H5F_ACC_RDWR"} | @qcode{"H5F_ACC_RDONLY"} | @qcode{"H5F_ACC_RDONLY|H5F_ACC_SWMR_READ"} | @qcode{"H5F_ACC_RDWR|H5F_ACC_SWMR_WRITE"}@}. The default is @qcode{"H5F_ACC_RDONLY"}.
+    ##  @item @var{fapl_id} @tab @tab File access property list identifier. The default is @qcode{"H5P_DEFAULT"}.
+    ##  @end multitable
+    ## 
+    ## @strong{Description:}
+    ## 
+    ## See original function at 
+    ## @url{https://support.hdfgroup.org/documentation/hdf5/latest/group___h5_f.html}.
+    ## 
     ## @seealso{H5F.close}
     ## @end deftypefn
     function fid = open (varargin)

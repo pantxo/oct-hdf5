@@ -55,6 +55,8 @@ classdef H5L
     ##  @item @var{opdata_out} @tab @tab Returned callback data
     ##  @end multitable
     ##
+    ## 
+    ## @strong{Description:}
     ##
     ## The user callback function signature must be:
     ## @example
@@ -102,6 +104,8 @@ classdef H5L
     ##  @item @var{opdata_out} @tab @tab Returned callback data
     ##  @end multitable
     ##
+    ## 
+    ## @strong{Description:}
     ##
     ## The user callback function signature must be:
     ## @example
