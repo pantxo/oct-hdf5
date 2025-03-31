@@ -792,4 +792,7 @@ See original function at \
 %!test
 %! h5ex_t_vlstringatt ()
 
+%!test
+%! h5ex_t_cmpdatt ()
+
 */
