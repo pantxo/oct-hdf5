@@ -477,11 +477,11 @@ __h5write__ (const std::string& caller, const octave_value& ov,
                    caller.c_str ());
 
           if (wrt_fcn == 0)
-            status = H5Dwrite (object_id, sub_type_id, mem_space_id,
+            status = H5Dwrite (object_id, mem_type_id, mem_space_id,
                                file_space_id, xfer_plist_id,
                                str_array);
           else
-            status = H5Awrite (object_id, sub_type_id,
+            status = H5Awrite (object_id, mem_type_id,
                                str_array);
 
           free (str_array);
@@ -491,11 +491,11 @@ __h5write__ (const std::string& caller, const octave_value& ov,
           charMatrix cm = ov.xchar_matrix_value ("%s: expecting char array for fixed length strings", caller.c_str ());
 
           if (wrt_fcn == 0)
-            status = H5Dwrite (object_id, sub_type_id, mem_space_id,
+            status = H5Dwrite (object_id, mem_type_id, mem_space_id,
                                file_space_id, xfer_plist_id,
                                cm.data ());
           else
-            status = H5Awrite (object_id, sub_type_id,
+            status = H5Awrite (object_id, mem_type_id,
                                cm.data ());
         }
     }
@@ -518,7 +518,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
               size_t sz = H5Tget_size (field_type_id);
 
               hid_t type_id = H5Tcreate (H5T_COMPOUND, sz);
-
+                
               H5Tinsert (type_id, name, 0, field_type_id);
 
               const octave_value val = data.getfield (name);

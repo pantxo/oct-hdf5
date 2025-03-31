@@ -14,7 +14,7 @@ function h5ex_t_vlstringatt
   %  EDIT: Also tested with version 1.10.
   %**************************************************************************
 
-  fileName       = 'h5ex_t_vlstringatt.h5';
+  fileName       = tempname ();
   DATASET        = 'DS1';
   ATTRIBUTE      = 'A1';
   DIM0           = 4;
@@ -112,6 +112,7 @@ function h5ex_t_vlstringatt
   H5T.close (filetype);
   H5T.close (memtype);
   H5F.close (file);
-
+  delete (fileName);
+  
   assert (rdata, wdata)
 endfunction

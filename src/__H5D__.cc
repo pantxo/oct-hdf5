@@ -503,6 +503,9 @@ See original function at \
 %!test
 %! h5ex_t_string ()
 
+%!test
+%! h5ex_t_cmpd ()
+
 */
 
 // PKG_ADD: autoload ("__H5D_write__", "__H5D__.oct");
