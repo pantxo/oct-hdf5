@@ -441,7 +441,6 @@ __h5write__ (const std::string& caller, const octave_value& ov,
     }
   else if (H5Tget_class (sub_type_id) == H5T_STRING)
     {
-      dim_vector dims = ov.dims ();
       htri_t is_vlstr  = H5Tis_variable_str (sub_type_id);
 
       if (is_vlstr)
@@ -459,6 +458,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
               Cell cellstr = ov.cellstr_value ();
               octave_idx_type nrows = cellstr.numel ();
               std::string str;
+
               for (int ii = 0; ii < nrows; ii++)
                 {
                   str = cellstr(ii).string_value ();
@@ -473,7 +473,8 @@ __h5write__ (const std::string& caller, const octave_value& ov,
             }
           else
             error ("%s: expect a single line char array "
-                   "or cell array of strings", caller.c_str ());
+                   "or cell array of strings for H5T_VARIABLE type",
+                   caller.c_str ());
 
           if (wrt_fcn == 0)
             status = H5Dwrite (object_id, sub_type_id, mem_space_id,
@@ -512,7 +513,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
           char *name = H5Tget_member_name (sub_type_id, ii);
           if (data.isfield (name))
             {
-              hid_t field_type_id  = H5Tget_member_type (sub_type_id, ii);
+              field_type_id = H5Tget_member_type (sub_type_id, ii);
 
               size_t sz = H5Tget_size (field_type_id);
 
@@ -527,7 +528,11 @@ __h5write__ (const std::string& caller, const octave_value& ov,
                            field_type_id);
               // We went that far, all is ok.
               status = 0;
+              H5Tclose (field_type_id);
+              H5Tclose (type_id);
             }
+
+          H5free_memory (name);
         }
     }
   if (auto_type)
