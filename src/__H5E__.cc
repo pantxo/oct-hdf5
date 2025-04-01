@@ -251,10 +251,12 @@ DEFUN_DLD(__H5E_walk__, args, nargout,
   H5Eclose_stack (estack_id);
 
   // Rethrow previously caugh error if necessary
+#if defined HAVE_EXCEPTION_MSG
   if (! ee.message ().empty ())
+#else
+  if (! ee.info ().empty ())
+#endif
     throw ee;
 
   return retval.append (herr);
 }
-
-
