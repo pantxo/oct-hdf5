@@ -44,7 +44,8 @@ jobs:
         timeout-minutes: 5
         run: |
           sudo apt-get update --fix-missing
-          sudo apt-get install octave-dev
+          sudo apt-get install octave
+          sudo apt-get install liboctave-dev
 
       - name: Build oct-hdf5
         run: make -j $(nproc)
