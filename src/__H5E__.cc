@@ -151,10 +151,10 @@ DEFUN_DLD(__H5E_get_msg__, args, nargout,
 
   ssize_t nret = H5Eget_msg (msg_id, &type, msg, sz);
 
-  printf ("ID is %lld, nret is %lld, msg is %s\n", msg_id, nret, msg);
+  printf ("ID is %zd, nret is %zd, msg is %s\n", msg_id, nret, msg);
 
   if (nret < 0)
-    error ("H5E.get_msg: unable to retrieve message for id %lld", msg_id);
+    error ("H5E.get_msg: unable to retrieve message for id %zd", msg_id);
 
   return retval.append (std::string (msg));
 }
