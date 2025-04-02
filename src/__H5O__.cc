@@ -94,7 +94,7 @@ num_attrs; /* # of attributes attached to object \n\
 #if ((H5_VERS_MAJOR * 1000) + H5_VERS_MINOR) <= 1010
   if (H5Oget_info_by_name1 (loc_id, name.c_str (), &oinfo, lapl_id) < 0)
 #else
-  if (H5Oget_info_by_name3 (loc_id, name.c_str (), &oinfo, 0xFFFFFFFF, lapl_id) < 0)
+  if (H5Oget_info_by_name3 (loc_id, name.c_str (), &oinfo, H5O_INFO_ALL, lapl_id) < 0)
 #endif
     error ("H5O_info2_t *oinfo: unable to get object info");
 
