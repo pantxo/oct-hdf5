@@ -7,13 +7,57 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build_and_test:
+  build_and_test_ubuntu_latest:
     name: Compile and run Tests
     
     runs-on: ubuntu-latest
     
     container:
       image: gnuoctave/octave:latest
+      volumes:
+        - ${{ github.workspace }}:/app
+
+    steps:
+      - name: Check Out the Repo
+        uses: actions/checkout@v4
+        with:
+          submodules: 'false'
+
+      - name: Build oct-hdf5
+        run: make -j $(nproc)
+
+      - name: Test oct-hdf5
+        run: make check
+
+  build_and_test_ubuntu_20_04:
+    name: Compile and run Tests
+    
+    runs-on: ubuntu-20.04
+    
+    container:
+      image: gnuoctave/octave:6.1
+      volumes:
+        - ${{ github.workspace }}:/app
+
+    steps:
+      - name: Check Out the Repo
+        uses: actions/checkout@v4
+        with:
+          submodules: 'false'
+
+      - name: Build oct-hdf5
+        run: make -j $(nproc)
+
+      - name: Test oct-hdf5
+        run: make check
+
+  build_and_test_ubuntu_22_04:
+    name: Compile and run Tests
+    
+    runs-on: ubuntu-20.04
+    
+    container:
+      image: gnuoctave/octave:7.1
       volumes:
         - ${{ github.workspace }}:/app
 
