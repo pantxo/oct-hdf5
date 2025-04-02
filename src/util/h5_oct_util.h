@@ -23,7 +23,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <octave/octave.h>
 #include <octave/parse.h>
 
-#include <hdf5/serial/hdf5.h>
+#if defined(__APPLE__) || defined(_WIN32)
+    #include <hdf5.h>
+#else
+    #include <hdf5/serial/hdf5.h>
+#endif
 
 #include <set>
 #include <string>
