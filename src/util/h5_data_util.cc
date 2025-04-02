@@ -457,26 +457,22 @@ __h5write__ (const std::string& caller, const octave_value& ov,
               Cell cellstr = ov.cell_value ();
               octave_idx_type nstr = cellstr.numel ();
               str_array = (char**) malloc (nstr * sizeof (char*));
-              std::string str;
               
               for (int ii = 0; ii < nstr; ii++)
                 {
                   // For compatibility with ML, transform vertical char arrays
                   // into row strings
-                  octave_value tmp_ov = cellstr(ii);
-                  dim_vector tmpdv = tmp_ov.dims ();
+                  charMatrix cm = cellstr(ii).char_matrix_value ();
+                  octave_idx_type nchar = cm.numel ();
+                  cm = cm.reshape (1, nchar);
                   
-                  if (tmpdv(1) < tmpdv (0))
-                    tmp_ov = tmp_ov.reshape (dim_vector (tmpdv(1), tmpdv(0)));
-                  
-                  str = tmp_ov.string_value ();
-                  str_array[ii] = (char *) malloc ((str.size () + 1)
+                  str_array[ii] = (char *) malloc ((nchar + 1)
                                                    * sizeof (char*));
 
                   if (ii < nstr-1)
-                    str_array[ii+1] = str_array[ii] + ii * (str.size () + 1);
+                    str_array[ii+1] = str_array[ii] + ii * (nchar + 1);
 
-                  std::strcpy (str_array[ii], str.c_str ());
+                  std::strcpy (str_array[ii], cm.row_as_string (0).c_str ());
                 }
             }
           else

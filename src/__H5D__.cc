@@ -555,61 +555,92 @@ DEFUN_DLD(__H5D_write__, args, nargout,
 
 /*
 %!test
-% data = 122 + 245.56i;
-% fname = tempname ();
-% fid = H5F.create (tempname (), 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
-% typeid = H5T.copy ('H5T_IEEE_F64LE');
-% sizeid = H5S.create_simple(ndims (data), fliplr (size (data)),
-%                            fliplr (size (data)));
-% elemsize = H5T.get_size (typeid);
-% memtype = H5T.create ('H5T_COMPOUND', elemsize * 2);
-% H5T.insert (memtype, 'Real', 0, typeid);
-% H5T.insert (memtype, 'Imag', elemsize, typeid);
-% oid = H5D.create (fid, '/a', memtype, sizeid, 'H5P_DEFAULT');
-% data = struct ('Real', real (data), 'Imag', imag (data));
-% H5D.write (oid, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', data);
-% H5T.close (memtype);
-% H5T.close (typeid);
-% H5D.close(oid);
-% H5F.close(fid);
-% ## We went so far, it's ok
-% delete (fname);
-% assert (true)
+%! data = 122 + 245.56i;
+%! fname = tempname ();
+%! fid = H5F.create (fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
+%! typeid = H5T.copy ('H5T_IEEE_F64LE');
+%! sizeid = H5S.create_simple(ndims (data), fliplr (size (data)),
+%!                            fliplr (size (data)));
+%! elemsize = H5T.get_size (typeid);
+%! memtype = H5T.create ('H5T_COMPOUND', elemsize * 2);
+%! H5T.insert (memtype, 'Real', 0, typeid);
+%! H5T.insert (memtype, 'Imag', elemsize, typeid);
+%! oid = H5D.create (fid, '/a', memtype, sizeid, 'H5P_DEFAULT');
+%! data = struct ('Real', real (data), 'Imag', imag (data));
+%! H5D.write (oid, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', data);
+%! H5T.close (memtype);
+%! H5T.close (typeid);
+%! H5D.close(oid);
+%! H5F.close(fid);
+%! ## We went so far, it's ok
+%! delete (fname);
+%! assert (true)
 
 %!test
-% ## For compatibility with ML, in vlstrings vertical char arrays are turned
-% ## horizontal
-% item = 'test';
-% 
-% fname = tempname ();
-% fid = H5F.create (fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
-% 
-% itemtype = H5T.copy ('H5T_C_S1');
-% H5T.set_size(itemtype, 'H5T_VARIABLE');
-% 
-% space = H5S.create('H5S_SCALAR');
-% dset = H5D.create(fid, '/vertical', itemtype, space, 'H5P_DEFAULT');
-% H5D.write(dset, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {item'});
-% dset2 = H5D.create(fid, '/horizontal', itemtype, space, 'H5P_DEFAULT');
-% H5D.write(dset2, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {item});
-% 
-% H5S.close (space);
-% H5D.close(dset);
-% H5D.close(dset2);
-% H5F.close(fid);
-% 
-% fid = H5F.open (fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
-% dset = H5D.open (fid, '/vertical');
-% dset2 = H5D.open (fid, '/horizontal');
-% 
-% memtype = H5T.copy ('H5T_C_S1');
-% H5T.set_size (memtype, 'H5T_VARIABLE');
-% vertical = H5D.read (dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
-% horizontal = H5D.read (dset2, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
-% H5D.close (dset);
-% H5D.close (dset2);
-% H5T.close (memtype);
-% H5F.close (fid);
-% delete (fname)
-% assert (vertical,horizontal)
+%! ## For compatibility with ML, in vlstrings vertical char arrays are turned
+%! ## horizontal
+%! item = 'test';
+%! 
+%! fname = tempname ();
+%! fid = H5F.create (fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
+%! 
+%! itemtype = H5T.copy ('H5T_C_S1');
+%! H5T.set_size(itemtype, 'H5T_VARIABLE');
+%! 
+%! space = H5S.create('H5S_SCALAR');
+%! dset = H5D.create(fid, '/vertical', itemtype, space, 'H5P_DEFAULT');
+%! H5D.write(dset, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {item'});
+%! dset2 = H5D.create(fid, '/horizontal', itemtype, space, 'H5P_DEFAULT');
+%! H5D.write(dset2, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {item});
+%! 
+%! H5S.close (space);
+%! H5D.close(dset);
+%! H5D.close(dset2);
+%! H5F.close(fid);
+%! 
+%! fid = H5F.open (fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
+%! dset = H5D.open (fid, '/vertical');
+%! dset2 = H5D.open (fid, '/horizontal');
+%! 
+%! memtype = H5T.copy ('H5T_C_S1');
+%! H5T.set_size (memtype, 'H5T_VARIABLE');
+%! vertical = H5D.read (dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
+%! horizontal = H5D.read (dset2, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
+%! H5D.close (dset);
+%! H5D.close (dset2);
+%! H5T.close (memtype);
+%! H5F.close (fid);
+%! delete (fname)
+%! assert (vertical,horizontal)
+
+%!test
+%! ## Char matrix are serialized to a single row char vector
+%! charmat = ['abc'; 'def'];
+%
+%! fname = tempname ();
+%! fid = H5F.create (fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
+%! 
+%! itemtype = H5T.copy ('H5T_C_S1');
+%! H5T.set_size(itemtype, 'H5T_VARIABLE');
+%! 
+%! space = H5S.create('H5S_SCALAR');
+%! dset = H5D.create(fid, '/charmat', itemtype, space, 'H5P_DEFAULT');
+%! H5D.write(dset, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {charmat'});
+%! 
+%! H5S.close (space);
+%! H5D.close(dset);
+%! H5F.close(fid);
+%! 
+%! fid = H5F.open (fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
+%! dset = H5D.open (fid, '/charmat');
+%! 
+%! memtype = H5T.copy ('H5T_C_S1');
+%! H5T.set_size (memtype, 'H5T_VARIABLE');
+%! charvec = H5D.read (dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
+%! H5D.close (dset);
+%! H5T.close (memtype);
+%! H5F.close (fid);
+%! delete (fname)
+%! assert (charvec,charmat'(:)')
+
 */
