@@ -44,7 +44,7 @@ jobs:
         timeout-minutes: 5
         run: |
           sudo apt-get update --fix-missing
-          sudo apt-get -Y install octave-dev
+          sudo apt-get install octave-dev
 
       - name: Build oct-hdf5
         run: make -j $(nproc)
@@ -52,10 +52,10 @@ jobs:
       - name: Test oct-hdf5
         run: make check
 
-  build_and_test_ubuntu_20_04:
+  build_and_test_ubuntu_22_04:
     name: Compile and run Tests
     
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Check Out the Repo
@@ -67,7 +67,7 @@ jobs:
         timeout-minutes: 5
         run: |
           sudo apt-get update --fix-missing
-          sudo apt-get -Y install octave-dev
+          sudo apt-get install octave-dev
 
       - name: Build oct-hdf5
         run: make -j $(nproc)
