@@ -575,4 +575,41 @@ DEFUN_DLD(__H5D_write__, args, nargout,
 % ## We went so far, it's ok
 % delete (fname);
 % assert (true)
+
+%!test
+% ## For compatibility with ML, in vlstrings vertical char arrays are turned
+% ## horizontal
+% item = 'test';
+% 
+% fname = tempname ();
+% fid = H5F.create (fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
+% 
+% itemtype = H5T.copy ('H5T_C_S1');
+% H5T.set_size(itemtype, 'H5T_VARIABLE');
+% 
+% space = H5S.create('H5S_SCALAR');
+% dset = H5D.create(fid, '/vertical', itemtype, space, 'H5P_DEFAULT');
+% H5D.write(dset, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {item'});
+% dset2 = H5D.create(fid, '/horizontal', itemtype, space, 'H5P_DEFAULT');
+% H5D.write(dset2, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', {item});
+% 
+% H5S.close (space);
+% H5D.close(dset);
+% H5D.close(dset2);
+% H5F.close(fid);
+% 
+% fid = H5F.open (fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
+% dset = H5D.open (fid, '/vertical');
+% dset2 = H5D.open (fid, '/horizontal');
+% 
+% memtype = H5T.copy ('H5T_C_S1');
+% H5T.set_size (memtype, 'H5T_VARIABLE');
+% vertical = H5D.read (dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
+% horizontal = H5D.read (dset2, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
+% H5D.close (dset);
+% H5D.close (dset2);
+% H5T.close (memtype);
+% H5F.close (fid);
+% delete (fname)
+% assert (vertical,horizontal)
 */
