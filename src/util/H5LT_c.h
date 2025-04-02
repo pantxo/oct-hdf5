@@ -15,7 +15,11 @@
 #ifndef H5LT_C_H
 #define H5LT_C_H
 
-#include <hdf5/serial/hdf5.h>
+#if defined(__APPLE__) || defined(_WIN32)
+    #include <hdf5.h>
+#else
+    #include <hdf5/serial/hdf5.h>
+#endif
 
 #include <octave/octave.h>
 #include <octave/parse.h>

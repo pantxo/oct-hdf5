@@ -21,7 +21,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define H5_DATA_UTIL_H
 
 #include <octave/octave.h>
-#include <hdf5/serial/hdf5.h>
+#if defined(__APPLE__) || defined(_WIN32)
+    #include <hdf5.h>
+#else
+    #include <hdf5/serial/hdf5.h>
+#endif
 
 #include "H5LT_c.h"
 

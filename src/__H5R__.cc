@@ -80,8 +80,13 @@ references and should be set to -1 if the reference is an object reference,\n\
 
       int64NDArray out(dim_vector (1,nref));
 
+#if ((H5_VERS_MAJOR * 1000) + H5_VERS_MINOR) <= 1010
       for (int ii = 0; ii < nref; ii++)
         out(ii) = ref[ii];
+#else
+      for (int ii = 0; ii < nref; ii++)
+        out(ii) = ref.__data[ii];
+#endif
 
       retval.append (out);
     }
