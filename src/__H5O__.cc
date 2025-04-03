@@ -89,21 +89,19 @@ num_attrs; /* # of attributes attached to object \n\
   hid_t lapl_id = get_h5_id (args, 2, "LAPL_ID", "H5O.get_info_by_name");
 
   // Infor structur output
-  H5O_info_t oinfo;
-
 #if ((H5_VERS_MAJOR * 1000) + H5_VERS_MINOR) <= 1010
+  H5O_info_t oinfo;
   if (H5Oget_info_by_name1 (loc_id, name.c_str (), &oinfo, lapl_id) < 0)
 #else
-  if (H5Oget_info_by_name3 (loc_id, name.c_str (), &oinfo, H5O_INFO_ALL, lapl_id) < 0)
+  H5O_info1_t oinfo;
+  if (H5Oget_info_by_name2 (loc_id, name.c_str (), &oinfo, H5O_INFO_ALL, lapl_id) < 0)
 #endif
     error ("H5O_info2_t *oinfo: unable to get object info");
 
   // Build ouput structure
   octave_scalar_map info_struct;
   info_struct.assign ("fileno", octave_int64 (oinfo.fileno));
-#if ((H5_VERS_MAJOR * 1000) + H5_VERS_MINOR) <= 1010
   info_struct.assign ("addr", octave_int64 (oinfo.addr));
-#endif
   info_struct.assign ("type", octave_int64 (oinfo.type));
   info_struct.assign ("rc", octave_int64 (oinfo.rc));
   info_struct.assign ("atime", octave_int64 (oinfo.atime));
