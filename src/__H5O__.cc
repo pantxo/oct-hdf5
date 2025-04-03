@@ -96,7 +96,7 @@ num_attrs; /* # of attributes attached to object \n\
   H5O_info1_t oinfo;
   if (H5Oget_info_by_name2 (loc_id, name.c_str (), &oinfo, H5O_INFO_ALL, lapl_id) < 0)
 #endif
-    error ("H5O_info2_t *oinfo: unable to get object info");
+    error ("H5Oget_info_by_name: unable to get object info");
 
   // Build ouput structure
   octave_scalar_map info_struct;
