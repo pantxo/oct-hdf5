@@ -11,9 +11,9 @@ SOURCES_UTIL := $(wildcard *.cc)
 OBJS_UTIL    := $(patsubst %.cc,%.o,$(SOURCES_UTIL))
 UNAME        := $(shell uname -o)
 ifeq ($(UNAME),Darwin)
- GREP         = grep
-else
  GREP         = ggrep
+else
+ GREP         = grep
 endif
 PKG_ADD      := $(shell $(GREP) -Pho '(?<=// PKG_ADD: ).*' $(SOURCES))
 
