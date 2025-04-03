@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_oct_util.h"
 // PKG_ADD: autoload ("__H5F_close__", "__H5F__.oct");
 // PKG_DEL: autoload ("__H5F_close__", "__H5F__.oct", "remove");
-DEFUN_DLD(__H5F_close__, args, nargout, 
+DEFUN_DLD(__H5F_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5F.close (@var{file_id})\n\
 @seealso{}\n\
@@ -45,7 +45,7 @@ DEFUN_DLD(__H5F_close__, args, nargout,
 
 // PKG_ADD: autoload ("__H5F_create__", "__H5F__.oct");
 // PKG_DEL: autoload ("__H5F_create__", "__H5F__.oct", "remove");
-DEFUN_DLD(__H5F_create__, args, nargout, 
+DEFUN_DLD(__H5F_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{fid} =} H5F.create (@var{fname})\n\
 @deftypefnx {} {@var{fid} =} H5F.create (@var{fname}, @var{flags})\n\
@@ -92,7 +92,7 @@ DEFUN_DLD(__H5F_create__, args, nargout,
 
 // PKG_ADD: autoload ("__H5F_open__", "__H5F__.oct");
 // PKG_DEL: autoload ("__H5F_open__", "__H5F__.oct", "remove");
-DEFUN_DLD(__H5F_open__, args, nargout, 
+DEFUN_DLD(__H5F_open__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{fid} =} H5F.open (@var{fname})\n\
 @deftypefnx {} {@var{fid} =} H5F.open (@var{fname}, @var{flags})\n\

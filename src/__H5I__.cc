@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // PKG_ADD: autoload ("__H5I_get_name__", "__H5I__.oct");
 // PKG_DEL: autoload ("__H5I_get_name__", "__H5I__.oct", "remove");
-DEFUN_DLD(__H5I_get_name__, args, nargout, 
+DEFUN_DLD(__H5I_get_name__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{info_struct} =} H5I.get_name (@var{obj_id})\n\
 Retrieve a name for the object identified by @var{obj_id}.\n\

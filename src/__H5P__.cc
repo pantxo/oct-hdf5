@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_oct_util.h"
 // PKG_ADD: autoload ("__H5P_close__", "__H5P__.oct");
 // PKG_DEL: autoload ("__H5P_close__", "__H5P__.oct", "remove");
-DEFUN_DLD(__H5P_close__, args, nargout, 
+DEFUN_DLD(__H5P_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5P.close (@var{plist})\n\
 @seealso{}\n\
@@ -47,7 +47,7 @@ DEFUN_DLD(__H5P_close__, args, nargout,
 
 // PKG_ADD: autoload ("__H5P_create__", "__H5P__.oct");
 // PKG_DEL: autoload ("__H5P_create__", "__H5P__.oct", "remove");
-DEFUN_DLD(__H5P_create__, args, nargout, 
+DEFUN_DLD(__H5P_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{plist_id} =} H5P.create (@var{class_id})\n\
 @seealso{}\n\
@@ -73,7 +73,7 @@ DEFUN_DLD(__H5P_create__, args, nargout,
 
 // PKG_ADD: autoload ("__H5P_fill_value_defined__", "__H5P__.oct");
 // PKG_DEL: autoload ("__H5P_fill_value_defined__", "__H5P__.oct", "remove");
-DEFUN_DLD(__H5P_fill_value_defined__, args, nargout, 
+DEFUN_DLD(__H5P_fill_value_defined__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{fill_val_id} = } H5P.fill_value_defined (@var{plist_id})\n \
 @seealso{H5D.get_create_plist}\n\
@@ -99,7 +99,7 @@ DEFUN_DLD(__H5P_fill_value_defined__, args, nargout,
 
 // PKG_ADD: autoload ("__H5P_get_chunk__", "__H5P__.oct");
 // PKG_DEL: autoload ("__H5P_get_chunk__", "__H5P__.oct", "remove");
-DEFUN_DLD(__H5P_get_chunk__, args, nargout, 
+DEFUN_DLD(__H5P_get_chunk__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {[@var{rank, @var{dims}] = } H5P.get_chunk (@var{plist_id})\n\
 @seealso{H5D.get_crreate_plist}\n\
@@ -135,7 +135,7 @@ DEFUN_DLD(__H5P_get_chunk__, args, nargout,
 
 // PKG_ADD: autoload ("__H5P_get_layout__", "__H5P__.oct");
 // PKG_DEL: autoload ("__H5P_get_layout__", "__H5P__.oct", "remove");
-DEFUN_DLD(__H5P_get_layout__, args, nargout, 
+DEFUN_DLD(__H5P_get_layout__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{layout_id} = } H5P.get_layout (@var{plist_id})\n \
 @seealso{H5D.get_create_plist}\n\

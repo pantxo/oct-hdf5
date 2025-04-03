@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_oct_util.h"
 // PKG_ADD: autoload ("__H5S_close__", "__H5S__.oct");
 // PKG_DEL: autoload ("__H5S_close__", "__H5S__.oct", "remove");
-DEFUN_DLD(__H5S_close__, args, nargout, 
+DEFUN_DLD(__H5S_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5S.close (@var{space_id})\n\
 @seealso{}\n\
@@ -47,7 +47,7 @@ DEFUN_DLD(__H5S_close__, args, nargout,
 
 // PKG_ADD: autoload ("__H5S_create__", "__H5S__.oct");
 // PKG_DEL: autoload ("__H5S_create__", "__H5S__.oct", "remove");
-DEFUN_DLD(__H5S_create__, args, nargout, 
+DEFUN_DLD(__H5S_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_id} =} create (@var{type})\n\
 \n\
@@ -93,7 +93,7 @@ with @code{H5S.close} so that resource leaks will not occur.\n\
 
 // PKG_ADD: autoload ("__H5S_create_simple__", "__H5S__.oct");
 // PKG_DEL: autoload ("__H5S_create_simple__", "__H5S__.oct", "remove");
-DEFUN_DLD(__H5S_create_simple__, args, nargout, 
+DEFUN_DLD(__H5S_create_simple__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_id} =} create_simple (@var{rank}, @var{dims}, @var{max_dims})\n \
 Create a new simple dataspace and open it for access, returning a dataspace \
@@ -175,7 +175,7 @@ of egual to the elemnts in DIMS");
 
 // PKG_ADD: autoload ("__H5S_get_simple_extent_dims__", "__H5S__.oct");
 // PKG_DEL: autoload ("__H5S_get_simple_extent_dims__", "__H5S__.oct", "remove");
-DEFUN_DLD(__H5S_get_simple_extent_dims__, args, nargout, 
+DEFUN_DLD(__H5S_get_simple_extent_dims__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {[@var{ndims}, @var{dims}, @var{maxdims}] = } H5S.get_simple_extent_dims (@var{space_id})\n\
 @seealso{}\n\
@@ -226,7 +226,7 @@ DEFUN_DLD(__H5S_get_simple_extent_dims__, args, nargout,
 
 // PKG_ADD: autoload ("__H5S_get_simple_extent_type__", "__H5S__.oct");
 // PKG_DEL: autoload ("__H5S_get_simple_extent_type__", "__H5S__.oct", "remove");
-DEFUN_DLD(__H5S_get_simple_extent_type__, args, nargout, 
+DEFUN_DLD(__H5S_get_simple_extent_type__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_type} =} H5S.get_simple_extent_type (@var{space_id})\
 n\

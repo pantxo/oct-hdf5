@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_oct_util.h"
 // PKG_ADD: autoload ("__H5T_array_create__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_array_create__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_array_create__, args, nargout, 
+DEFUN_DLD(__H5T_array_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{type_id} =} H5T.array_create (@var{base_type_id}, @var{dims})\n\
 @deftypefnx {} {@var{type_id} =} H5T.array_create (@var{base_type_id}, @var{rank}, @var{dims})\n\
@@ -93,7 +93,7 @@ sizes specified in @var{dims} must be greater than 0 (zero).\n\
 
 // PKG_ADD: autoload ("__H5T_close__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_close__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_close__, args, nargout, 
+DEFUN_DLD(__H5T_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.close (@var{type_id})\n\
 @seealso{}\n\
@@ -117,7 +117,7 @@ DEFUN_DLD(__H5T_close__, args, nargout,
 
 // PKG_ADD: autoload ("__H5T_copy__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_copy__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_copy__, args, nargout, 
+DEFUN_DLD(__H5T_copy__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{type_id} =} H5T.copy (@var{type_id})\n\
 @seealso{}\n\
@@ -143,7 +143,7 @@ DEFUN_DLD(__H5T_copy__, args, nargout,
 
 // PKG_ADD: autoload ("__H5T_create__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_create__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_create__, args, nargout, 
+DEFUN_DLD(__H5T_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{type_id}} H5T.create (@var{class}, @var{size})\n\
 Create a new datatype of the specified class with the specified number \
@@ -193,7 +193,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5T_get_class__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_get_class__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_get_class__, args, nargout, 
+DEFUN_DLD(__H5T_get_class__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{class_id} =} H5T.get_class (@var{type_id})\n\
 Get the class of the data type specified by @var{type_id}.\n\
@@ -225,7 +225,7 @@ The output can be @qcode{'H5T_INTEGER'}, @qcode{'H5T_FLOAT'},\n\
 
 // PKG_ADD: autoload ("__H5T_get_order__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_get_order__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_get_order__, args, nargout, 
+DEFUN_DLD(__H5T_get_order__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{byte_order} =} H5T.get_order (@var{type_id})\n\
 Get the byte order of the data type specified by @var{type_id}.\n\
@@ -256,7 +256,7 @@ or @qcode{'H5T_ORDER_NONE'}.\n\
 
 // PKG_ADD: autoload ("__H5T_get_size__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_get_size__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_get_size__, args, nargout, 
+DEFUN_DLD(__H5T_get_size__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{sz} =} H5T.get_size (@var{type_id})\n\
 @seealso{}\n\
@@ -282,7 +282,7 @@ DEFUN_DLD(__H5T_get_size__, args, nargout,
 
 // PKG_ADD: autoload ("__H5T_insert__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_insert__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_insert__, args, nargout, 
+DEFUN_DLD(__H5T_insert__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {} H5T.insert (@var{parent_id}, @var{name}, @var{offset}, @var{member_id})\n\
 Adds a new member to a compound datatype.\n\
@@ -335,7 +335,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5T_set_cset__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_set_cset__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_set_cset__, args, nargout, 
+DEFUN_DLD(__H5T_set_cset__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_cset (@var{type_id}, @var{charset})\n\
 @var{charset} must be @qcode{\"H5T_CSET_ASCII\"} \
@@ -364,7 +364,7 @@ or @qcode{\"H5T_CSET_UTF8\"}.\n\
 
 // PKG_ADD: autoload ("__H5T_set_order__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_set_order__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_set_order__, args, nargout, 
+DEFUN_DLD(__H5T_set_order__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_order (@var{type_id}, @var{byte_order})\n                       \
 Set the byte order of the data type specified by @var{type_id}.\n\
@@ -399,7 +399,7 @@ The input @var{byte_order} can be @qcode{'H5T_ORDER_LE'},\n\
 
 // PKG_ADD: autoload ("__H5T_set_size__", "__H5T__.oct");
 // PKG_DEL: autoload ("__H5T_set_size__", "__H5T__.oct", "remove");
-DEFUN_DLD(__H5T_set_size__, args, nargout, 
+DEFUN_DLD(__H5T_set_size__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5T.set_size (@var{type_id}, @var{size})\n\
 @var{size} is the size in bytes of the type or @qcode{\"H5T_VARIABLE\"}.\n\

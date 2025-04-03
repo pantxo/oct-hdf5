@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // PKG_ADD: autoload ("__H5G_close__", "__H5G__.oct");
 // PKG_DEL: autoload ("__H5G_close__", "__H5G__.oct", "remove");
-DEFUN_DLD(__H5G_close__, args, nargout, 
+DEFUN_DLD(__H5G_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5G.close (@var{group_id})\n\
 Release resources used by a group which was opened by @code{H5G.create}\n\
@@ -54,7 +54,7 @@ Failure to release a group with this call will result in resource leaks.\n\
 
 // PKG_ADD: autoload ("__H5G_create__", "__H5G__.oct");
 // PKG_DEL: autoload ("__H5G_create__", "__H5G__.oct", "remove");
-DEFUN_DLD(__H5G_create__, args, nargout, 
+DEFUN_DLD(__H5G_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{group_id} =} H5G.create (@var{loc_id}, @var{name})\n\
 @deftypefnx {} {@var{group_id} =} H5G.create (@var{loc_id}, @var{name}, @var{lcpl_id}, @var{gcpl_id}, @var{gapl_id})\n\
@@ -121,7 +121,7 @@ is no longer required.\n\
 
 // PKG_ADD: autoload ("__H5G_open__", "__H5G__.oct");
 // PKG_DEL: autoload ("__H5G_open__", "__H5G__.oct", "remove");
-DEFUN_DLD(__H5G_open__, args, nargout, 
+DEFUN_DLD(__H5G_open__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{group_id} =} H5G.open (@var{loc_id}, @var{name}, @var{gapl_id})\n\
 Open an existing group, @var{name}, at the location specified by\n\

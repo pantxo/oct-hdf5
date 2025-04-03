@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_oct_util.h"
 // PKG_ADD: autoload ("__H5O_close__", "__H5O__.oct");
 // PKG_DEL: autoload ("__H5O_close__", "__H5O__.oct", "remove");
-DEFUN_DLD(__H5O_close__, args, nargout, 
+DEFUN_DLD(__H5O_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5O.close (@var{object_id})\n\
 Closes the object, dataset, or named datatype specified by @var{object_id}.\n\
@@ -54,7 +54,7 @@ or file.\n\
 
 // PKG_ADD: autoload ("__H5O_get_info_by_name__", "__H5O__.oct");
 // PKG_DEL: autoload ("__H5O_get_info_by_name__", "__H5O__.oct", "remove");
-DEFUN_DLD(__H5O_get_info_by_name__, args, nargout, 
+DEFUN_DLD(__H5O_get_info_by_name__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{info_struct} =} H5O.get_info_by_name (@var{loc_id}, @var{name}, @var{lapl_id})\n\
 The @var{info_struct} structure contains fields:\n\
@@ -115,7 +115,7 @@ num_attrs; /* # of attributes attached to object \n\
 
 // PKG_ADD: autoload ("__H5O_open__", "__H5O__.oct");
 // PKG_DEL: autoload ("__H5O_open__", "__H5O__.oct", "remove");
-DEFUN_DLD(__H5O_open__, args, nargout, 
+DEFUN_DLD(__H5O_open__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{dataset_id} =} H5O.open (@var{loc_id}, @var{name}, @var{lapl_id})\n\
 Open a group, dataset, or committed (named) datatype specified by a location, \

@@ -70,7 +70,7 @@ error_handler (unsigned n, const H5E_error2_t *err_desc, void* exception_ptr)
 }
 // PKG_ADD: autoload ("__H5E_get_class_name__", "__H5E__.oct");
 // PKG_DEL: autoload ("__H5E_get_class_name__", "__H5E__.oct", "remove");
-DEFUN_DLD(__H5E_get_class_name__, args, nargout, 
+DEFUN_DLD(__H5E_get_class_name__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{cname} =} H5E.get_class_name (@var{class_id})\n\
 @seealso{H5E.walk}\n\
@@ -97,7 +97,7 @@ DEFUN_DLD(__H5E_get_class_name__, args, nargout,
 
 // PKG_ADD: autoload ("__H5E_get_major__", "__H5E__.oct");
 // PKG_DEL: autoload ("__H5E_get_major__", "__H5E__.oct", "remove");
-DEFUN_DLD(__H5E_get_major__, args, nargout, 
+DEFUN_DLD(__H5E_get_major__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{err_msg} =} H5E.get_major (@var{maj_num})\n\
 @seealso{H5E.walk}\n\
@@ -129,7 +129,7 @@ DEFUN_DLD(__H5E_get_major__, args, nargout,
 
 // PKG_ADD: autoload ("__H5E_get_msg__", "__H5E__.oct");
 // PKG_DEL: autoload ("__H5E_get_msg__", "__H5E__.oct", "remove");
-DEFUN_DLD(__H5E_get_msg__, args, nargout, 
+DEFUN_DLD(__H5E_get_msg__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{msg} =} H5E.get_msg (@var{msg_id})\n\
 @seealso{H5E.walk}\n\
@@ -161,7 +161,7 @@ DEFUN_DLD(__H5E_get_msg__, args, nargout,
 
 // PKG_ADD: autoload ("__H5E_oclear__", "__H5E__.oct");
 // PKG_DEL: autoload ("__H5E_oclear__", "__H5E__.oct", "remove");
-DEFUN_DLD(__H5E_oclear__, args, nargout, 
+DEFUN_DLD(__H5E_oclear__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5E.oclear ()\n\
 @seealso{H5E.walk}\n\
@@ -186,7 +186,7 @@ DEFUN_DLD(__H5E_oclear__, args, nargout,
 
 // PKG_ADD: autoload ("__H5E_set_auto__", "__H5E__.oct");
 // PKG_DEL: autoload ("__H5E_set_auto__", "__H5E__.oct", "remove");
-DEFUN_DLD(__H5E_set_auto__, args, nargout, 
+DEFUN_DLD(__H5E_set_auto__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5E.set_auto (@var{tf})\n\
 @seealso{H5E.walk}\n\
@@ -218,7 +218,7 @@ DEFUN_DLD(__H5E_set_auto__, args, nargout,
 
 // PKG_ADD: autoload ("__H5E_walk__", "__H5E__.oct");
 // PKG_DEL: autoload ("__H5E_walk__", "__H5E__.oct", "remove");
-DEFUN_DLD(__H5E_walk__, args, nargout, 
+DEFUN_DLD(__H5E_walk__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5E.walk (@var{direction}, @var{fcn})\n        \
 @seealso{H5E.clear}\n                                           \

@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "./util/h5_data_util.h"
 // PKG_ADD: autoload ("__H5D_close__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_close__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_close__, args, nargout, 
+DEFUN_DLD(__H5D_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} { } H5D.close (@var{dataset_id})\n\
 End access to a dataset specified by @var{dataset_id} and releases resources\n\
@@ -73,7 +73,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_create__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_create__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_create__, args, nargout, 
+DEFUN_DLD(__H5D_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{dataset_id} =} H5D.create (@var{loc_id}, @var{name}, @var{dtype_id}, @var{space_id}, @var{lcpl_id})\n\
 @deftypefnx {} {@var{dataset_id} =} H5D.create (@var{loc_id}, @var{name}, @var{dtype_id}, @var{space_id}, @var{lcpl_id}, @var{dcpl_id}, @var{dapl_id})\n\
@@ -145,7 +145,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_get_create_plist__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_get_create_plist__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_get_create_plist__, args, nargout, 
+DEFUN_DLD(__H5D_get_create_plist__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{dcpl_id} = } H5D.get_create_plist (@var{dataset_id})\n\
 Return an identifier for a copy of the dataset creation property list\n\
@@ -191,7 +191,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_get_space__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_get_space__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_get_space__, args, nargout, 
+DEFUN_DLD(__H5D_get_space__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{space_id} = } H5D.get_space (@var{dataset_id})\n\
 Make a copy of the dataspace of the dataset specified by @var{dataset_id}.\n\
@@ -240,7 +240,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_get_type__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_get_type__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_get_type__, args, nargout, 
+DEFUN_DLD(__H5D_get_type__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{type_id} = } H5D.get_type (@var{dataset_id})\n\
 Return an identifier for a copy of the datatype for a dataset.\n\
@@ -290,7 +290,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_open__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_open__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_open__, args, nargout, 
+DEFUN_DLD(__H5D_open__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{dataset_id} =} H5D.open (@var{loc_id}, @var{name}, @var{dapl_id})\n\
 Open the existing dataset specified by a location identifier and name,\n\
@@ -351,7 +351,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_read__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_read__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_read__, args, nargout, 
+DEFUN_DLD(__H5D_read__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{data} = } H5D.read (@var{dataset_id})\n\
 @deftypefnx {} {@var{data} = } H5D.read (@var{dataset_id}, @var{mem_type_id}, @var{mem_space_id}, @var{file_space_id}, @var{xfer_plist_id})\n\
@@ -513,7 +513,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5D_write__", "__H5D__.oct");
 // PKG_DEL: autoload ("__H5D_write__", "__H5D__.oct", "remove");
-DEFUN_DLD(__H5D_write__, args, nargout, 
+DEFUN_DLD(__H5D_write__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5D.write (@var{dataset_id}, @var{mem_type_id}, @var{mem_space_id}, @var{file_space_id}, @var{xfer_plist_id}, @var{data})\n\
 @seealso{}\n\

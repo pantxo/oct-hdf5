@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // PKG_ADD: autoload ("__H5A_close__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_close__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_close__, args, nargout, 
+DEFUN_DLD(__H5A_close__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} { } H5A.close (@var{attr_id})\n\
 Terminates access to the attribute specified by @var{attr_id}.\n\
@@ -69,7 +69,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_create__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_create__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_create__, args, nargout, 
+DEFUN_DLD(__H5A_create__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id})\n\
 @deftypefnx {oct-hdf5} {@var{attribute_id} =} H5A.create (@var{loc_id}, @var{attr_name}, @var{type_id}, @var{space_id}, @var{acpl_id}, @var{aapl_id},)\n\
@@ -138,7 +138,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_get_num_attrs__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_get_num_attrs__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_get_num_attrs__, args, nargout, 
+DEFUN_DLD(__H5A_get_num_attrs__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{attr_count} =} H5A.get_num_attrs (@var{loc_id})\n\
 Return the number of attributes if successful; otherwise return a negative \
@@ -188,7 +188,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_get_space__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_get_space__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_get_space__, args, nargout, 
+DEFUN_DLD(__H5A_get_space__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{space_id} = } H5A.get_space (@var{attr_id})\n\
 Retrieve a copy of the dataspace for an attribute @var{attr_id}.\n\
@@ -239,7 +239,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_get_type__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_get_type__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_get_type__, args, nargout, 
+DEFUN_DLD(__H5A_get_type__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{type_id} = } H5A.get_type (@var{attr_id})\n\
 Return a datatype identifier if successful; otherwise returns a negative \
@@ -291,7 +291,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_iterate__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_iterate__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_iterate__, args, nargout, 
+DEFUN_DLD(__H5A_iterate__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate (@var{loc_id}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in})\n\
 Iterate over the attributes attached to the dataset or group specified\n\
@@ -424,7 +424,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_iterate_by_name__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_iterate_by_name__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_iterate_by_name__, args, nargout, 
+DEFUN_DLD(__H5A_iterate_by_name__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {[@var{status}, @var{idx_out}, @var{opdata_out}] =} H5A.iterate_by_name (@var{loc_id}, @var{name}, @var{idx_type}, @var{order}, @var{idx_in},  @var{fcn}, @var{opdata_in}, @var{lapd_id})\n\
 Iterate over the attributes attached to the dataset or group specified\n\
@@ -574,7 +574,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_open__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_open__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_open__, args, nargout, 
+DEFUN_DLD(__H5A_open__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {oct-hdf5} {@var{attr_id} =} H5A.open (@var{obj_id}, @var{name}, @var{aapl_id})\n\
 Open an existing attribute, @var{name}, that is attached to an object\n\
@@ -626,7 +626,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_open_name__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_open_name__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_open_name__, args, nargout, 
+DEFUN_DLD(__H5A_open_name__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{attr_id} =} H5A.open_name (@var{loc_id}, @var{name})\n\
 Open an attribute specified by its name, @var{name}, which is attached to\n\
@@ -666,7 +666,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_read__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_read__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_read__, args, nargout, 
+DEFUN_DLD(__H5A_read__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {@var{data} = } H5A.read (@var{attr_id})\n\
 @deftypefnx {} {@var{data} = } H5A.read (@var{attr_id}, @var{mem_type_id})\n\
@@ -737,7 +737,7 @@ See original function at \
 
 // PKG_ADD: autoload ("__H5A_write__", "__H5A__.oct");
 // PKG_DEL: autoload ("__H5A_write__", "__H5A__.oct", "remove");
-DEFUN_DLD(__H5A_write__, args, nargout, 
+DEFUN_DLD(__H5A_write__, args, , 
 "-*- texinfo -*-\n\
 @deftypefn {} {} H5A.write (@var{attribute_id}, @var{mem_type_id}, @var{data})\n\
 Write an attribute, specified with @var{attribute_id}.\n\

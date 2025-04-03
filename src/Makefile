@@ -1,6 +1,6 @@
 OCTAVE       ?= octave
 MKOCTFILE    ?= mkoctfile
-CFLAGS        = -Wall -g
+CFLAGS        = -Wall -Wextra -g
 INCLUDES     := $(shell ${OCTAVE} -f --eval "printf ('%s', __octave_config_info__().build_environment.HDF5_CPPFLAGS)")
 
 LIBS         := $(shell ${OCTAVE} -f --eval "printf ('%s %s', __octave_config_info__().build_environment.HDF5_LDFLAGS, __octave_config_info__().build_environment.HDF5_LIBS)")
