@@ -9,7 +9,12 @@ SOURCES      := $(wildcard *.cc)
 OBJS         := $(patsubst %.cc,%.oct,$(SOURCES))
 SOURCES_UTIL := $(wildcard *.cc)
 OBJS_UTIL    := $(patsubst %.cc,%.o,$(SOURCES_UTIL))
-PKG_ADD      := $(shell grep -Pho '(?<=// PKG_ADD: ).*' $(SOURCES))
+ifeq ($(UNAME),Darwin)
+ GREP         = ggrep
+else
+ GREP         = grep
+endif
+PKG_ADD      := $(shell $(GREP) -Pho '(?<=// PKG_ADD: ).*' $(SOURCES))
 
 ## Test Octave version
 OCT_MAJ_VER  := $(shell ${OCTAVE} -f --silent --eval "printf ('%s', strsplit (version, \".\"){1})")

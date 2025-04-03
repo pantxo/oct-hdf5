@@ -44,6 +44,12 @@ jobs:
         uses: gerlero/brew-install@v1
         with:
           packages: octave
+        
+      - name: Install Gnu grep
+        id: install-octave
+        uses: gerlero/brew-install@v1
+        with:
+          packages: grep
           
       - name: Check Out the Repo
         uses: actions/checkout@v4
@@ -55,3 +61,9 @@ jobs:
 
       - name: Test oct-hdf5
         run: make check
+        
+      - name: Archive test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: test/fntests.log
