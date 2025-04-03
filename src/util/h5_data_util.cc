@@ -225,7 +225,7 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
         {
           char *name = H5Tget_member_name (mem_type_id, ii);
 
-          hid_t field_type_id  = H5Tget_member_type (mem_type_id, ii);
+          field_type_id  = H5Tget_member_type (mem_type_id, ii);
 
           size_t sz = H5Tget_size (field_type_id);
 
