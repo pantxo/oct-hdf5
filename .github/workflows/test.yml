@@ -46,7 +46,7 @@ jobs:
           packages: octave
         
       - name: Install Gnu grep
-        id: install-octave
+        id: install-grep
         uses: gerlero/brew-install@v1
         with:
           packages: grep
