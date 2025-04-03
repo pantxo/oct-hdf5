@@ -89,7 +89,7 @@ is no longer required.\n\
 
   int nargin = args.length ();
 
-  if (nargin < 2 && nargin > 5)
+  if (nargin < 2 || nargin > 5)
     print_usage ("H5G.create");
 
   // Parse arguments
