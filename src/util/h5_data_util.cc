@@ -112,6 +112,8 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
     }
   else if (cls == "H5T_STRING")
     {
+      // FIXME: This section is messy (at least). Separate variable and fixed
+      // length sections for readability and see if this can be simplified.
       std::string typ = info_struct.getfield ("Type").scalar_map_value ()
         .getfield ("CharacterType").string_value ();
 
@@ -119,9 +121,6 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
         error ("H5D.read: unhandled string type %s", typ.c_str ());
 
       int slen = H5Tget_size (mem_type_id);
-
-      if (slen < 2)
-        retval = octave_value (std::string ());
 
       octave_idx_type ndims = dv.ndims ();
       octave_idx_type nstrings = 0;
@@ -194,7 +193,11 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
           charMatrix cm (dv2, *fill_val);
           for (int ii = 0; ii < nstrings; ii++)
             cm.insert (rdata[ii], ii, 0);
-          retval = octave_value (cm);
+
+          if (slen == 1)
+            retval = octave_value (cm.reshape (dv));
+          else
+            retval = octave_value (cm);
         }
 
       // Cleanup
@@ -457,7 +460,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
               Cell cellstr = ov.cell_value ();
               octave_idx_type nstr = cellstr.numel ();
               str_array = (char**) malloc (nstr * sizeof (char*));
-              
+
               for (int ii = 0; ii < nstr; ii++)
                 {
                   // For compatibility with ML, transform vertical char arrays
@@ -465,7 +468,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
                   charMatrix cm = cellstr(ii).char_matrix_value ();
                   octave_idx_type nchar = cm.numel ();
                   cm = cm.reshape (1, nchar);
-                  
+
                   str_array[ii] = (char *) malloc ((nchar + 1)
                                                    * sizeof (char*));
 
@@ -522,7 +525,7 @@ __h5write__ (const std::string& caller, const octave_value& ov,
               size_t sz = H5Tget_size (field_type_id);
 
               hid_t type_id = H5Tcreate (H5T_COMPOUND, sz);
-                
+
               H5Tinsert (type_id, name, 0, field_type_id);
 
               const octave_value val = data.getfield (name);
