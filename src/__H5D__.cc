@@ -643,4 +643,29 @@ DEFUN_DLD(__H5D_write__, args, ,
 %! delete (fname)
 %! assert (charvec,charmat'(:)')
 
+%!test
+%! item = ['test' ; 'abcd'];
+%! fname = tempname ();
+%! dsname='/a';
+%! 
+%! fid = H5F.create(fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
+%! itemtype = H5T.copy ('H5T_C_S1');
+%! itemsize = H5S.create_simple (ndims(item), fliplr (size(item)), []);
+%! oid = H5D.create (fid, dsname, itemtype, itemsize, 'H5P_DEFAULT');
+%! H5D.write(oid, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', item);
+%! H5S.close (itemsize);
+%! H5T.close (itemtype);
+%! H5D.close (oid);
+%! H5F.close (fid);
+%! 
+%! % reading a 2d char array
+%! loc = H5F.open (fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
+%! dataset_loc = H5D.open (loc, dsname);
+%! sub_data = H5D.read (dataset_loc, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', ...
+%!                      'H5P_DEFAULT');
+%! H5D.close(dataset_loc);
+%! H5F.close(loc);
+%! delete (fname)
+%! assert (item, sub_data)
+
 */
