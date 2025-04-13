@@ -270,6 +270,7 @@ dtype_to_struct (hid_t dtype, octave_scalar_map& s)
         if (H5Tequal (tmp_type, str_type))
           return false;
       }
+      // fall through
     case H5T_OPAQUE:
       s.assign ("Class", "H5T_OPAQUE");
       break;
