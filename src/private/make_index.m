@@ -1,4 +1,4 @@
-## Copyright (C) 2023 Pantxo Diribarne
+## Copyright (C) 2023-2025 Pantxo Diribarne
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ function make_index (basedir)
   dirs = {"H5A", "H5D", "H5E", "H5F", "H5G", "H5I", "H5L", "H5LT", ...
           "H5ML", "H5O", "H5P", "H5R", "H5S", "H5T"};
 
-  hl_fun = {"h5info", "h5readatt", "read_mat73"};
+  hl_fun = {"h5info", "h5readatt", "read_mat73", "write_mat73"};
 
   try
     delete (fname);
