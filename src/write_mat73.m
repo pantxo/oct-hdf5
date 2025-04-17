@@ -256,19 +256,58 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
       case "char"
         if (! empty_var)
           rnk = ndims (var);
-          sz = fliplr (size (var));
           type_id = "H5T_NATIVE_UINT16";
+
+          ## Write data a utf-16
+          order = H5T.get_order (type_id);
+          is_le = order == H5ML.get_constant_value ("H5T_ORDER_LE");
+          native_u16 = "utf-16le";
+          if (! is_le)
+            native_u16 = "utf-16be";
+          endif
+          
+          nd = ndims (var);
+          if (nd > 2)
+            warning ("write_mat73: Only first page of char array is written.");
+          endif
+          
+          if (nd == 1)
+            var = typecast (unicode2native (var, native_u16), "uint16");
+          else
+            nr = rows (var);
+            lines = cell (nr, 1);
+            nc(nr) = 0;
+            for ii = 1:nr;
+              var(ii,:)
+              lines{ii} = typecast (unicode2native (var(ii,:), native_u16), ...
+                                    "uint16");
+              nc(ii) = numel (lines{ii}); 
+            endfor
+            mx = max (nc);
+            for ii = 1:nr
+              fill_char = string_fill_char ();
+              ## Eventually padd
+              lines{ii}(end+1:mx) = fill_char; 
+            endfor
+            var = vertcat (lines{:})
+          endif
+          
+          sz = fliplr (size (var));
+          
         else
           rnk = 1;
           sz = ndims (var);
           type_id = "H5T_NATIVE_UINT64";
           var = uint64 (size (var));
-        endif
+        endif 
 
         space_id = H5S.create_simple (rnk, sz, sz);
 
         obj_id = H5D.create (parent_id, varname, type_id, space_id, ...
                              "H5P_DEFAULT");
+        
+        H5D.write (obj_id, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
+                   "H5P_DEFAULT", var);
 
         ## Write attributes
         write_matlab_class (obj_id, varinfo.class);
@@ -276,24 +315,7 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
         if (empty_var)
           write_matlab_empty (obj_id);
         endif
-
-        ## Write data a utf-16
-        sz = size (var);
-        order = H5T.get_order (type_id);
-        is_le = order == H5ML.get_constant_value ("H5T_ORDER_LE");
-        if (is_le)
-          var = typecast (unicode2native (var(:)', "utf-16le"), "uint16");
-        else
-          var = typecast (unicode2native (var(:)', "utf-16be"), "uint16");
-        endif
-        if (rows (var)>1)
-          ## FIXME: This won't work if any character is non-ascii because
-          ## sz is not the number of actual characters but the number of bytes
-          ## (eventually padded) to represent glyphs
-          var = reshape (var, sz);
-        endif
-        H5D.write (obj_id, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
-                   "H5P_DEFAULT", var);
+        
     endswitch
 
     ## Write H5PATH
