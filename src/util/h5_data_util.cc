@@ -258,7 +258,7 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
           if (info_struct.getfield ("Class").string_value () != "H5T_STRING")
             error ("%s: unhandled type %s", caller.c_str (), cls.c_str ());
 
-          hvl_t rdata[dv.ndims ()];
+          hvl_t *rdata = (hvl_t *)malloc(dv.ndims () * sizeof(hvl_t));
 
           herr_t status;
           if (read_fcn == 0)
@@ -281,8 +281,10 @@ __h5_read__ (const std::string& caller, dim_vector dv, hid_t object_id,
             }
           else
             retval = std::string (static_cast<char*> (rdata[0].p));
-
-          // FIXME : we should H5Dvlen_reclaim
+          
+          status = H5Dvlen_reclaim (mem_type_id, mem_space_id, H5P_DEFAULT,
+                                    rdata);
+          free(rdata);
         }
       else
         retval = octave_value ();
