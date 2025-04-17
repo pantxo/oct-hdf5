@@ -112,9 +112,9 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
   persistent has_refs = false;
   space_id = [];
   obj_id = [];
-  
+
   empty_var = isempty (var);
-  
+
   unwind_protect
     switch varinfo.class
       case {"int8","int16","int32","int64", ...
@@ -144,7 +144,7 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
         ## Write data
         H5D.write (obj_id, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
                    "H5P_DEFAULT", var);
-        
+
       case {"double", "single"}
         issingle = strcmp (varinfo.class, "single");
 
@@ -190,24 +190,24 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
           clear var;
           var.real = real (tmpvar);
           var.imag = imag (tmpvar);
-          
+
           H5T.close (type_id);
         endif
 
         H5D.write (obj_id, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
-                   "H5P_DEFAULT", var);          
-        
+                   "H5P_DEFAULT", var);
+
       case "struct"
         disp ("writing struct")
-      case "cell"        
+      case "cell"
         if (has_refs)
           refs_id = H5G.open (file, "/#refs#", "H5P_DEFAULT");
         else
           refs_id = H5G.create (file, "/#refs#");
           has_refs = true;
         endif
-        
-        unwind_protect            
+
+        unwind_protect
           if (! empty_var)
             ## Create a dataset to be referenced for each element
             ref_names = cell (size (var));
@@ -218,7 +218,7 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
               ref_info = whos ("tmp");
               write_var (refs_id, name, tmp, ref_info, file, ["/#refs#/" name]);
             endfor
-            
+
             rnk = ndims (var);
             sz = fliplr (size (var));
             type_id = "H5T_STD_REF_OBJ";
@@ -240,7 +240,7 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
           endfor
           H5D.write (obj_id, 'H5T_STD_REF_OBJ', 'H5S_ALL', 'H5S_ALL', ...
                      'H5P_DEFAULT', refs);
-          
+
           ## Write attributes
           write_matlab_class (obj_id, varinfo.class);
           if (empty_var)
@@ -250,9 +250,9 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
           try
             H5G.close (refs_id);
           catch
-          end_try_catch 
+          end_try_catch
         end_unwind_protect
-        
+
       case "char"
         if (! empty_var)
           rnk = ndims (var);
@@ -265,12 +265,12 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
           if (! is_le)
             native_u16 = "utf-16be";
           endif
-          
+
           nd = ndims (var);
           if (nd > 2)
             warning ("write_mat73: Only first page of char array is written.");
           endif
-          
+
           if (nd == 1)
             var = typecast (unicode2native (var, native_u16), "uint16");
           else
@@ -281,31 +281,31 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
               var(ii,:)
               lines{ii} = typecast (unicode2native (var(ii,:), native_u16), ...
                                     "uint16");
-              nc(ii) = numel (lines{ii}); 
+              nc(ii) = numel (lines{ii});
             endfor
             mx = max (nc);
             for ii = 1:nr
               fill_char = string_fill_char ();
               ## Eventually padd
-              lines{ii}(end+1:mx) = fill_char; 
+              lines{ii}(end+1:mx) = fill_char;
             endfor
             var = vertcat (lines{:})
           endif
-          
+
           sz = fliplr (size (var));
-          
+
         else
           rnk = 1;
           sz = ndims (var);
           type_id = "H5T_NATIVE_UINT64";
           var = uint64 (size (var));
-        endif 
+        endif
 
         space_id = H5S.create_simple (rnk, sz, sz);
 
         obj_id = H5D.create (parent_id, varname, type_id, space_id, ...
                              "H5P_DEFAULT");
-        
+
         H5D.write (obj_id, "H5ML_DEFAULT", "H5S_ALL", "H5S_ALL", ...
                    "H5P_DEFAULT", var);
 
@@ -315,7 +315,7 @@ function write_var (parent_id, varname, var, varinfo, file, h5path = "")
         if (empty_var)
           write_matlab_empty (obj_id);
         endif
-        
+
     endswitch
 
     ## Write H5PATH
@@ -375,14 +375,14 @@ function write_h5path (parent_id, pth)
   catch
     rethrow_h5error ()
   end_try_catch
-  
+
   try
     H5A.write (attr_id, "H5ML_DEFAULT", pth);
     H5A.close (attr_id);
   catch
     rethrow_h5error ()
   end_try_catch
-  
+
   H5S.close (space_id);
   H5T.close (type_id);
 endfunction
@@ -400,14 +400,14 @@ function write_int_decode (parent_id, val)
   catch
     rethrow_h5error ()
   end_try_catch
-  
+
   try
     H5A.write (attr_id, "H5ML_DEFAULT", val);
     H5A.close (attr_id);
   catch
     rethrow_h5error ()
   end_try_catch
-  
+
   H5S.close (space_id);
 endfunction
 
@@ -431,7 +431,7 @@ function write_matlab_empty (parent_id)
   catch
     rethrow_h5error ()
   end_try_catch
-  
+
   H5S.close (space_id);
   H5T.close (type_id);
 endfunction
@@ -448,5 +448,3 @@ function name = next_ref_name ()
   endwhile
   pidx++;
 endfunction
-
-  
